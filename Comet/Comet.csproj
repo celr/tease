@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{FA4685B5-5D6A-4A54-AE31-8C02CC607317}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="app.css" />
+    <TypeScriptCompile Include="Canvas.ts" />
+    <Content Include="Canvas.js">
+      <DependentUpon>Canvas.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="Element.ts" />
+    <Content Include="Element.js">
+      <DependentUpon>Element.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="Eventable.ts" />
+    <Content Include="Eventable.js">
+      <DependentUpon>Eventable.ts</DependentUpon>
+    </Content>
+    <Content Include="index.html" />
+    <Content Include="app.js">
+      <DependentUpon>app.ts</DependentUpon>
+    </Content>
+    <Content Include="lib\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="lib\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="lib\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="lib\bootstrap\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="lib\jquery.d.ts" />
+    <Content Include="lib\jquery.js" />
+    <Content Include="MainController.js">
+      <DependentUpon>Main.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="Tool.ts" />
+    <TypeScriptCompile Include="PropertyEditor.ts" />
+    <Content Include="PropertyEditor.js">
+      <DependentUpon>PropertyEditor.ts</DependentUpon>
+    </Content>
+    <Content Include="res\audio.mp3" />
+    <Content Include="res\audioTool.png" />
+    <Content Include="res\carlos.png" />
+    <Content Include="res\chadan.png" />
+    <Content Include="res\defaultImage.png" />
+    <Content Include="res\imageTool.png" />
+    <Content Include="res\jair.png" />
+    <Content Include="res\audio1.mp3" />
+    <Content Include="Tool.js">
+      <DependentUpon>Tool.ts</DependentUpon>
+    </Content>
+    <Content Include="Toolbar.js">
+      <DependentUpon>Toolbar.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="Toolbar.ts" />
+    <TypeScriptCompile Include="Main.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Comet</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56141/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="BeforeBuild">
+    <Exec Command="&quot;$(PROGRAMFILES)\Microsoft SDKs\TypeScript\0.8.0.0\tsc&quot; @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ')" />
+  </Target>
+</Project>

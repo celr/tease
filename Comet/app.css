@@ -1,0 +1,17 @@
+﻿.tool img {
+    height: 50px;
+    width: 50px;
+    border: solid 2px #FFF;
+}
+
+.tool img:hover {
+    border: solid 2px #808080;
+}
+
+.selectedtool img {
+    border: solid 2px;
+}
+
+.selected {
+    border: solid 2px;
+}

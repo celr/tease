@@ -1,0 +1,5 @@
+c:\users\carlose\documents\visual studio 2012\Projects\Comet\Comet\bin\Comet.dll
+c:\users\carlose\documents\visual studio 2012\Projects\Comet\Comet\bin\Comet.pdb
+c:\users\carlose\documents\visual studio 2012\Projects\Comet\Comet\obj\Release\Comet.csprojResolveAssemblyReference.cache
+c:\users\carlose\documents\visual studio 2012\Projects\Comet\Comet\obj\Release\Comet.dll
+c:\users\carlose\documents\visual studio 2012\Projects\Comet\Comet\obj\Release\Comet.pdb
