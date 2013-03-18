@@ -1,4 +1,8 @@
-﻿.tool img {
+﻿body {
+    font-size: 12px;
+}
+
+.tool img {
     height: 50px;
     width: 50px;
     border: solid 2px #FFF;
@@ -14,4 +18,93 @@
 
 .selected {
     border: solid 2px;
+}
+
+.top-nav {
+    background: #385774;
+}
+
+#timeline {
+    padding: 15px;
+    padding-bottom: 35px;
+    max-height: 210px;
+}
+
+#canvas {
+    border:1px solid #cecece;
+}
+
+#toolbar {
+    padding-left: 15px;
+}
+
+#propertyeditor {
+    padding-left: 15px;
+}
+
+#propertyeditor h2 {
+    font-size: 16px;
+}
+
+.noselection {
+    color: #a7a7a7;
+}
+
+#statusbar {
+    border-top: 1px solid #cecece;
+    background: #eaeaea;
+    padding-left: 10px;
+}
+
+#zoombar .zoom {
+    background: #eaeaea;
+    padding: 4px;
+    border:1px solid #cecece;
+}
+
+.timeline-item {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-bottom: solid 1px #cecece;
+}
+
+#timeline-ruler {
+    background: url('res/ruler-line.png') repeat-x;
+    height: 3px;
+    width: 100%;
+    border-bottom: solid 1px #a2a2a2;
+}
+
+#timeline-frames {
+    letter-spacing: -3px;
+    line-height: 0px;
+    white-space: nowrap;
+}
+
+.timeline-frame {
+    border-right: solid 1px #cecece;
+    border-bottom: solid 1px #cecece;
+    height: 30px;
+    width: 15px;
+    display: inline-block;
+}
+
+#timeline-divider {
+    border-left: solid 1px #cecece;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+
+.ruler-line {
+    background: #b7b7b7;
+    height: 5px;
+    width: 1px;
+    margin-right: 3px;
+    display:inline-block;
+    vertical-align: top;
+}
+
+#frame-properties {
+    padding-left: 20px;
 }

@@ -19,8 +19,8 @@
   </head>
 
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner" style="background: #385774">
+    <div class="navbar navbar-inverse navbar-fixed-top top-nav">
+      <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
@@ -43,47 +43,355 @@
     </div>
 
     <div class="container-fluid">
-
-      <!-- Main hero unit for a primary marketing message or call to action 
-      <div class="hero-unit">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-      </div> -->
-
-      <!-- Example row of columns -->
-
       <div class="row-fluid">
         <div class="span2" id="toolbar">
         </div>
-       <div class="span8 hero-unit" style="min-height: 650px; padding: 5px" id="canvas">
-       </div>
-        <div class="span2" id="propertyeditor">
-          <h2>Editor de propiedades</h2>
-          <p>No hay elemento seleccionado</p>
+        <div class="span19" style="min-height:650px; padding: 5px" id="canvas"></div>
+        <div class="span3" id="propertyeditor">
+          <p class="noselection">No hay elemento seleccionado</p>
         </div>
       </div>
 
     <div class="navbar navbar-fixed-bottom">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Timeline</a>
-          <div class="nav-collapse collapse">
-          </div><!--/.nav-collapse -->
+        <div id="zoombar" class="row-fluid">
+            <div class="span3 offset21" style="padding-left: 10px"><span class="zoom"><img src="res/zoom.png" />100%</span></div>
         </div>
-      </div>
+        <div id="timeline" class="navbar-inner">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <div id="timeline-layercontrols"><img src="res/new-layer.jpg" /> <img src="res/trash.gif" /></div>
+                        <div class="timeline-item" style="margin-top:14px">Capa 1</div>
+                        <div class="timeline-item">Capa 2</div>
+                        <div class="timeline-item">Capa 3</div>
+                    </div>
+                    <div id="timeline-divider" class="span19">
+                        <div id="timeline-numbers">1 &nbsp; &nbsp; &nbsp; &nbsp; 5 &nbsp; &nbsp; &nbsp; &nbsp; 10 &nbsp; &nbsp; &nbsp; &nbsp; 15 &nbsp; &nbsp; &nbsp; &nbsp; 20 &nbsp; &nbsp; &nbsp; &nbsp; 25 &nbsp; &nbsp; &nbsp; &nbsp; 30 &nbsp; &nbsp; &nbsp; &nbsp; 35 &nbsp; &nbsp; &nbsp; &nbsp; 40 &nbsp; &nbsp; &nbsp; &nbsp; 45 &nbsp; &nbsp; &nbsp; &nbsp; 50 &nbsp; &nbsp; &nbsp; &nbsp; 55 &nbsp; &nbsp; &nbsp; &nbsp; 60 &nbsp; &nbsp; &nbsp; &nbsp; 65 &nbsp; &nbsp; &nbsp; &nbsp; 70 &nbsp; &nbsp; &nbsp; &nbsp; 75 &nbsp; &nbsp; &nbsp; &nbsp; 80</div>
+                        <div id="timeline-ruler">
+                        </div>
+                        <div id="timeline-frames">
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <br />
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <br />
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                            <div class="timeline-frame"></div>
+                        </div>
+                    </div>
+                    <div id="frame-properties" class="span3">
+                        Frame rate: 12 fps
+                        <br />Frame actual: 1
+                        <br />Tiempo: 0.0 sec
+                    </div>
+                </div>
+                <div class="nav-collapse collapse">
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+        <div id="statusbar" class="navbar navbar-fixed-bottom">
+            <strong>index.html</strong> Last saved: 6 minutes ago
+        </div>
     </div>
-
-
       <hr>
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; TTeam 2013</p>
       </footer>
 
     </div> <!-- /container -->
