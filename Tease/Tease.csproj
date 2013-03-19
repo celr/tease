@@ -23,6 +23,15 @@
     </Content>
     <TypeScriptCompile Include="Element.ts" />
     <TypeScriptCompile Include="Eventable.ts" />
+    <Content Include="Canvas.js">
+      <DependentUpon>Canvas.ts</DependentUpon>
+    </Content>
+    <Content Include="Element.js">
+      <DependentUpon>Element.ts</DependentUpon>
+    </Content>
+    <Content Include="Eventable.js">
+      <DependentUpon>Eventable.ts</DependentUpon>
+    </Content>
     <Content Include="index.html" />
     <TypeScriptCompile Include="Main.ts" />
     <TypeScriptCompile Include="PropertyEditor.ts" />
@@ -34,6 +43,21 @@
     <TypeScriptCompile Include="app.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Main.js">
+      <DependentUpon>Main.ts</DependentUpon>
+    </Content>
+    <Content Include="PropertyEditor.js">
+      <DependentUpon>PropertyEditor.ts</DependentUpon>
+    </Content>
+    <Content Include="Timeline.js">
+      <DependentUpon>Timeline.ts</DependentUpon>
+    </Content>
+    <Content Include="Tool.js">
+      <DependentUpon>Tool.ts</DependentUpon>
+    </Content>
+    <Content Include="Toolbar.js">
+      <DependentUpon>Toolbar.ts</DependentUpon>
+    </Content>
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
