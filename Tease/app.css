@@ -89,7 +89,7 @@
     display: inline-block;
 }
 
-#timeline-divider {
+#timeline-framelist {
     border-left: solid 1px #cecece;
     overflow-x: auto;
     overflow-y: hidden;
@@ -107,4 +107,12 @@
 
 #frame-properties {
     padding-left: 20px;
+}
+
+.timeline-number {
+    margin-right: 64px;
+}
+
+#timeline-layercontrols {
+    margin-bottom: 14px;
 }
