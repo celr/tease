@@ -46,31 +46,33 @@
       <div class="row-fluid">
         <div class="span2" id="toolbar">
         </div>
-        <div class="span19" style="min-height:650px; padding: 5px" id="canvas"></div>
+        <div class="span19" style="min-height:650px; padding: 5px" id="canvas">
+        </div>
         <div class="span3" id="propertyeditor">
           <p class="noselection">No hay elemento seleccionado</p>
         </div>
       </div>
 
-    <div class="navbar navbar-fixed-bottom">
+    <div class="nav navbar-fixed-bottom">
         <div id="zoombar" class="row-fluid">
             <div class="span3 offset21" style="padding-left: 10px"><span class="zoom"><img src="res/zoom.png" />100%</span></div>
         </div>
         <div id="timeline" class="navbar-inner">
             <div class="container-fluid">
                 <div class="row-fluid">
+                                    
                     <div id="timeline-layers" class="span2">
-                        <div id="timeline-layercontrols"><img src="res/new-layer.jpg" /> <img src="res/trash.gif" /></div>
+                        <div class="timeline-layercontrols"><img id="newlayer-btn" src="res/new-layer.jpg" /> <img id="trashlayer-btn" src="res/trash.gif" /></div>
+                        <div id="timeline-layerlist"></div>
                     </div>
                     <div id="timeline-framelist" class="span19">
                         <div id="timeline-numbers"></div>
                         <div id="timeline-ruler"></div>
-                        <div id="timeline-frames"></div>
+                        <div id="timeline-frames">
+                        </div>
                     </div>
                     <div id="frame-properties" class="span3">
                         Frame rate: <span id="framerate-value">12</span> fps
-                        <br />Frame actual: <span id="currentframe-value">1</span>
-                        <br />Tiempo actual: <span id="currenttime-value">0.0</span> sec
                         <br />Tiempo total: <span id="totaltime-value">0</span> sec
                     </div>
                 </div>
@@ -94,6 +96,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="lib/jquery.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
     <script src="Eventable.js"></script>
     <script src="Element.js"></script>
     <script src="Tool.js"></script>
@@ -101,6 +104,7 @@
     <script src="Canvas.js"></script>
     <script src="PropertyEditor.js"></script>
     <script src="Timeline.js"></script>
+    <script src="Layer.js"></script>
     <script src="Main.js"></script>
   </body>
 </html>

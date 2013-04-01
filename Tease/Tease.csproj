@@ -43,6 +43,10 @@
     <TypeScriptCompile Include="app.ts" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Layer.ts" />
+    <Content Include="Layer.js">
+      <DependentUpon>Layer.ts</DependentUpon>
+    </Content>
     <Content Include="Main.js">
       <DependentUpon>Main.ts</DependentUpon>
     </Content>
