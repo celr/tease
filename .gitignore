@@ -1,4 +1,6 @@
 *.js
+!Tease/src/lib/*.js
+!Tease/src/lib/bootstrap/js/*.js
 *.map
 bin
 obj
