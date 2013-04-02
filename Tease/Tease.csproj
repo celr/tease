@@ -53,6 +53,7 @@
     <Content Include="PropertyEditor.js">
       <DependentUpon>PropertyEditor.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="SizingTool.ts" />
     <Content Include="Timeline.js">
       <DependentUpon>Timeline.ts</DependentUpon>
     </Content>
