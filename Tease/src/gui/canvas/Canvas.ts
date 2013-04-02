@@ -1,7 +1,6 @@
-///<reference path="../toolbars/Toolbar.ts" />
-///<reference path="../../base/Element.ts" />
-///<reference path="../../base/Eventable.ts" />
-///<reference path="../canvas/SizingTool.ts" />
+///<reference path="Toolbar.ts" />
+///<reference path="Element.ts" />
+///<reference path="SizingTool.ts" />
 // Canvas
 // Represents a canvas in the GUI
 // owner: jair
@@ -33,6 +32,7 @@ class Canvas extends Eventable {
             this.doSelect(this.currentElements[parseInt(selectedDOME.id)]);
             this.sizingTool.render(element.DOMElement);
             var that = this;
+            //element.DOMElement.addEventListener('mouseout', function () { console.log('done!'); that.sizingTool.erase(); }, false);
         });
 
         element.DOMElement.addEventListener('mousedown', (e: MouseEvent) => {
@@ -46,6 +46,7 @@ class Canvas extends Eventable {
 
 
             var that = this;
+            this.sizingTool.erase();
 
             function handleMove(e: MouseEvent) {
                 element.DOMElement.style.top = (initialElemY + e.clientY - initialMouseY) + 'px';
@@ -67,13 +68,13 @@ class Canvas extends Eventable {
         element.DOMElement.id = this.currentElements.length.toString();
         this.environment.layers[this.currentLayerIndex].insertElementInPosition(this.currentPosition, element);
         this.currentElements.push(element);
-        this.DOMElement.appendChild(element.DOMElement);
+        
         this.doSelect(element); // Automatically select newly inserted element
         this.fireEvent('çanvasinsert', element);
         element.DOMElement.style.position = 'absolute';
         element.DOMElement.style.left = (e.clientX - this.DOMElement.offsetLeft) + 'px';
         element.DOMElement.style.top = (e.clientY - this.DOMElement.offsetTop)+'px';
-        
+        this.DOMElement.appendChild(element.DOMElement);
     }
 
     private handleDown(e: MouseEvent) {
@@ -101,6 +102,7 @@ class Canvas extends Eventable {
         this.setCurrentPosition(1);
         this.setCurrentLayer(0);
         this.sizingTool = new SizingTool();
+        this.DOMElement.style.position = 'relative';
         this.DOMElement.addEventListener('click', (e: Event) => {
             this.handleCanvasClick(e);
         });
