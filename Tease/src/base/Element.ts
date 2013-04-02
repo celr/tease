@@ -1,4 +1,4 @@
-///<reference path="Tool.ts" />
+///<reference path="../tools/Tool.ts" />
 module Tease {
     export class Element {
         attributes: Attribute[];

@@ -1,6 +1,7 @@
-///<reference path="Toolbar.ts" />
-///<reference path="Element.ts" />
-///<reference path="SizingTool.ts" />
+///<reference path="../toolbars/Toolbar.ts" />
+///<reference path="../../base/Element.ts" />
+///<reference path="../../base/Eventable.ts" />
+///<reference path="../canvas/SizingTool.ts" />
 // Canvas
 // Represents a canvas in the GUI
 // owner: jair

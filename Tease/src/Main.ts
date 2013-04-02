@@ -1,8 +1,8 @@
-///<reference path="Toolbar.ts" />
-///<reference path="Canvas.ts" />
-///<reference path="PropertyEditor.ts" />
-///<reference path="Timeline.ts" />
-///<reference path="Layer.ts" />
+///<reference path="gui/toolbars/Toolbar.ts" />
+///<reference path="gui/canvas/Canvas.ts" />
+///<reference path="gui/toolbars/PropertyEditor.ts" />
+///<reference path="gui/toolbars/Timeline.ts" />
+///<reference path="base/Layer.ts" />
 
 window.onload = () => {
     // Initialize environment

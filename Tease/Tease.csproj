@@ -16,56 +16,38 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="app.css" />
-    <TypeScriptCompile Include="Canvas.ts" />
-    <Content Include="app.js">
-      <DependentUpon>app.ts</DependentUpon>
-    </Content>
-    <TypeScriptCompile Include="Element.ts" />
-    <TypeScriptCompile Include="Eventable.ts" />
-    <Content Include="Canvas.js">
-      <DependentUpon>Canvas.ts</DependentUpon>
-    </Content>
-    <Content Include="Element.js">
-      <DependentUpon>Element.ts</DependentUpon>
-    </Content>
-    <Content Include="Eventable.js">
-      <DependentUpon>Eventable.ts</DependentUpon>
-    </Content>
-    <Content Include="index.html" />
-    <TypeScriptCompile Include="Main.ts" />
-    <TypeScriptCompile Include="PropertyEditor.ts" />
-    <TypeScriptCompile Include="Timeline.ts" />
-    <TypeScriptCompile Include="Tool.ts" />
-    <TypeScriptCompile Include="Toolbar.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Layer.ts" />
-    <Content Include="Layer.js">
-      <DependentUpon>Layer.ts</DependentUpon>
-    </Content>
-    <Content Include="Main.js">
-      <DependentUpon>Main.ts</DependentUpon>
-    </Content>
-    <Content Include="PropertyEditor.js">
-      <DependentUpon>PropertyEditor.ts</DependentUpon>
-    </Content>
-    <TypeScriptCompile Include="SizingTool.ts" />
-    <Content Include="SizingTool.js">
-      <DependentUpon>SizingTool.ts</DependentUpon>
-    </Content>
-    <Content Include="Timeline.js">
-      <DependentUpon>Timeline.ts</DependentUpon>
-    </Content>
-    <Content Include="Tool.js">
-      <DependentUpon>Tool.ts</DependentUpon>
-    </Content>
-    <Content Include="Toolbar.js">
-      <DependentUpon>Toolbar.ts</DependentUpon>
-    </Content>
+    <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\base\Element.ts" />
+    <TypeScriptCompile Include="src\base\Eventable.ts" />
+    <TypeScriptCompile Include="src\base\Layer.ts" />
+    <TypeScriptCompile Include="src\gui\canvas\Canvas.ts" />
+    <TypeScriptCompile Include="src\gui\canvas\SizingTool.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\PropertyEditor.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\Timeline.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\Toolbar.ts" />
+    <Content Include="src\index.html" />
+    <Content Include="src\lib\bootstrap\css\bootstrap.css" />
+    <Content Include="src\lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="src\lib\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="src\lib\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="src\lib\jquery.d.ts" />
+    <Content Include="src\lib\jquery.js" />
+    <TypeScriptCompile Include="src\Main.ts" />
+    <Content Include="src\res\audio.mp3" />
+    <Content Include="src\res\audio1.mp3" />
+    <Content Include="src\res\audioTool.png" />
+    <Content Include="src\res\carlos.png" />
+    <Content Include="src\res\chadan.png" />
+    <Content Include="src\res\defaultImage.png" />
+    <Content Include="src\res\Dot.png" />
+    <Content Include="src\res\imageTool.png" />
+    <Content Include="src\res\jair.png" />
+    <Content Include="src\res\new-layer.jpg" />
+    <Content Include="src\res\ruler-line.png" />
+    <Content Include="src\res\trash.gif" />
+    <Content Include="src\res\zoom.png" />
+    <Content Include="src\style\app.css" />
+    <TypeScriptCompile Include="src\tools\Tool.ts" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -73,6 +55,9 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\lib\bootstrap\js\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

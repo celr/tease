@@ -73,7 +73,7 @@
 }
 
 #timeline-ruler {
-    background: url('res/ruler-line.png') repeat-x;
+    background: url('../res/ruler-line.png') repeat-x;
     height: 3px;
     width: 100%;
     border-bottom: solid 1px #a2a2a2;

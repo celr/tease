@@ -1,5 +1,5 @@
-///<reference path="Tool.ts" />
-///<reference path="Eventable.ts" />
+///<reference path="../../tools/Tool.ts" />
+///<reference path="../../base/Eventable.ts" />
 
 // Toolbar
 // Represents a toolbar in the GUI

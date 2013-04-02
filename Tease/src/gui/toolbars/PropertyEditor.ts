@@ -1,6 +1,6 @@
-///<reference path="Eventable.ts" />
-///<reference path="Canvas.ts" />
-///<reference path="Element.ts" />
+///<reference path="../../base/Eventable.ts" />
+///<reference path="../canvas/Canvas.ts" />
+///<reference path="../../base/Element.ts" />
 class PropertyEditor extends Eventable {
     private propertyMap: Object;
 

@@ -1,6 +1,6 @@
-///<reference path="Eventable.ts" />
-///<reference path="Layer.ts" />
-///<reference path="lib/jquery.d.ts" />
+///<reference path="../../base/Eventable.ts" />
+///<reference path="../../base/Layer.ts" />
+///<reference path="../../lib/jquery.d.ts" />
 
 class Timeline extends Eventable {
     public selectedLayer: Layer;
