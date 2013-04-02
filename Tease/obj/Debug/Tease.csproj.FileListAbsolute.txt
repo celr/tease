@@ -1,0 +1,5 @@
+C:\Users\CarlosE\Documents\Visual Studio 2012\Projects\Tease\Tease\bin\Tease.dll
+C:\Users\CarlosE\Documents\Visual Studio 2012\Projects\Tease\Tease\bin\Tease.pdb
+C:\Users\CarlosE\Documents\Visual Studio 2012\Projects\Tease\Tease\obj\Debug\Tease.csprojResolveAssemblyReference.cache
+C:\Users\CarlosE\Documents\Visual Studio 2012\Projects\Tease\Tease\obj\Debug\Tease.dll
+C:\Users\CarlosE\Documents\Visual Studio 2012\Projects\Tease\Tease\obj\Debug\Tease.pdb
