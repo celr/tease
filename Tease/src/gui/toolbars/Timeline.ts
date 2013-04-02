@@ -68,9 +68,13 @@ class Timeline extends Eventable {
 
     private drawLayer(layer: Layer) {
         // Insert layer into list
-        var layerGUI = $('<div class="timeline-item">' + layer.title + '</div>').appendTo(this.layerListGUI);
+        var layerGUI = $('<div class="timeline-layer"><div class="timeline-layer-decor"></div><div class="timeline-layer-text">' + layer.title + '</div></div>').appendTo(this.layerListGUI);
         layerGUI.click((e: Event) => {
-            this.selectLayer($(e.target));
+            var clickTarget = $(e.target);
+            while (!clickTarget.hasClass('timeline-layer')) {
+                clickTarget = clickTarget.parent();
+            }
+            this.selectLayer(clickTarget);
             this.selectFrame($(this.frameListGUI.find('#timeline-frames').children()[layerGUI.index()]).find('.timeline-frame').first()); // TODO: Break this down
         });
 
@@ -93,7 +97,7 @@ class Timeline extends Eventable {
         }
         frame.addClass('timeline-frame-selected');
         this.selectedFrameGUI = frame;
-        this.selectedFrameIndex = frame.parent().index();
+        this.selectedFrameIndex = frame.index();
         this.selectedKeyframe = this.selectedLayer.findKeyframeForPosition(this.selectedFrameIndex + 1);
         this.fireEvent('frameselect', this.selectedFrameIndex + 1);
     }
@@ -115,9 +119,9 @@ class Timeline extends Eventable {
     private handleTimelineFrameClick(e: Event) {
         var layerIndex = $(e.target).parent().parent().index();
         if (layerIndex != this.selectedLayerIndex) {
-            this.selectLayer(this.layerListGUI.find(':nth-child(' + (layerIndex + 1) + ')'));
+            this.selectLayer($(this.layerListGUI.children()[layerIndex]));
         }
-        this.selectFrame($(e.target));
+        this.selectFrame($(e.target).parent());
     }
 
     private drawLayerFrames(layer: Layer) {
@@ -128,12 +132,17 @@ class Timeline extends Eventable {
         var layerFramesDiv = $('<div></div>');
 
         for (var i = 0, k = 0; i < limit; i++) {
-            var timelineFrame = $('<div class="timeline-frames-container dropup"><a class="timeline-frame" data-toggle="dropdown" href="#"></a><ul class="dropdown-menu frame-options" role="menu">\
-                                    <li><a tabindex="-1" href="#" class="insert-keyframe">Insertar keyframe</a></li>\
-                                    <li><a tabindex="-1" href="#" class="empty-frame">Vaciar frame</a></li>\
-                                    <li class ="divider"></li>\
-                                    <li><a tabindex="-1" href="#" class="delete-frame">Eliminar frame</a></li>\
-                                    </ul></div>').appendTo(layerFramesDiv);
+            var timelineFrame = $('<div class="timeline-frames-container dropup timeline-frame"><a class="timeline-frame-link" data-toggle="dropdown" href="#"></a><ul class="dropdown-menu frame-options" role="menu">\
+                                <li><a tabindex="-1" href="#" class ="insert-keyframe">Insertar keyframe</a></li>\
+                                <li><a tabindex="-1" href="#" class ="empty-frame">Vaciar frame</a></li>\
+                                <li class ="divider"></li>\
+                                <li><a tabindex="-1" href="#" class ="delete-frame">Eliminar frame</a></li>\
+                        </ul>\
+                        </div>').appendTo(layerFramesDiv);
+
+            if (layer.index == 0) {
+                timelineFrame.addClass('timeline-frame-top');
+            }
 
             // Check if current frame is keyframe
             if (k < layer.frames.length && layer.frames[k].position == i + 1) {
@@ -154,7 +163,7 @@ class Timeline extends Eventable {
             });
 
             // Click event for individual frame on the Timeline
-            timelineFrame.find('.timeline-frame').click((e: Event) => {
+            timelineFrame.find('.timeline-frame-link').click((e: Event) => {
                 this.handleTimelineFrameClick(e);
             });
         }
@@ -168,7 +177,7 @@ class Timeline extends Eventable {
     }
 
     private addNewLayer() {
-        var layer = new Layer('Layer ' + (this.environment.layers.length + 1), true, true);
+        var layer = new Layer('Layer ' + (this.environment.layers.length + 1), true, true, this.environment.layers.length);
         this.drawLayer(layer);
         this.environment.layers.push(layer);
     }
@@ -215,6 +224,6 @@ class Timeline extends Eventable {
         this.drawTimeline();
 
         // Select first frame
-        this.selectFrame(this.frameListGUI.find('.timeline-frame').first());
+        this.selectFrame(this.frameContainerGUI.find('div .timeline-frame').first());
     }
 }

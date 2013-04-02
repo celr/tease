@@ -30,6 +30,8 @@
     <Content Include="src\lib\bootstrap\css\bootstrap.min.css" />
     <Content Include="src\lib\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="src\lib\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="src\lib\bootstrap\js\bootstrap.js" />
+    <Content Include="src\lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="src\lib\jquery.d.ts" />
     <Content Include="src\lib\jquery.js" />
     <TypeScriptCompile Include="src\Main.ts" />
@@ -56,9 +58,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\lib\bootstrap\js\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

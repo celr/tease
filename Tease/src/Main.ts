@@ -7,7 +7,7 @@
 window.onload = () => {
     // Initialize environment
     var env = new Environment;
-    env.layers = [new Layer("Layer 1", true, true)];
+    env.layers = [new Layer("Layer 1", true, true, 0)];
 
     var toolbar = new Toolbar(document.getElementById('toolbar'));
     var canvas = new Canvas(document.getElementById('canvas'), toolbar.currentTool, env);

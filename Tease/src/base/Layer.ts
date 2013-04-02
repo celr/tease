@@ -59,7 +59,7 @@ class Layer {
         return result;
     }
 
-    constructor(public title: string, public visible: bool, public editable: bool) {
+    constructor(public title: string, public visible: bool, public editable: bool, public index: number) {
         // Insert an empty keyframe
         this.frames = [new Keyframe(1, [])];
     }
