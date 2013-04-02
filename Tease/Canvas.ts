@@ -32,7 +32,6 @@ class Canvas extends Eventable {
             this.doSelect(this.currentElements[parseInt(selectedDOME.id)]);
             this.sizingTool.render(element.DOMElement);
             var that = this;
-            element.DOMElement.addEventListener('mouseout', function () { console.log('done!'); that.sizingTool.erase(); }, false);
         });
 
         element.DOMElement.addEventListener('mousedown', (e: MouseEvent) => {
