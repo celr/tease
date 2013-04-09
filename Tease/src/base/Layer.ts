@@ -6,8 +6,23 @@ class Frame {
 }
 
 class Keyframe extends Frame {
-    constructor(public position: number, public elements: Tease.Element[]) {
+    public elements: Tease.Element[];
+
+    constructor(public position: number) {
         super(position);
+        this.elements = [];
+    }
+
+    public copyElements(copyElements: Tease.Element[]) {
+        for (var i = 0; i < copyElements.length; i++) {
+            this.elements.push(copyElements[i].getCopy());
+        }
+    }
+
+    public createTransitionsForElements(transitionElements: Tease.Element[]) {
+        for (var i = 0; i < transitionElements.length; i++) {
+            this.elements.push(transitionElements[i].createTransition(transitionElements[i]));
+        }
     }
 }
 
@@ -61,7 +76,7 @@ class Layer {
 
     constructor(public title: string, public visible: bool, public editable: bool, public index: number) {
         // Insert an empty keyframe
-        this.frames = [new Keyframe(1, [])];
+        this.frames = [new Keyframe(1)];
     }
 }
 

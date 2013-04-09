@@ -20,10 +20,19 @@
     <TypeScriptCompile Include="src\base\Element.ts" />
     <TypeScriptCompile Include="src\base\Eventable.ts" />
     <TypeScriptCompile Include="src\base\Layer.ts" />
+    <None Include="src\base\Layer.js">
+      <DependentUpon>Layer.ts</DependentUpon>
+    </None>
     <TypeScriptCompile Include="src\gui\canvas\Canvas.ts" />
+    <Content Include="src\gui\canvas\Canvas.js">
+      <DependentUpon>Canvas.ts</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="src\gui\canvas\SizingTool.ts" />
     <TypeScriptCompile Include="src\gui\toolbars\PropertyEditor.ts" />
     <TypeScriptCompile Include="src\gui\toolbars\Timeline.ts" />
+    <Content Include="src\gui\toolbars\Timeline.js">
+      <DependentUpon>Timeline.ts</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="src\gui\toolbars\Toolbar.ts" />
     <Content Include="src\index.html" />
     <Content Include="src\lib\bootstrap\css\bootstrap.css" />
