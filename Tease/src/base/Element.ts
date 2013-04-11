@@ -24,7 +24,23 @@ module Tease {
                 this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
             }
 
+            
             this.elementTransition = new ElementTransition(null, null, []);
+
+            //jair
+            var sizingToolAttributes = this.parentTool.sizingToolAttributes;
+
+            for (var i = 0; i < sizingToolAttributes.length; i++) {
+                var tempAttr = this.lookForAttribute(sizingToolAttributes[i]); //auxiliar variable
+                if (tempAttr == null) {
+                    this.attributes.push(new Attribute(sizingToolAttributes[i].property, sizingToolAttributes[i].value));
+                }
+            }
+
+            this.DOMElement = <HTMLElement> this.parentTool.defaultDOMElement.cloneNode(true);
+            this.DOMElement.style.zIndex = '9999';
+            this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
+            //jair
         }
 
         private lookForAttribute(attribute: Attribute) {
@@ -82,6 +98,19 @@ module Tease {
             if (this.elementTransition.nextElement) {
                 this.setAttributes(this.elementTransition.changeListToNext);
             }
+        }
+
+        getAttribute(propertyId: string) {
+            var result = null;
+
+            for (var i = 0; i < this.attributes.length; i++) {
+                if (this.attributes[i].property.id == propertyId) {
+                    result = this.attributes[i];
+                    break;
+                }
+            }
+
+            return result;
         }
     }
 }

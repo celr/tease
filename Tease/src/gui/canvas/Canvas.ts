@@ -19,9 +19,16 @@ class Canvas extends Eventable {
     private handleCanvasClick(e) {
         var element = new Tease.Element(this.currentTool);
         // TODO: Usar atributos internos en lugar de modificar directamente el DOMElement
-        element.DOMElement.style.position = 'absolute';
-        element.DOMElement.style.left = (e.clientX - this.DOMElement.offsetLeft) + 'px';
-        element.DOMElement.style.top = (e.clientY - this.DOMElement.offsetTop) + 'px';
+        var tempAttr = new Attribute(new Property('position', ''), 'absolute'); //auxiliar variable
+        element.setAttribute(tempAttr);
+
+        tempAttr.property.id = 'top';
+        tempAttr.value = (e.clientY - this.DOMElement.offsetTop).toString();
+        element.setAttribute(tempAttr);
+
+        tempAttr.property.id = 'left';
+        tempAttr.value = (e.clientX - this.DOMElement.offsetLeft).toString();
+        element.setAttribute(tempAttr);
 
         this.insertElement(element);
         this.selectElement(element); // Automatically select newly inserted element
@@ -39,20 +46,26 @@ class Canvas extends Eventable {
     }
 
     private handleElementMove(e: MouseEvent, element: Tease.Element) {
+        this.sizingTool.erase();
+
         //calculate initial position of element
-        var initialElemX = parseInt(window.getComputedStyle(element.DOMElement).left);
-        var initialElemY = parseInt(window.getComputedStyle(element.DOMElement).top);
+        var initialElemX = parseInt(element.getAttribute('left').value);
+        var initialElemY = parseInt(element.getAttribute('top').value);
 
         //get initial position of mouse down
         var initialMouseX = e.clientX;
         var initialMouseY = e.clientY;
 
         var that = this;
-        //this.sizingTool.erase();
+
+        var topAtt = new Attribute(new Property('top', 'top'), '');
+        var leftAtt = new Attribute(new Property('left', 'left'), '');
 
         function handleMove(e: MouseEvent) {
-            element.DOMElement.style.top = (initialElemY + e.clientY - initialMouseY) + 'px';
-            element.DOMElement.style.left = (initialElemX + e.clientX - initialMouseX) + 'px';
+            topAtt.value = (initialElemY + e.clientY - initialMouseY).toString();
+            leftAtt.value = (initialElemX + e.clientX - initialMouseX).toString();
+            element.setAttribute(topAtt);
+            element.setAttribute(leftAtt);
         }
 
         function handleUp(e: MouseEvent) {
@@ -67,7 +80,7 @@ class Canvas extends Eventable {
     private handleElementSelect(e: Event, element: Tease.Element) {
         var selectedDOME = <HTMLElement> e.target;
         this.selectElement(this.currentElements[parseInt(selectedDOME.id)]);
-        this.sizingTool.render(selectedDOME);
+        this.sizingTool.render(element);
     }
 
     // Inserts an element into the canvas
@@ -89,7 +102,7 @@ class Canvas extends Eventable {
         element.DOMElement.id = this.currentElements.length.toString();
         this.DOMElement.appendChild(element.DOMElement);
         this.currentElements.push(element);
-        this.sizingTool.render(element.DOMElement);
+        this.sizingTool.render(element);
     }
 
     constructor (private DOMElement: HTMLElement, public currentTool: Tool, private environment: Environment) {
