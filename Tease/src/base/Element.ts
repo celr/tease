@@ -24,26 +24,10 @@ module Tease {
                 this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
             }
 
-<<<<<<< HEAD
-            
-            var sizingToolAttributes = this.parentTool.sizingToolAttributes;
-
-            for (var i = 0; i < sizingToolAttributes.length; i++) {
-                var tempAttr = this.lookForAttribute(sizingToolAttributes[i]); //auxiliar variable
-                if (tempAttr == null) {
-                    this.attributes.push(new Attribute(sizingToolAttributes[i].property, sizingToolAttributes[i].value));
-                }
-            }
-
-            this.DOMElement = <HTMLElement> this.parentTool.defaultDOMElement.cloneNode(true);
-            this.DOMElement.style.zIndex = '9999';
-            this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
-=======
             this.elementTransition = new ElementTransition(null, null, []);
->>>>>>> 86c8ed5845af67c55a0dec6a0c9a288dccc6a5d4
         }
 
-        public lookForAttribute(attribute: Attribute) {
+        private lookForAttribute(attribute: Attribute) {
             var result = null;
 
             for (var i = 0; i < this.attributes.length; i++) {
@@ -64,6 +48,7 @@ module Tease {
 
         setAttribute(attribute: Attribute) {
             var existingAttribute = this.lookForAttribute(attribute);
+
             if (existingAttribute) {
                 existingAttribute.value = attribute.value;
             } else {
@@ -97,20 +82,6 @@ module Tease {
             if (this.elementTransition.nextElement) {
                 this.setAttributes(this.elementTransition.changeListToNext);
             }
-        }
-
-
-        getAttribute(propertyId: string) {
-            var result = null;
-
-            for (var i = 0; i < this.attributes.length; i++) {
-                if (this.attributes[i].property.id == propertyId) {
-                    result = this.attributes[i];
-                    break;
-                }
-            }
-
-            return result;
         }
     }
 }
