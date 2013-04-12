@@ -88,29 +88,29 @@ class ImageTool implements Tool {
                     case 'top':
                         DOMElement.style.top = attributes[i].value + 'px';
                         break;
-                    case 'mirrorX':
-                        if (attributes[i].value == '') attributes[i].value = '1';
-                        var regex = /scale\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/;
-                        var style = <string>$(DOMElement).css('transform');
-                        var newStyle = "";
-                        if (style.length == 0) {
-                            newStyle = "scale(" + attributes[i].value + ", 1)";
-                        }
-                        else {
-                            newStyle = style.replace(regex, "scale(" + attributes[i].value + ", $2)");
-                        }
-                        $(DOMElement).css('transform', newStyle);
-                        break;
-                    case 'mirrorY':
-                        if (attributes[i].value == '') attributes[i].value = '1';
-                        var regex = /scale\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/;
-                        var style = $(DOMElement).css('webkitTransform');
-                        if (style.length == 0) {
-                            var newStyle = "scale(1, " + attributes[i].value + ")";
-                        }
-                        var newStyle = style.replace(regex, "scale($1," + attributes[i].value + ", $2)");
-                        $(DOMElement).css('webkitTransform', newStyle);
-                        break;
+                    //case 'mirrorX':
+                    //    if (attributes[i].value == '') attributes[i].value = '1';
+                    //    var regex = /scale\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/;
+                    //    var style = <string>$(DOMElement).css('transform');
+                    //    var newStyle = "";
+                    //    if (style.length == 0) {
+                    //        newStyle = "scale(" + attributes[i].value + ", 1)";
+                    //    }
+                    //    else {
+                    //        newStyle = style.replace(regex, "scale(" + attributes[i].value + ", $2)");
+                    //    }
+                    //    $(DOMElement).css('transform', newStyle);
+                    //    break;
+                    //case 'mirrorY':
+                    //    if (attributes[i].value == '') attributes[i].value = '1';
+                    //    var regex = /scale\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/;
+                    //    var style = $(DOMElement).css('webkitTransform');
+                    //    if (style.length == 0) {
+                    //        var newStyle = "scale(1, " + attributes[i].value + ")";
+                    //    }
+                    //    var newStyle = style.replace(regex, "scale($1," + attributes[i].value + ", $2)");
+                    //    $(DOMElement).css('webkitTransform', newStyle);
+                    //    break;
                     case 'position':
                         DOMElement.style.position = attributes[i].value;
                         break;

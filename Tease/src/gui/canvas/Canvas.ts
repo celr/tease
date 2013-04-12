@@ -85,6 +85,7 @@ class Canvas extends Eventable {
 
     // Inserts an element into the canvas
     public insertElement(element: Tease.Element) {
+        this.sizingTool.erase();
         element.DOMElement.addEventListener('click', (e: Event) => {
             e.stopPropagation();
             e.preventDefault();

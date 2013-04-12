@@ -74,7 +74,7 @@ class SizingTool {
     }
 
     render(target: Tease.Element) {
-        console.log(target);
+        //this.erase();
         this.target = target;
         this.visible = true;
 
@@ -627,29 +627,19 @@ class SizingTool {
         this.uDot.addEventListener('click', stopPropagation, false);
 
 
-        //append dot elements to the canvas
         if (this.targetHeight && this.targetWidth) {
             this.canvas.appendChild(this.ulDot);
-        }
-        if (this.targetHeight && this.targetWidth) {
             this.canvas.appendChild(this.urDot);
-        }
-        if (this.targetHeight && this.targetWidth) {
             this.canvas.appendChild(this.blDot);
-        }
-        if (this.targetHeight && this.targetWidth) {
             this.canvas.appendChild(this.brDot);
         }
-        if (this.targetHeight) {
+        
+        if (this.targetHeight != null) {
             this.canvas.appendChild(this.uDot);
-        }
-        if (this.targetHeight) {
             this.canvas.appendChild(this.bDot);
         }
-        if (this.targetWidth) {
+        if (this.targetWidth != null) {
             this.canvas.appendChild(this.lDot);
-        }
-        if (this.targetWidth) {
             this.canvas.appendChild(this.rDot);
         }
     }
@@ -670,8 +660,6 @@ class SizingTool {
         }
         that.targetLeft = parseInt(this.target.getAttribute('left').value);
         that.targetTop = parseInt(this.target.getAttribute('top').value);
-        //that.targetMirrorX = parseInt(this.target.getAttribute('mirroX').value);
-        //that.targetMirrorY = parseInt(this.target.getAttribute('mirroY').value);
     }
 
     erase() {
