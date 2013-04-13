@@ -1,5 +1,6 @@
 ///<reference path="../toolbars/Toolbar.ts" />
 ///<reference path="../../base/Layer.ts" />
+///<reference path="../../base/Environment.ts" />
 ///<reference path="../../base/Element.ts" />
 ///<reference path="../../base/Eventable.ts" />
 ///<reference path="../canvas/SizingTool.ts" />
@@ -8,10 +9,52 @@
 // owner: jair
 class Canvas extends Eventable {
     private currentElements: Tease.Element[]; // Elements currently shown on canvas
-    currentSelection: Tease.Element; // TODO: Multiple selection
-    sizingTool: SizingTool;
+    private currentSelection: Tease.Element; // TODO: Multiple selection
+    private sizingTool: SizingTool;
 
-    private selectElement(element: Tease.Element) {
+    constructor(private DOMElement: HTMLElement, public currentTool: Tool, private environment: Environment) {
+        super();
+        this.sizingTool = new SizingTool();
+        this.DOMElement.style.position = 'relative';
+        this.currentElements = [];
+        this.DOMElement.addEventListener('click', (e: Event) => {
+            this.handleCanvasClick(e);
+        });
+    }
+
+    public clear() {
+        this.DOMElement.innerText = '';
+    }
+
+    public insertElements(elements: Tease.Element[]) {
+        for (var i = 0; i < elements.length; i++) {
+            this.insertElement(elements[i]);
+        }
+    }
+
+    // Inserts an element into the canvas
+    public insertElement(element: Tease.Element) {
+        element.DOMElement.addEventListener('click', (e: Event) => {
+            e.stopPropagation();
+            e.preventDefault();
+            e.cancelBubble = true;
+            this.handleElementSelect(e, element);
+        }, false);
+
+        element.DOMElement.addEventListener('mousedown', (e: MouseEvent) => {
+            e.stopPropagation();
+            e.preventDefault();
+            e.cancelBubble = true;
+            this.handleElementMove(e, element);
+        }, false);
+
+        element.DOMElement.id = this.currentElements.length.toString();
+        this.DOMElement.appendChild(element.DOMElement);
+        this.currentElements.push(element);
+        this.sizingTool.render(element);
+    }
+
+    public selectElement(element: Tease.Element) {
         this.currentSelection = element;
         this.fireEvent('canvasselect', element);
     }
@@ -33,16 +76,6 @@ class Canvas extends Eventable {
         this.insertElement(element);
         this.selectElement(element); // Automatically select newly inserted element
         this.fireEvent('canvasinsert', element);
-    }
-
-    public clear() {
-        this.DOMElement.innerText = '';
-    }
-
-    public insertElements(elements: Tease.Element[]) {
-        for (var i = 0; i < elements.length; i++) {
-            this.insertElement(elements[i]);
-        }
     }
 
     private handleElementMove(e: MouseEvent, element: Tease.Element) {
@@ -81,38 +114,5 @@ class Canvas extends Eventable {
         var selectedDOME = <HTMLElement> e.target;
         this.selectElement(this.currentElements[parseInt(selectedDOME.id)]);
         this.sizingTool.render(element);
-    }
-
-    // Inserts an element into the canvas
-    public insertElement(element: Tease.Element) {
-        this.sizingTool.erase();
-        element.DOMElement.addEventListener('click', (e: Event) => {
-            e.stopPropagation();
-            e.preventDefault();
-            e.cancelBubble = true;
-            this.handleElementSelect(e, element);
-        }, false);
-
-        element.DOMElement.addEventListener('mousedown', (e: MouseEvent) => {
-            e.stopPropagation();
-            e.preventDefault();
-            e.cancelBubble = true;
-            this.handleElementMove(e, element);
-        }, false);
-
-        element.DOMElement.id = this.currentElements.length.toString();
-        this.DOMElement.appendChild(element.DOMElement);
-        this.currentElements.push(element);
-        this.sizingTool.render(element);
-    }
-
-    constructor (private DOMElement: HTMLElement, public currentTool: Tool, private environment: Environment) {
-        super();
-        this.sizingTool = new SizingTool();
-        this.DOMElement.style.position = 'relative';
-        this.currentElements = [];
-        this.DOMElement.addEventListener('click', (e: Event) => {
-            this.handleCanvasClick(e);
-        });
     }
 }

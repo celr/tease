@@ -6,9 +6,18 @@
 // owner: carlos
 
 class Toolbar extends Eventable {
-    tools: Tool[];
-    currentTool: Tool;
-    toolMap: Object; // id => tool mapping
+    public currentTool: Tool;
+    private tools: Tool[];
+    private toolMap: Object; // id => tool mapping
+
+    constructor (private DOMElement: HTMLElement) {
+        super();
+        this.tools = new Tool[];
+        this.toolMap = new Object();
+        this.loadTools();
+        this.renderTools();
+        this.selectTool(this.tools[0]); // Automatically select the first tool
+    }
 
     // Loads the available tools into the tools array
     private loadTools() {
@@ -56,14 +65,5 @@ class Toolbar extends Eventable {
                 this.DOMElement.appendChild(document.createElement('br')); // Add newline every two tools
             }
         }
-    }
-
-    constructor (private DOMElement: HTMLElement) {
-        super();
-        this.tools = new Tool[];
-        this.toolMap = new Object();
-        this.loadTools();
-        this.renderTools();
-        this.selectTool(this.tools[0]); // Automatically select the first tool
     }
 }

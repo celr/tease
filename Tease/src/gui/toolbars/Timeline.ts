@@ -19,6 +19,35 @@ class Timeline extends Eventable {
     private selectedLayerIndex: number;
     private selectedFrameIndex: number;
 
+    constructor(private element: HTMLElement, private environment: any, private timelineSettings: any) {
+        super();
+
+        // Get different containers within the timeline DOM Element
+        this.layerListGUI = $(this.element).find('#timeline-layerlist');
+        this.frameListGUI = $(this.element).find('#timeline-framelist');
+        this.framePropertiesGUI = $(this.element).find('#frame-properties');
+        this.frameContainerGUI = this.frameListGUI.find('#timeline-frames');
+        this.frameOptionsGUI = $(this.element).find('#frame-options');
+
+        // Set general information
+        this.framePropertiesGUI.find('#framerate-value').text(timelineSettings.framerate);
+        this.framePropertiesGUI.find('#totaltime-value').text(timelineSettings.defaultLength);
+
+        // Add event listeners for adding / removing layers
+        $(this.element).find('#newlayer-btn').click((e: Event) => {
+            this.addNewLayer();
+        });
+
+        $(this.element).find('#trashlayer-btn').click((e: Event) => {
+            this.trashLayer();
+        });
+
+        this.drawTimeline();
+
+        // Select first frame
+        this.selectFrame(this.frameContainerGUI.find('div .timeline-frame').first());
+    }
+
     private drawTimelineRulerNumbers(e: JQuery) {
         // TODO: fix number margin according to number of digits.
 
@@ -106,7 +135,7 @@ class Timeline extends Eventable {
     private updateFrame() {
         this.fireEvent('frameupdate', this.selectedFrameIndex + 1);
     }
-    
+
     private insertKeyframe() {
         this.selectedFrameGUI.addClass('timeline-frame-keyframe');
 
@@ -213,34 +242,5 @@ class Timeline extends Eventable {
 
             this.environment.layers.splice(layerIndex - 1, 1);
         }
-    }
-
-    constructor(private element: HTMLElement, private environment: any, private timelineSettings: any) {
-        super();
-
-        // Get different containers within the timeline DOM Element
-        this.layerListGUI = $(this.element).find('#timeline-layerlist');
-        this.frameListGUI = $(this.element).find('#timeline-framelist');
-        this.framePropertiesGUI = $(this.element).find('#frame-properties');
-        this.frameContainerGUI = this.frameListGUI.find('#timeline-frames');
-        this.frameOptionsGUI = $(this.element).find('#frame-options');
-
-        // Set general information
-        this.framePropertiesGUI.find('#framerate-value').text(timelineSettings.framerate);
-        this.framePropertiesGUI.find('#totaltime-value').text(timelineSettings.defaultLength);
-
-        // Add event listeners for adding / removing layers
-        $(this.element).find('#newlayer-btn').click((e: Event) => {
-            this.addNewLayer();
-        });
-
-        $(this.element).find('#trashlayer-btn').click((e: Event) => {
-            this.trashLayer();
-        });
-
-        this.drawTimeline();
-
-        // Select first frame
-        this.selectFrame(this.frameContainerGUI.find('div .timeline-frame').first());
     }
 }

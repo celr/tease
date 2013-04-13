@@ -1,56 +1,39 @@
 ///<reference path="Element.ts" />
+///<reference path="Frame.ts" />
 
-class Frame {
-    constructor(public position: number) {
-    }
-}
-
-class Keyframe extends Frame {
-    public elements: Tease.Element[];
-
-    constructor(public position: number) {
-        super(position);
-        this.elements = [];
-    }
-
-    public copyElements(copyElements: Tease.Element[]) {
-        for (var i = 0; i < copyElements.length; i++) {
-            this.elements.push(copyElements[i].getCopy());
-        }
-    }
-
-    public createTransitionsForElements(transitionElements: Tease.Element[]) {
-        for (var i = 0; i < transitionElements.length; i++) {
-            this.elements.push(transitionElements[i].createTransition(transitionElements[i]));
-        }
-    }
-}
-
+// Represents a layer. Contains frames
 class Layer {
     public frames: Frame[];
 
+    constructor(public title: string, public visible: bool, public editable: bool, public index: number) {
+        // Insert an empty keyframe
+        this.frames = [new Keyframe(1)];
+    }
+
+    // Inserts a frame to the layer
     public insertFrame(frame: Frame) {
         var i;
         for (i = 0; i < this.frames.length && this.frames[i].position <= frame.position; i++);
         this.frames.splice(i, 0, frame);
     }
 
+    // Inserts an element in the specified timeline position
     public insertElementInPosition(position: number, element: Tease.Element) {
         var keyframe = this.findKeyframeForPosition(position);
-        keyframe.elements.push(element);
+        keyframe.addElement(element);
     }
 
-    // Finds the keyframe object corresponding to a position (GUI index) in the timeline
+    // Returns the keyframe object corresponding to a timeline position.
     // If no exact match is found it returns the previous keyframe
     public findKeyframeForPosition(position: number) {
         var low = 0;
-        var high = this.frames.length;
+        var high = this.frames.length - 1;
         var mid;
         var found = false;
         var result;
 
         // Binary search
-        while (!found && high > low) {
+        while (!found && high >= low) {
             mid = Math.floor((high + low) / 2);
             if (position < this.frames[mid].position) {
                 high = mid - 1;
@@ -72,28 +55,5 @@ class Layer {
         }
 
         return result;
-    }
-
-    constructor(public title: string, public visible: bool, public editable: bool, public index: number) {
-        // Insert an empty keyframe
-        this.frames = [new Keyframe(1)];
-    }
-}
-
-class Environment {
-    public layers: Layer[];
-
-    // Returns an array containing the elements on all visible layers in a specified position in time
-    public getVisibleElements(position: number) {
-        var elements = [];
-
-        for (var i = 0; i < this.layers.length; i++) {
-            if (this.layers[i].visible) {
-                var visibleKeyframe = this.layers[i].findKeyframeForPosition(position);
-                elements = elements.concat(visibleKeyframe.elements);
-            }
-        }
-
-        return elements;
     }
 }

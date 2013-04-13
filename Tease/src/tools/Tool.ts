@@ -2,12 +2,35 @@
 
 class Property {
     range: Object;
-
-    constructor(public id: string, public displayName: string) { }
+    constructor (public id: string, public displayName: string) { }
 }
 
 class Attribute {
-    constructor(public property: Property, public value: string) { }
+    constructor (public property: Property, public value: string) { }
+}
+
+class AttributeList {
+    public attributes: Object;
+
+    constructor() {
+        this.attributes = {};
+    }
+
+    setAttribute(attribute: Attribute) {
+        this.attributes[attribute.property.id] = attribute;
+    }
+    
+    getAttribute(property: Property) {
+        return this.getAttributeByPropertyId(property.id);
+    }
+
+    getAttributeByPropertyId(propertyId: string) {
+        var res = null;
+        if (this.attributes[propertyId]) {
+            res = this.attributes[propertyId];
+        }
+        return res;
+    }
 }
 
 interface Tool {
@@ -15,12 +38,12 @@ interface Tool {
     displayImagePath: string; // Image to be shown on the toolbar
     id: string; // Unique id for this tool
     properties: Property[]; // Supported properties
-    defaultAttributes: Attribute[];
+    defaultAttributes: AttributeList;
     defaultDOMElement: HTMLElement; // Vanilla DOM element to be inserted by Tool, WITHOUT any default attributes
     toolbarDOMElement: HTMLElement; // DOM Element for the tool button in the toolbar
     sizingToolAttributes: Attribute[];
 
-    setAttributesInDOMElement(attributes: Attribute[], DOMElement: HTMLElement): void;
+    setAttributesInDOMElement(attributes: AttributeList, DOMElement: HTMLElement): void;
     getAttributesFromDOMElement(DOMElement: HTMLElement): Attribute[];
 }
 
@@ -28,7 +51,7 @@ class ImageTool implements Tool {
     displayName: string;
     displayImagePath: string;
     properties: Property[];
-    defaultAttributes: Attribute[];
+    defaultAttributes: AttributeList;
     defaultDOMElement: HTMLImageElement;
     toolbarDOMElement: HTMLElement;
     sizingToolAttributes: Attribute[];
@@ -63,56 +86,34 @@ class ImageTool implements Tool {
         this.properties.push(heightProperty);
 
         this.defaultDOMElement.addEventListener('load', () => {
-            this.defaultAttributes = [
-                new Attribute(widthProperty, this.defaultDOMElement.width.toString()),
-                new Attribute(heightProperty, this.defaultDOMElement.height.toString())
-            ];
+            this.defaultAttributes = new AttributeList;
+            this.defaultAttributes.setAttribute(new Attribute(widthProperty, this.defaultDOMElement.width.toString()));
+            this.defaultAttributes.setAttribute(new Attribute(heightProperty, this.defaultDOMElement.height.toString()));
+
         });
     }
 
-    setAttributesInDOMElement(attributes: Attribute[], DOMElement: HTMLElement) {
+    setAttributesInDOMElement(attributes: AttributeList, DOMElement: HTMLElement) {
         var result = false;
         if (attributes) {
             result = true;
-            for (var i = 0; i < attributes.length; i++) {
-                switch (attributes[i].property.id) {
+            for (var i in attributes.attributes) {
+                var value = attributes.attributes[i].value;
+                switch (attributes.attributes[i].property.id) {
                     case 'width':
-                        DOMElement.style.width = attributes[i].value + 'px';
+                        DOMElement.style.width = value + 'px';
                         break;
                     case 'height':
-                        DOMElement.style.height = attributes[i].value + 'px';
+                        DOMElement.style.height = value + 'px';
                         break;
                     case 'left':
-                        DOMElement.style.left = attributes[i].value + 'px';
+                        DOMElement.style.left = value + 'px';
                         break;
                     case 'top':
-                        DOMElement.style.top = attributes[i].value + 'px';
+                        DOMElement.style.top = value + 'px';
                         break;
-                    //case 'mirrorX':
-                    //    if (attributes[i].value == '') attributes[i].value = '1';
-                    //    var regex = /scale\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/;
-                    //    var style = <string>$(DOMElement).css('transform');
-                    //    var newStyle = "";
-                    //    if (style.length == 0) {
-                    //        newStyle = "scale(" + attributes[i].value + ", 1)";
-                    //    }
-                    //    else {
-                    //        newStyle = style.replace(regex, "scale(" + attributes[i].value + ", $2)");
-                    //    }
-                    //    $(DOMElement).css('transform', newStyle);
-                    //    break;
-                    //case 'mirrorY':
-                    //    if (attributes[i].value == '') attributes[i].value = '1';
-                    //    var regex = /scale\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/;
-                    //    var style = $(DOMElement).css('webkitTransform');
-                    //    if (style.length == 0) {
-                    //        var newStyle = "scale(1, " + attributes[i].value + ")";
-                    //    }
-                    //    var newStyle = style.replace(regex, "scale($1," + attributes[i].value + ", $2)");
-                    //    $(DOMElement).css('webkitTransform', newStyle);
-                    //    break;
                     case 'position':
-                        DOMElement.style.position = attributes[i].value;
+                        DOMElement.style.position = value + 'px';
                         break;
                     default:
                         result = false;
@@ -134,7 +135,7 @@ class AudioTool implements Tool {
     displayName: string;
     displayImagePath: string;
     properties: Property[];
-    defaultAttributes: Attribute[];
+    defaultAttributes: AttributeList;
     defaultDOMElement: HTMLAudioElement;
     toolbarDOMElement: HTMLElement;
     sourceElement: HTMLSourceElement;
@@ -165,18 +166,18 @@ class AudioTool implements Tool {
         this.sizingToolAttributes.push(new Attribute(positionProperty, 'absolute'));
 
         this.properties.push(srcProperty);
-        this.defaultAttributes = [
-            new Attribute(apProperty, 'true'),
-            new Attribute(srcProperty, 'res/audio.mp3')
-        ];
+        this.defaultAttributes = new AttributeList;
+        this.defaultAttributes.setAttribute(new Attribute(apProperty, 'true'));
+        this.defaultAttributes.setAttribute(new Attribute(srcProperty, 'res/audio.mp3'));
     }
 
-    setAttributesInDOMElement(attributes: Attribute[], DOMElement: HTMLAudioElement) {
+    setAttributesInDOMElement(attributes: AttributeList, DOMElement: HTMLAudioElement) {
         var result = false;
         if (attributes) {
             result = true;
-            for (var i = 0; i < attributes.length; i++) {
-                switch (attributes[i].property.id) {
+            for (var i in attributes.attributes) {
+                var value = attributes.attributes[i].value;
+                switch (attributes.attributes[i].property.id) {
                     case 'source':
                         // Remove any previous source tags
                         while (DOMElement.childNodes.length > 0) {
@@ -198,16 +199,16 @@ class AudioTool implements Tool {
                         <any>DOMElement.autoplay = 'autoplay';
                         break;
                     case 'width':
-                        DOMElement.style.width = attributes[i].value + 'px';
+                        DOMElement.style.width = value + 'px';
                         break;
                     case 'left':
-                        DOMElement.style.left = attributes[i].value + 'px';
+                        DOMElement.style.left = value + 'px';
                         break;
                     case 'top':
-                        DOMElement.style.top = attributes[i].value + 'px';
+                        DOMElement.style.top = value + 'px';
                         break;
                     case 'position':
-                        DOMElement.style.position = attributes[i].value;
+                        DOMElement.style.position = value;
                         break;
                     default:
                         result = false;

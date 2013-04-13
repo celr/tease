@@ -18,22 +18,45 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\app.ts" />
     <TypeScriptCompile Include="src\base\Element.ts" />
+    <Content Include="src\base\Element.js">
+      <DependentUpon>Element.ts</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="src\base\Eventable.ts" />
+    <TypeScriptCompile Include="src\base\Environment.ts" />
+    <Content Include="src\base\Environment.js">
+      <DependentUpon>Environment.ts</DependentUpon>
+    </Content>
+    <Content Include="src\base\Eventable.js">
+      <DependentUpon>Eventable.ts</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="src\base\Layer.ts" />
-    <None Include="src\base\Layer.js">
+    <TypeScriptCompile Include="src\base\Frame.ts" />
+    <Content Include="src\base\Frame.js">
+      <DependentUpon>Frame.ts</DependentUpon>
+    </Content>
+    <Content Include="src\base\Layer.js">
       <DependentUpon>Layer.ts</DependentUpon>
-    </None>
+    </Content>
     <TypeScriptCompile Include="src\gui\canvas\Canvas.ts" />
     <Content Include="src\gui\canvas\Canvas.js">
       <DependentUpon>Canvas.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\canvas\SizingTool.ts" />
+    <Content Include="src\gui\canvas\SizingTool.js">
+      <DependentUpon>SizingTool.ts</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="src\gui\toolbars\PropertyEditor.ts" />
+    <Content Include="src\gui\toolbars\PropertyEditor.js">
+      <DependentUpon>PropertyEditor.ts</DependentUpon>
+    </Content>
     <TypeScriptCompile Include="src\gui\toolbars\Timeline.ts" />
     <Content Include="src\gui\toolbars\Timeline.js">
       <DependentUpon>Timeline.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\Toolbar.ts" />
+    <Content Include="src\gui\toolbars\Toolbar.js">
+      <DependentUpon>Toolbar.ts</DependentUpon>
+    </Content>
     <Content Include="src\index.html" />
     <Content Include="src\lib\bootstrap\css\bootstrap.css" />
     <Content Include="src\lib\bootstrap\css\bootstrap.min.css" />

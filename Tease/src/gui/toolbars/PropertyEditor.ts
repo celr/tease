@@ -3,6 +3,20 @@
 ///<reference path="../../base/Element.ts" />
 class PropertyEditor extends Eventable {
     private propertyMap: Object;
+    public currentElement: Tease.Element;
+
+    constructor (private DOMElement: HTMLElement) {
+        super();
+        this.propertyMap = new Object;
+    }
+
+    public renderPropertiesForElement(element: Tease.Element) {
+        this.DOMElement.innerHTML = '';
+        for (var i = 0; i < element.parentTool.properties.length; i++) {
+            var defaultValue = element.attributes.getAttribute(element.parentTool.properties[i]).value;
+            this.renderProperty(element.parentTool.properties[i], defaultValue);
+        }
+    }
 
     private findAttributeForProperty(property: Property, attributes: Attribute[]) {
         var value = null;
@@ -41,18 +55,5 @@ class PropertyEditor extends Eventable {
         }
         newProperty.appendChild(newValue);
         this.DOMElement.appendChild(newProperty);
-    }
-
-    renderPropertiesForElement(element: Tease.Element) {
-        this.DOMElement.innerHTML = '';
-        for (var i = 0; i < element.parentTool.properties.length; i++) {
-            var defaultValue = this.findAttributeForProperty(element.parentTool.properties[i], element.attributes);
-            this.renderProperty(element.parentTool.properties[i], defaultValue);
-        }
-    }
-
-    constructor (private DOMElement: HTMLElement, public currentElement: Tease.Element) {
-        super();
-        this.propertyMap = new Object;
     }
 }
