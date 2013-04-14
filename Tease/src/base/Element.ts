@@ -33,10 +33,10 @@ module Tease {
             if (this.parentTool) {
                 var sizingToolAttributes = this.parentTool.sizingToolAttributes;
 
-                for (var k = 0; k < sizingToolAttributes.length; k++) {
-                    var tempAttr = this.attributes.getAttribute(sizingToolAttributes[k].property); //auxiliar variable
+                for (var k in sizingToolAttributes.attributes) {
+                    var tempAttr = this.attributes.getAttribute(sizingToolAttributes.attributes[k].property); //auxiliar variable
                     if (tempAttr == null) {
-                        this.attributes.setAttribute(new Attribute(sizingToolAttributes[k].property, sizingToolAttributes[k].value));
+                        this.attributes.setAttribute(new Attribute(sizingToolAttributes.attributes[k].property, sizingToolAttributes.attributes[k].value));
                     }
                 }
 

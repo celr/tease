@@ -41,7 +41,7 @@ interface Tool {
     defaultAttributes: AttributeList;
     defaultDOMElement: HTMLElement; // Vanilla DOM element to be inserted by Tool, WITHOUT any default attributes
     toolbarDOMElement: HTMLElement; // DOM Element for the tool button in the toolbar
-    sizingToolAttributes: Attribute[];
+    sizingToolAttributes: AttributeList;
 
     setAttributesInDOMElement(attributes: AttributeList, DOMElement: HTMLElement): void;
     getAttributesFromDOMElement(DOMElement: HTMLElement): Attribute[];
@@ -54,7 +54,7 @@ class ImageTool implements Tool {
     defaultAttributes: AttributeList;
     defaultDOMElement: HTMLImageElement;
     toolbarDOMElement: HTMLElement;
-    sizingToolAttributes: Attribute[];
+    sizingToolAttributes: AttributeList;
 
     constructor(public id: string, defaultImage: string) {
         this.displayName = 'Image';
@@ -63,7 +63,7 @@ class ImageTool implements Tool {
         this.defaultDOMElement.src = defaultImage;
         this.id = id;
         this.properties = new Property[];
-        this.sizingToolAttributes = new Attribute[]; //properties that indicate how sizing tool manipulates this tool
+        this.sizingToolAttributes = new AttributeList; //properties that indicate how sizing tool manipulates this tool
 
         var widthProperty = new Property('width', 'ancho');
         var heightProperty = new Property('height', 'largo');
@@ -74,13 +74,13 @@ class ImageTool implements Tool {
         var positionProperty = new Property('position', 'Posicion');
 
         //adding sizing tool properties
-        this.sizingToolAttributes.push(new Attribute(widthProperty, this.defaultDOMElement.width.toString()));
-        this.sizingToolAttributes.push(new Attribute(heightProperty, this.defaultDOMElement.height.toString()));
-        this.sizingToolAttributes.push(new Attribute(mirrorXProperty, '1'));
-        this.sizingToolAttributes.push(new Attribute(mirrorYProperty, '1'));
-        this.sizingToolAttributes.push(new Attribute(topProperty, ''));
-        this.sizingToolAttributes.push(new Attribute(leftProperty, ''));
-        this.sizingToolAttributes.push(new Attribute(positionProperty, 'absolute'));
+        this.sizingToolAttributes.setAttribute(new Attribute(widthProperty, this.defaultDOMElement.width.toString()));
+        this.sizingToolAttributes.setAttribute(new Attribute(heightProperty, this.defaultDOMElement.height.toString()));
+        this.sizingToolAttributes.setAttribute(new Attribute(mirrorXProperty, '1'));
+        this.sizingToolAttributes.setAttribute(new Attribute(mirrorYProperty, '1'));
+        this.sizingToolAttributes.setAttribute(new Attribute(topProperty, ''));
+        this.sizingToolAttributes.setAttribute(new Attribute(leftProperty, ''));
+        this.sizingToolAttributes.setAttribute(new Attribute(positionProperty, 'absolute'));
 
         this.properties.push(widthProperty);
         this.properties.push(heightProperty);
@@ -113,7 +113,7 @@ class ImageTool implements Tool {
                         DOMElement.style.top = value + 'px';
                         break;
                     case 'position':
-                        DOMElement.style.position = value + 'px';
+                        DOMElement.style.position = value;
                         break;
                     default:
                         result = false;
@@ -139,7 +139,7 @@ class AudioTool implements Tool {
     defaultDOMElement: HTMLAudioElement;
     toolbarDOMElement: HTMLElement;
     sourceElement: HTMLSourceElement;
-    sizingToolAttributes: Attribute[];
+    sizingToolAttributes: AttributeList;
 
     constructor(public id: string) {
         this.displayName = 'Audio';
@@ -148,7 +148,7 @@ class AudioTool implements Tool {
         this.defaultDOMElement.controls = true;
         this.id = id;
         this.properties = new Property[];
-        this.sizingToolAttributes = new Attribute[];
+        this.sizingToolAttributes = new AttributeList;
         var srcProperty = new Property('source', 'archivo');
         var apProperty = new Property('autoplay', 'autoplay');
 
@@ -160,10 +160,10 @@ class AudioTool implements Tool {
 
 
         //adding sizing tool properties
-        this.sizingToolAttributes.push(new Attribute(widthProperty, '300'));
-        this.sizingToolAttributes.push(new Attribute(topProperty, ''));
-        this.sizingToolAttributes.push(new Attribute(leftProperty, ''));
-        this.sizingToolAttributes.push(new Attribute(positionProperty, 'absolute'));
+        this.sizingToolAttributes.setAttribute(new Attribute(widthProperty, '300'));
+        this.sizingToolAttributes.setAttribute(new Attribute(topProperty, ''));
+        this.sizingToolAttributes.setAttribute(new Attribute(leftProperty, ''));
+        this.sizingToolAttributes.setAttribute(new Attribute(positionProperty, 'absolute'));
 
         this.properties.push(srcProperty);
         this.defaultAttributes = new AttributeList;

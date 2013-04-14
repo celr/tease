@@ -29,28 +29,14 @@ class SizingTool {
         dotImg.src = 'res/Dot.png';
 
         this.dotSize = dotImg.width;
-        //upper-left dot
+        //upper-left, upper-right, bottom-left, bottom-right, upper, bottom, left , right dots
         this.ulDot = this.createDot(dotImg.src);
-
-        //upper-right dot
         this.urDot = this.createDot(dotImg.src);
-
-        //bottom-left dot
         this.blDot = this.createDot(dotImg.src);
-
-        //bottom-right dot
         this.brDot = this.createDot(dotImg.src);
-
-        //upper dot
         this.uDot = this.createDot(dotImg.src);
-
-        //bottom dot
         this.bDot = this.createDot(dotImg.src);
-
-        //left dot
         this.lDot = this.createDot(dotImg.src);
-
-        //right dot
         this.rDot = this.createDot(dotImg.src);
 
         this.canvas = document.getElementById('canvas');
@@ -74,7 +60,6 @@ class SizingTool {
     }
 
     render(target: Tease.Element) {
-        //this.erase();
         this.target = target;
         this.visible = true;
 
