@@ -3,31 +3,35 @@
 
 // Represents a layer. Contains frames
 class Layer {
-    public frames: Frame[];
+    public keyframes: Keyframe[];
 
     constructor(public title: string, public visible: bool, public editable: bool, public index: number) {
         // Insert an empty keyframe
-        this.frames = [new Keyframe(1)];
+        this.keyframes = [new Keyframe(1)];
     }
 
     // Inserts a frame to the layer
-    public insertFrame(frame: Frame) {
+    public insertKeyframe(keyframe: Keyframe) {
         var i;
-        for (i = 0; i < this.frames.length && this.frames[i].position <= frame.position; i++);
-        this.frames.splice(i, 0, frame);
+        for (i = 0; i < this.keyframes.length && this.keyframes[i].position <= keyframe.position; i++);
+        this.keyframes.splice(i, 0, keyframe);
     }
 
     // Inserts an element in the specified timeline position
     public insertElementInPosition(position: number, element: Tease.Element) {
-        var keyframe = this.findKeyframeForPosition(position);
+        var keyframe = <Keyframe> this.findKeyframeForPosition(position);
         keyframe.addElement(element);
     }
 
     // Returns the keyframe object corresponding to a timeline position.
     // If no exact match is found it returns the previous keyframe
     public findKeyframeForPosition(position: number) {
+        return this.keyframes[this.findFrameIndexForPosition(position)];
+    }
+
+    public findFrameIndexForPosition(position: number) {
         var low = 0;
-        var high = this.frames.length - 1;
+        var high = this.keyframes.length - 1;
         var mid;
         var found = false;
         var result;
@@ -35,22 +39,22 @@ class Layer {
         // Binary search
         while (!found && high >= low) {
             mid = Math.floor((high + low) / 2);
-            if (position < this.frames[mid].position) {
+            if (position < this.keyframes[mid].position) {
                 high = mid - 1;
-            } else if (position > this.frames[mid].position) {
+            } else if (position > this.keyframes[mid].position) {
                 low = mid + 1;
             } else {
                 found = true;
-                result = this.frames[mid];
+                result = mid;
             }
         }
 
         // If no exact match is found return the previous keyframe
-        if (!result) {
-            if (position > this.frames[mid].position) {
-                result = this.frames[mid];
+        if (!result && result != 0) {
+            if (position > this.keyframes[mid].position) {
+                result = mid;
             } else {
-                result = this.frames[mid - 1];
+                result = mid - 1;
             }
         }
 

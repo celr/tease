@@ -4,7 +4,7 @@
 
 class Timeline extends Eventable {
     public selectedLayer: Layer;
-    public selectedKeyframe: Keyframe;
+    public selectedFrame: Keyframe;
 
     // DOM Elements for GUI
     private frameListGUI: JQuery;
@@ -40,6 +40,11 @@ class Timeline extends Eventable {
 
         $(this.element).find('#trashlayer-btn').click((e: Event) => {
             this.trashLayer();
+        });
+
+        // Add event listener for play button
+        $(this.element).find('#play-button').click((e: Event) => {
+            this.fireEvent('playbuttonclick', e);
         });
 
         this.drawTimeline();
@@ -127,7 +132,7 @@ class Timeline extends Eventable {
         frame.addClass('timeline-frame-selected');
         this.selectedFrameGUI = frame;
         this.selectedFrameIndex = frame.index();
-        this.selectedKeyframe = this.selectedLayer.findKeyframeForPosition(this.selectedFrameIndex + 1);
+        this.selectedFrame = this.selectedLayer.findKeyframeForPosition(this.selectedFrameIndex + 1);
         this.fireEvent('frameselect', this.selectedFrameIndex + 1);
         this.updateFrame();
     }
@@ -140,7 +145,7 @@ class Timeline extends Eventable {
         this.selectedFrameGUI.addClass('timeline-frame-keyframe');
 
         var keyframe = new Keyframe(this.selectedFrameIndex + 1);
-        this.environment.layers[this.selectedLayerIndex].insertFrame(keyframe);
+        this.environment.layers[this.selectedLayerIndex].insertKeyframe(keyframe);
         this.selectFrame(this.selectedFrameGUI); // Reselect frame to update dependencies (ie. Canvas)
     }
 
@@ -159,9 +164,9 @@ class Timeline extends Eventable {
     }
 
     private animateToFrame(e: Event) {
-        var previousKeyframe = this.selectedKeyframe;
+        var previousKeyframe = this.selectedFrame;
         this.insertKeyframe();
-        this.selectedKeyframe.createTransitionsForElements(previousKeyframe.elements);
+        this.selectedFrame.createTransitionsForElements(previousKeyframe.elements);
         this.selectFrame(this.selectedFrameGUI);
     }
 
@@ -187,7 +192,7 @@ class Timeline extends Eventable {
             }
 
             // Check if current frame is keyframe
-            if (k < layer.frames.length && layer.frames[k].position == i + 1) {
+            if (k < layer.keyframes.length && layer.keyframes[k].position == i + 1) {
                 timelineFrame.addClass('timeline-frame-keyframe');
                 k++;
             }

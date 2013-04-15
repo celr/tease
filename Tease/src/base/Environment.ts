@@ -1,3 +1,4 @@
+///<reference path="../lib/jquery.d.ts" />
 ///<reference path="Layer.ts" />
 
 // Represents the global environment. Contains layers.

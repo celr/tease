@@ -1,37 +1,5 @@
+///<reference path="../base/Attribute.ts" />
 ///<reference path="../lib/jquery.d.ts" />
-
-class Property {
-    range: Object;
-    constructor (public id: string, public displayName: string) { }
-}
-
-class Attribute {
-    constructor (public property: Property, public value: string) { }
-}
-
-class AttributeList {
-    public attributes: Object;
-
-    constructor() {
-        this.attributes = {};
-    }
-
-    setAttribute(attribute: Attribute) {
-        this.attributes[attribute.property.id] = attribute;
-    }
-    
-    getAttribute(property: Property) {
-        return this.getAttributeByPropertyId(property.id);
-    }
-
-    getAttributeByPropertyId(propertyId: string) {
-        var res = null;
-        if (this.attributes[propertyId]) {
-            res = this.attributes[propertyId];
-        }
-        return res;
-    }
-}
 
 interface Tool {
     displayName: string;
@@ -65,13 +33,13 @@ class ImageTool implements Tool {
         this.properties = new Property[];
         this.sizingToolAttributes = new AttributeList; //properties that indicate how sizing tool manipulates this tool
 
-        var widthProperty = new Property('width', 'ancho');
-        var heightProperty = new Property('height', 'largo');
-        var topProperty = new Property('top', 'top');
-        var leftProperty = new Property('left', 'left');
+        var widthProperty = new Property('width', 'ancho', 'width');
+        var heightProperty = new Property('height', 'largo', 'height');
+        var topProperty = new Property('top', 'top', 'top');
+        var leftProperty = new Property('left', 'left', 'left');
         var mirrorXProperty = new Property('mirrorX', 'mirrorX');
         var mirrorYProperty = new Property('mirrorY', 'mirrorY');
-        var positionProperty = new Property('position', 'Posicion');
+        var positionProperty = new Property('position', 'Posicion', 'position');
 
         //adding sizing tool properties
         this.sizingToolAttributes.setAttribute(new Attribute(widthProperty, this.defaultDOMElement.width.toString()));

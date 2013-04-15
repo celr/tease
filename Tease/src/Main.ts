@@ -4,6 +4,7 @@
 ///<reference path="gui/toolbars/Timeline.ts" />
 ///<reference path="base/Layer.ts" />
 ///<reference path="base/Environment.ts" />
+///<reference path="base/AnimationRenderer.ts" />
 
 // Manages system wide events and global environment
 class MainController {
@@ -12,6 +13,7 @@ class MainController {
     private canvas: Canvas;
     private propertyEditor: PropertyEditor;
     private timeline: Timeline;
+    private animationSettings: AnimationSettings;
 
     private currentLayerIndex;
 
@@ -37,6 +39,10 @@ class MainController {
             this.handleLayerSelect(e);
         }, true);
 
+        this.timeline.addEventListener('playbuttonclick', (e: CustomEvent) => {
+            this.handlePlayButtonClick(e);
+        }, true);
+
         this.canvas.addEventListener('canvasselect', (e: CustomEvent) => {
             this.handleCanvasSelect(e);
         }, true);
@@ -48,6 +54,21 @@ class MainController {
         this.toolbar.addEventListener('toolselect', (e: CustomEvent) => {
             this.handleToolSelect(e);
         }, true);
+
+        // Initialize animation settings
+        this.animationSettings = new AnimationSettings(1, 24); // TODO: Set fps from GUI
+    }
+
+    // Event handler for play button click
+    private handlePlayButtonClick(e: CustomEvent) {
+        var animationRenderer = new AnimationRenderer();
+        var renderedEnv = animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
+        this.canvas.clear();
+        this.canvas.blockInput();
+        this.canvas.insertRenderedElements(renderedEnv.renderedElements);
+        renderedEnv.play(() => {
+            this.canvas.unblockInput();
+        });
     }
 
     // Event handler for frameselect timeline event
@@ -55,9 +76,12 @@ class MainController {
         var elements = this.environment.getVisibleElements(<number> e.detail);
         this.canvas.clear();
         this.canvas.insertElements(elements);
+
         if (elements.length > 0) {
             this.canvas.selectElement(elements[0]);
         }
+
+        this.animationSettings.initialPosition = <number> e.detail;
     }
 
     // Event handler for layerselect timeline event
@@ -74,7 +98,7 @@ class MainController {
     // Event handler for canvasinsert canvas event
     private handleCanvasInsert(e: CustomEvent) {
         // Add element to the environment
-        this.timeline.selectedKeyframe.addElement(<Tease.Element> e.detail);
+        this.timeline.selectedFrame.addElement(<Tease.Element> e.detail);
     }
 
     // Event handler for toolselect toolbar event

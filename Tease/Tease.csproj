@@ -18,6 +18,14 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\app.ts" />
     <TypeScriptCompile Include="src\base\Element.ts" />
+    <TypeScriptCompile Include="src\base\AnimationRenderer.ts" />
+    <Content Include="src\base\AnimationRenderer.js">
+      <DependentUpon>AnimationRenderer.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\base\Attribute.ts" />
+    <Content Include="src\base\Attribute.js">
+      <DependentUpon>Attribute.ts</DependentUpon>
+    </Content>
     <Content Include="src\base\Element.js">
       <DependentUpon>Element.ts</DependentUpon>
     </Content>
@@ -76,7 +84,10 @@
     <Content Include="src\res\Dot.png" />
     <Content Include="src\res\imageTool.png" />
     <Content Include="src\res\jair.png" />
+    <Content Include="src\res\keyframe-selected.png" />
+    <Content Include="src\res\keyframe.png" />
     <Content Include="src\res\new-layer.jpg" />
+    <Content Include="src\res\play-icon.png" />
     <Content Include="src\res\ruler-line.png" />
     <Content Include="src\res\trash.gif" />
     <Content Include="src\res\zoom.png" />
