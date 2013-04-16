@@ -25,10 +25,10 @@ class MainController {
         this.currentLayerIndex = 0;
 
         // Initialize GUI components
-        this.toolbar = new Toolbar(document.getElementById('toolbar'));
-        this.canvas = new Canvas(document.getElementById('canvas'), this.toolbar.currentTool, this.environment);
-        this.propertyEditor = new PropertyEditor(document.getElementById('propertyeditor'));
-        this.timeline = new Timeline(document.getElementById('timeline'), this.environment, { framerate: 12, defaultLength: 30 }); // TODO: Replace settings with real objects
+        this.toolbar = new Toolbar($('#toolbar'));
+        this.canvas = new Canvas($('#canvas'), this.toolbar.currentTool, this.environment);
+        this.propertyEditor = new PropertyEditor($('#propertyeditor'));
+        this.timeline = new Timeline($('#timeline'), this.environment, { framerate: 12, defaultLength: 30 }); // TODO: Replace settings with real objects
 
         // Add event handlers
         this.timeline.addEventListener('frameselect', (e: CustomEvent) => {

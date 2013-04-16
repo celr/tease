@@ -1,4 +1,5 @@
 ///<reference path="../toolbars/Toolbar.ts" />
+///<reference path="../../base/AnimationRenderer.ts" />
 ///<reference path="../../base/Layer.ts" />
 ///<reference path="../../base/Environment.ts" />
 ///<reference path="../../base/Element.ts" />
@@ -13,13 +14,13 @@ class Canvas extends Eventable {
     private sizingTool: SizingTool;
     private allowInput: bool;
 
-    constructor(private DOMElement: HTMLElement, public currentTool: Tool, private environment: Environment) {
+    constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment) {
         super();
         this.allowInput = true;
         this.sizingTool = new SizingTool();
-        this.DOMElement.style.position = 'relative';
+        this.DOMElement.css('position', 'relative');
         this.currentElements = [];
-        this.DOMElement.addEventListener('click', (e: Event) => {
+        this.DOMElement.click((e: Event) => {
             this.handleCanvasClick(e);
         });
     }
@@ -33,7 +34,7 @@ class Canvas extends Eventable {
     }
 
     public clear() {
-        this.DOMElement.innerText = '';
+        this.DOMElement.text('');
     }
 
     public insertRenderedElements(elements: RenderedElement[]) {
@@ -50,22 +51,22 @@ class Canvas extends Eventable {
 
     // Inserts an element into the canvas
     public insertElement(element: Tease.Element) {
-        element.DOMElement.addEventListener('click', (e: Event) => {
+        element.DOMElement.click((e: Event) => {
             e.stopPropagation();
             e.preventDefault();
             e.cancelBubble = true;
             this.handleElementSelect(e, element);
-        }, false);
+        });
 
-        element.DOMElement.addEventListener('mousedown', (e: MouseEvent) => {
+        element.DOMElement.bind('mousedown', (e: MouseEvent) => {
             e.stopPropagation();
             e.preventDefault();
             e.cancelBubble = true;
             this.handleElementMove(e, element);
-        }, false);
+        });
 
-        element.DOMElement.id = this.currentElements.length.toString();
-        this.DOMElement.appendChild(element.DOMElement);
+        element.DOMElement.attr('id', this.currentElements.length.toString());
+        this.DOMElement.append(element.DOMElement);
         this.currentElements.push(element);
         this.sizingTool.render(element);
     }
@@ -84,12 +85,14 @@ class Canvas extends Eventable {
             var leftAttr = new Attribute(new Property('left', 'left'), '0px'); //auxiliar variable
             element.setAttribute(posAttr);
 
-            topAttr.value = (e.clientY - this.DOMElement.offsetTop).toString();
+            var offset = this.DOMElement.offset();
+
+            topAttr.value = (e.clientY - offset.top).toString();
             element.setAttribute(topAttr);
 
             console.log(element);
 
-            leftAttr.value = (e.clientX - this.DOMElement.offsetLeft).toString();
+            leftAttr.value = (e.clientX - offset.left).toString();
             element.setAttribute(leftAttr);
 
             console.log(element);
@@ -125,12 +128,12 @@ class Canvas extends Eventable {
             }
 
             function handleUp(e: MouseEvent) {
-                that.DOMElement.removeEventListener('mousemove', handleMove, true);
-                that.DOMElement.removeEventListener('mouseup', handleUp, true);
+                that.DOMElement.unbind('mousemove');
+                that.DOMElement.unbind('mouseup');
             }
 
-            this.DOMElement.addEventListener('mousemove', handleMove, true);
-            this.DOMElement.addEventListener('mouseup', handleUp, true);
+            this.DOMElement.bind('mousemove', handleMove);
+            this.DOMElement.bind('mouseup', handleUp);
         }
     }
 

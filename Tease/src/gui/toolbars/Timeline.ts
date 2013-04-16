@@ -19,31 +19,31 @@ class Timeline extends Eventable {
     private selectedLayerIndex: number;
     private selectedFrameIndex: number;
 
-    constructor(private element: HTMLElement, private environment: any, private timelineSettings: any) {
+    constructor(private element: JQuery, private environment: any, private timelineSettings: any) {
         super();
 
         // Get different containers within the timeline DOM Element
-        this.layerListGUI = $(this.element).find('#timeline-layerlist');
-        this.frameListGUI = $(this.element).find('#timeline-framelist');
-        this.framePropertiesGUI = $(this.element).find('#frame-properties');
+        this.layerListGUI = this.element.find('#timeline-layerlist');
+        this.frameListGUI = this.element.find('#timeline-framelist');
+        this.framePropertiesGUI = this.element.find('#frame-properties');
         this.frameContainerGUI = this.frameListGUI.find('#timeline-frames');
-        this.frameOptionsGUI = $(this.element).find('#frame-options');
+        this.frameOptionsGUI = this.element.find('#frame-options');
 
         // Set general information
         this.framePropertiesGUI.find('#framerate-value').text(timelineSettings.framerate);
         this.framePropertiesGUI.find('#totaltime-value').text(timelineSettings.defaultLength);
 
         // Add event listeners for adding / removing layers
-        $(this.element).find('#newlayer-btn').click((e: Event) => {
+        this.element.find('#newlayer-btn').click((e: Event) => {
             this.addNewLayer();
         });
 
-        $(this.element).find('#trashlayer-btn').click((e: Event) => {
+        this.element.find('#trashlayer-btn').click((e: Event) => {
             this.trashLayer();
         });
 
         // Add event listener for play button
-        $(this.element).find('#play-button').click((e: Event) => {
+        this.element.find('#play-button').click((e: Event) => {
             this.fireEvent('playbuttonclick', e);
         });
 

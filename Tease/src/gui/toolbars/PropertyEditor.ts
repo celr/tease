@@ -5,13 +5,13 @@ class PropertyEditor extends Eventable {
     private propertyMap: Object;
     public currentElement: Tease.Element;
 
-    constructor (private DOMElement: HTMLElement) {
+    constructor (private DOMElement: JQuery) {
         super();
         this.propertyMap = new Object;
     }
 
     public renderPropertiesForElement(element: Tease.Element) {
-        this.DOMElement.innerHTML = '';
+        this.DOMElement.text('');
         for (var i = 0; i < element.parentTool.properties.length; i++) {
             var defaultValue = element.attributes.getAttribute(element.parentTool.properties[i]).value;
             this.renderProperty(element.parentTool.properties[i], defaultValue);
@@ -34,26 +34,24 @@ class PropertyEditor extends Eventable {
     }
 
     private handlePropertyBlur(e: Event) {
-        var value = (<HTMLInputElement>e.currentTarget).value;
-        var attribute = new Attribute(this.propertyMap[(<HTMLInputElement>e.currentTarget).id], value);
+        var value = $(e.currentTarget).val();
+        var attribute = new Attribute(this.propertyMap[$(e.currentTarget).attr('id')], value);
         this.currentElement.setAttribute(attribute);
     }
 
     private renderProperty(property: Property, defaultValue: string) {
-        var newProperty = document.createElement('div');
-        newProperty.innerText = property.displayName;
-        var newValue = <HTMLInputElement> document.createElement('input');
-        newValue.id = property.id;
+        var newProperty = $('<div>' + property.displayName + '</div>');
+        var newValue = $('<input id="' + property.id + '"></input>');
         this.propertyMap[property.id] = property;
 
-        newValue.addEventListener('blur', (e: Event) => {
+        newValue.bind('blur', (e: Event) => {
             this.handlePropertyBlur(e);
         });
 
         if (defaultValue) {
-            newValue.value = defaultValue;
+            newValue.val(defaultValue);
         }
-        newProperty.appendChild(newValue);
-        this.DOMElement.appendChild(newProperty);
+        newProperty.append(newValue);
+        this.DOMElement.append(newProperty);
     }
 }
