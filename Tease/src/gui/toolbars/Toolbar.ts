@@ -1,5 +1,6 @@
 ///<reference path="../../tools/ImageTool.ts" />
 ///<reference path="../../tools/AudioTool.ts" />
+///<reference path="../../tools/PointerTool.ts" />
 ///<reference path="../../base/Eventable.ts" />
 
 // Toolbar
@@ -26,6 +27,7 @@ class Toolbar extends Eventable {
         this.tools.push(new ImageTool('imagetool2', 'res/chadan.png'));
         this.tools.push(new ImageTool('imagetool3', 'res/carlos.png'));
         this.tools.push(new AudioTool('audiotool'));
+        this.tools.push(new PointerTool('pointertool'));
     }
 
     // Creates and adds the html element for the passed tool

@@ -22,6 +22,7 @@ module Tease {
                 for (var i in defaultAttributes.attributes) {
                     this.attributes.setAttribute(new Attribute(defaultAttributes.attributes[i].property, defaultAttributes.attributes[i].value));
                 }
+                
 
                 this.DOMElement = this.parentTool.defaultDOMElement.clone(true);
                 this.DOMElement.css('z-index', '9999');
@@ -29,23 +30,6 @@ module Tease {
             }
 
             this.elementTransition = new ElementTransition(null, null, []);
-
-            //jair
-            if (this.parentTool) {
-                var sizingToolAttributes = this.parentTool.sizingToolAttributes;
-
-                for (var k in sizingToolAttributes.attributes) {
-                    var tempAttr = this.attributes.getAttribute(sizingToolAttributes.attributes[k].property); //auxiliar variable
-                    if (tempAttr == null) {
-                        this.attributes.setAttribute(new Attribute(sizingToolAttributes.attributes[k].property, sizingToolAttributes.attributes[k].value));
-                    }
-                }
-
-                this.DOMElement = this.parentTool.defaultDOMElement.clone(true);
-                this.DOMElement.css('z-index', '9999');
-                this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
-            }
-            //jair
         }
 
         setAttributes(attributes: AttributeList) {

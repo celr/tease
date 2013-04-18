@@ -664,7 +664,7 @@ class SizingTool {
                 this.canvas.removeChild(this.blDot);
                 this.canvas.removeChild(this.brDot);
             }
-
+            this.visible = false;
 
         }
     }

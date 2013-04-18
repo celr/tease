@@ -17,8 +17,6 @@ class SizableTool implements Tool {
         this.defaultAttributes = new AttributeList;
 
         // Create sizable properties
-        var widthProperty = new Property('width', 'ancho', 'width');
-        var heightProperty = new Property('height', 'largo', 'height');
         var topProperty = new Property('top', 'top', 'top');
         var leftProperty = new Property('left', 'left', 'left');
         var mirrorXProperty = new Property('mirrorX', 'mirrorX');
@@ -26,8 +24,6 @@ class SizableTool implements Tool {
         var positionProperty = new Property('position', 'Posicion', 'position');
 
         // Set sizing tool attributes
-        this.sizingToolAttributes.setAttribute(new Attribute(widthProperty, this.defaultDOMElement.width.toString()));
-        this.sizingToolAttributes.setAttribute(new Attribute(heightProperty, this.defaultDOMElement.height.toString()));
         this.sizingToolAttributes.setAttribute(new Attribute(mirrorXProperty, '1'));
         this.sizingToolAttributes.setAttribute(new Attribute(mirrorYProperty, '1'));
         this.sizingToolAttributes.setAttribute(new Attribute(topProperty, ''));
@@ -35,17 +31,13 @@ class SizableTool implements Tool {
         this.sizingToolAttributes.setAttribute(new Attribute(positionProperty, 'absolute'));
 
         // Add supported properties
-        this.properties.push(widthProperty);
-        this.properties.push(heightProperty);
         this.properties.push(topProperty);
         this.properties.push(leftProperty);
 
         // Set default attributes when DOM element is in the DOM tree
         this.defaultDOMElement.ready((e: Event) => {
-            this.defaultAttributes.setAttribute(new Attribute(widthProperty, this.defaultDOMElement.css('width').toString()));
-            this.defaultAttributes.setAttribute(new Attribute(heightProperty, this.defaultDOMElement.css('height').toString()));
-            this.defaultAttributes.setAttribute(new Attribute(leftProperty, this.defaultDOMElement.css('left').toString()));
-            this.defaultAttributes.setAttribute(new Attribute(topProperty, this.defaultDOMElement.css('top').toString()));
+            this.defaultAttributes.setAttribute(new Attribute(leftProperty, parseInt(this.defaultDOMElement.css('left')).toString()));
+            this.defaultAttributes.setAttribute(new Attribute(topProperty, parseInt(this.defaultDOMElement.css('top')).toString()));
         });
     }
 
