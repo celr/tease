@@ -7,30 +7,43 @@
 ///<reference path="../canvas/SizingTool.ts" />
 ///<reference path="../canvas/SelectionTool.ts" />
 ///<reference path="../canvas/ElementGroup.ts" />
+///<reference path="SelectedElementOptions.ts" />
+
 // Canvas
 // Represents a canvas in the GUI
 // owner: jair
 class Canvas extends Eventable {
-    private currentElements: Tease.Element[]; // Elements currently shown on canvas
+    private currentElements: Object; // Elements currently shown on canvas
     private currentSelection: Tease.Element; // TODO: Multiple selection
     private sizingTool: SizingTool;
     private allowInput: bool;
     private selectionTool: SelectionTool;
     private selectedGroup: ElementGroup;
     private move: bool;
+    private SEOptions: SelectedElementOptions;
+    private nextElementId: number;
 
     constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment) {
         super();
         this.allowInput = true;
-        this.sizingTool = new SizingTool();
         this.selectedGroup = new ElementGroup(null, this.DOMElement);
+        this.SEOptions = new SelectedElementOptions(this.DOMElement);
+        this.sizingTool = new SizingTool(this.SEOptions);
         this.DOMElement.css('position', 'relative');
-        this.currentElements = [];
+        this.currentElements = {};
+        this.nextElementId = 0;
         this.DOMElement.click((e: Event) => {
             this.handleCanvasClick(e);
         });
         this.DOMElement.mousedown((e: JQueryEventObject) => {
             this.handleSelectionTool(e);
+        });
+        this.DOMElement.on('elementDeleted', (e, element:Tease.Element) => {
+            delete this.currentElements[element.DOMElement.attr('id')];
+            element.DOMElement.remove();
+            this.sizingTool.erase();
+            this.SEOptions.erase();
+            this.selectedGroup.clear();
         });
         this.move = false;
     }
@@ -61,6 +74,7 @@ class Canvas extends Eventable {
 
     // Inserts an element into the canvas
     public insertElement(element: Tease.Element) {
+        
         element.DOMElement.click((e: Event) => {
             if (this.currentTool.id == 'pointertool') {
                 e.stopPropagation();
@@ -73,6 +87,7 @@ class Canvas extends Eventable {
             }
         });
 
+
         element.DOMElement.bind('mousedown', (e: MouseEvent) => {
             e.stopPropagation();
             e.preventDefault();
@@ -81,10 +96,19 @@ class Canvas extends Eventable {
                 this.handleElementMove(e, element);
             }
         });
-
-        element.DOMElement.attr('id', this.currentElements.length.toString());
+        //set id and zIndex properties, insert element into canvas and currentElements
+        element.DOMElement.attr('id', this.nextElementId);
+        this.currentElements[this.nextElementId.toString()] = element;
         this.DOMElement.append(element.DOMElement);
-        this.currentElements.push(element);
+        this.setZIndexProperty(element);
+        
+        //update nextId
+        this.nextElementId = this.nextElementId + 1;
+    }
+
+    private setZIndexProperty(element: Tease.Element) {
+        var $elements = element.DOMElement.siblings().not('[canvasTool="sizingTool"], [canvas="selectedGroupTool"], .dropdown');
+        element.DOMElement.css('zIndex', $elements.length);
     }
 
     public selectElement(element: Tease.Element) {
@@ -121,9 +145,9 @@ class Canvas extends Eventable {
         if (this.allowInput) {
             var wasGroupVisible = this.selectedGroup.isVisible();
             this.sizingTool.erase();
+            this.SEOptions.erase();
             this.selectedGroup.eraseDots();
             var that = this;
-            console.log('dine');
             if (!wasGroupVisible || !this.selectedGroup.isInGroup(element.DOMElement.attr('id'))) {
                 this.createGroup(element);
             }
@@ -142,6 +166,7 @@ class Canvas extends Eventable {
                 }
                 else {
                     that.sizingTool.render(element);
+                    that.SEOptions.render(element);
                 }
             }
 
@@ -153,15 +178,17 @@ class Canvas extends Eventable {
     private handleElementSelect(e: Event, element: Tease.Element) {
         if (this.allowInput) {
             var selectedDOME = <HTMLElement> e.target;
-            this.selectElement(this.currentElements[parseInt(selectedDOME.id)]);
+            this.selectElement(this.currentElements[selectedDOME.id]);
             this.sizingTool.render(element);
             this.createGroup(element);
+            this.SEOptions.render(element);
         }
     }
 
     private handleSelectionTool(e) {
         if (this.currentTool.id == 'pointertool') {
             this.sizingTool.erase();
+            this.SEOptions.erase();
             if (this.selectedGroup) {
                 this.selectedGroup.clear();
             }
@@ -173,13 +200,12 @@ class Canvas extends Eventable {
             var that = this;
 
             function handleMove(event) {
-                console.log('done');
-                that.selectionTool.resize(event.clientX-e.clientX, event.clientY-e.clientY);
+                that.selectionTool.resize(event.clientX - e.clientX, event.clientY - e.clientY);
             }
             function handleUp(event) {
                 document.removeEventListener('mouseup', handleUp);
                 that.DOMElement.off('mousemove', handleMove);
-                that.selectedGroup = that.selectionTool.getSelectedElements(that.currentElements, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().left);
+                that.selectedGroup = that.selectionTool.getSelectedElements(that.currentElements, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().top);
                 that.selectionTool.erase();
                 that.selectedGroup.markElements();
             }

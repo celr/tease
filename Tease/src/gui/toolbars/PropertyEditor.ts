@@ -11,8 +11,8 @@ class PropertyEditor extends Eventable {
     }
 
     public renderPropertiesForElement(element: Tease.Element) {
-        this.DOMElement.text('');
-        for (var i = 0; i < element.parentTool.properties.length; i++) {
+        this.DOMElement.text('');   
+        for (var i in element.parentTool.properties) {
             var defaultValue = element.attributes.getAttribute(element.parentTool.properties[i]).value;
             this.renderProperty(element.parentTool.properties[i], defaultValue);
         }

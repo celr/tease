@@ -5,14 +5,8 @@ class ImageTool implements Tool extends SizableTool {
     constructor(public id: string, defaultImagePath: string) {
         super(id, $('<img id="' + id + '" src = "' + defaultImagePath + '"></img>'));
 
-        var widthProperty = new Property('width', 'ancho', 'width');
-        var heightProperty = new Property('height', 'largo', 'height');
-
-        this.sizingToolAttributes.setAttribute(new Attribute(widthProperty, this.defaultDOMElement.width.toString()));
-        this.sizingToolAttributes.setAttribute(new Attribute(heightProperty, this.defaultDOMElement.height.toString()));
-
-        this.defaultAttributes.setAttribute(new Attribute(widthProperty, '50'));
-        this.defaultAttributes.setAttribute(new Attribute(heightProperty, '50'));
+        this.defaultAttributes.setAttribute(new Attribute(this.properties['height'], '50'));
+        this.defaultAttributes.setAttribute(new Attribute(this.properties['width'], '50'));
         this.displayName = 'Image';
         this.displayImagePath = 'res/imageTool.png';
 
@@ -23,7 +17,6 @@ class ImageTool implements Tool extends SizableTool {
 
     public setAttributesInDOMElement(attributes: AttributeList, DOMElement: JQuery) {
         var result = super.setAttributesInDOMElement(attributes, DOMElement);
-
         if (!result && attributes) {
             result = true;
             for (var i in attributes.attributes) {

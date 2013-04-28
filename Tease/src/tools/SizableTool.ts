@@ -4,7 +4,7 @@ class SizableTool implements Tool {
     public displayImagePath: string;
 
     // Attributes and properties
-    public properties: Property[];
+    public properties: {};
     public defaultAttributes: AttributeList;
     public sizingToolAttributes: AttributeList; // Properties that indicate how sizing tool manipulates this tool
 
@@ -12,33 +12,22 @@ class SizableTool implements Tool {
     public toolbarDOMElement: JQuery;
     
     constructor(public id: string, public defaultDOMElement: JQuery) {
-        this.properties = new Property[];
+        this.properties = new Object;
         this.sizingToolAttributes = new AttributeList;
         this.defaultAttributes = new AttributeList;
 
         // Create sizable properties
-        var topProperty = new Property('top', 'top', 'top');
-        var leftProperty = new Property('left', 'left', 'left');
-        var mirrorXProperty = new Property('mirrorX', 'mirrorX');
-        var mirrorYProperty = new Property('mirrorY', 'mirrorY');
-        var positionProperty = new Property('position', 'Posicion', 'position');
-
-        // Set sizing tool attributes
-        this.sizingToolAttributes.setAttribute(new Attribute(mirrorXProperty, '1'));
-        this.sizingToolAttributes.setAttribute(new Attribute(mirrorYProperty, '1'));
-        this.sizingToolAttributes.setAttribute(new Attribute(topProperty, ''));
-        this.sizingToolAttributes.setAttribute(new Attribute(leftProperty, ''));
-        this.sizingToolAttributes.setAttribute(new Attribute(positionProperty, 'absolute'));
-
-        // Add supported properties
-        this.properties.push(topProperty);
-        this.properties.push(leftProperty);
+        this.properties['top'] = new Property('top', 'top', 'top');
+        this.properties['left'] = new Property('left', 'left', 'left');
+        this.properties['position'] = new Property('position', 'Posicion', 'position');
+        this.properties['width'] = new Property('width', 'ancho', 'width');
+        this.properties['height'] = new Property('height', 'largo', 'height');
 
         // Set default attributes when DOM element is in the DOM tree
-        this.defaultDOMElement.ready((e: Event) => {
-            this.defaultAttributes.setAttribute(new Attribute(leftProperty, parseInt(this.defaultDOMElement.css('left')).toString()));
-            this.defaultAttributes.setAttribute(new Attribute(topProperty, parseInt(this.defaultDOMElement.css('top')).toString()));
-        });
+        this.defaultAttributes.setAttribute(new Attribute(this.properties['left'], '0'));
+        this.defaultAttributes.setAttribute(new Attribute(this.properties['top'], '0'));
+        this.defaultAttributes.setAttribute(new Attribute(this.properties['width'], '300'));
+        this.defaultAttributes.setAttribute(new Attribute(this.properties['height'], '300'));
     }
 
     public setAttributesInDOMElement(attributes: AttributeList, DOMElement: JQuery) {

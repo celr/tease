@@ -15,9 +15,6 @@ class SelectionTool {
             'border': '2px dotted black',
             'position': 'absolute'
         });
-
-        console.log(left + " " + top);
-
         canvas.append(this.$rectangle);
         this.initialX = left;
         this.initialY = top;
@@ -34,9 +31,9 @@ class SelectionTool {
         this.$rectangle.remove();
     }
 
-    public getSelectedElements(currentElements: Tease.Element[], finalX: number, finalY: number) {
+    public getSelectedElements(currentElements: Object, finalX: number, finalY: number) {
         var selectedGroup = new ElementGroup(null, this.canvas);
-        for (var i = 0; i < currentElements.length; i++) {
+        for (var i in currentElements) {
             var element = currentElements[i];
             var eleLeft = parseInt(element.getAttribute('left').value);
             var eleTop = parseInt(element.getAttribute('top').value);

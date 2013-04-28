@@ -23,8 +23,8 @@ class SizingTool {
 
     private dotSize: number;
     private visible: bool;
-
-    constructor() {
+    
+    constructor(private SEOptions: SelectedElementOptions) {
         var dotImg = new Image();
         dotImg.src = 'res/Dot.png';
 
@@ -40,13 +40,14 @@ class SizingTool {
         this.rDot = this.createDot(dotImg.src);
 
         this.canvas = document.getElementById('canvas');
-        this.zindex = 1000000;
+        this.zindex = 2000000;
     }
 
     private createDot(src: string) {
         var dot = document.createElement('img');
         dot.setAttribute('src', src);
         dot.style.position = 'absolute';
+        $(dot).attr('canvasTool', 'sizingTool');
         return dot;
     }
 
@@ -116,9 +117,13 @@ class SizingTool {
 
         //upper-left
         this.ulDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
+
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
+
+            
 
             //initial position of dot
             var initialDotX = parseInt(window.getComputedStyle(this.ulDot).left);
@@ -181,6 +186,7 @@ class SizingTool {
 
         //upper-right
         this.urDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -246,6 +252,7 @@ class SizingTool {
 
         //bottom-left
         this.blDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -311,6 +318,7 @@ class SizingTool {
 
         //bottom-right
         this.brDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -375,6 +383,7 @@ class SizingTool {
 
         //bottom
         this.bDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -430,6 +439,7 @@ class SizingTool {
 
         //upper
         this.uDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -488,6 +498,7 @@ class SizingTool {
 
         //left
         this.lDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -545,6 +556,7 @@ class SizingTool {
 
         //right
         this.rDot.addEventListener('mousedown', (e: MouseEvent) => {
+            this.SEOptions.erase();
             //initial position of mouse
             var initialX = e.clientX;
             var initialY = e.clientY;
@@ -632,6 +644,8 @@ class SizingTool {
     private handleUp(handleMove, handleUp, that) {
         that.canvas.removeEventListener('mousemove', handleMove, true);
         that.canvas.removeEventListener('mouseup', handleUp, true);
+
+        that.SEOptions.render(that.target);
 
         that.updateProperties(that);
     }

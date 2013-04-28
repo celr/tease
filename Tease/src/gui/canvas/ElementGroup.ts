@@ -41,13 +41,14 @@ class ElementGroup {
 
     private createDot(top, left) {
         var $img = $('<img></img>');
-        $img.attr('src', 'res/Dot.png');
+        $img.attr({'src': 'res/Dot.png', 'canvasTool' : 'selectedGroupTool'});
         $img.css({
             'top': top + 'px',
             'left': left + 'px',
             'position': 'absolute',
-            'z-index': '10000000'
+            'z-index': '10000000',
         });
+
         return $img;
     }
 
