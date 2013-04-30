@@ -1,6 +1,8 @@
 class Property {
     range: Object;
-    constructor(public id: string, public displayName: string, public reverseProperty?: string = null) { }
+    constructor(public id: string, public displayName: string, public reverseProperty?: string = null) {
+        this.reverseProperty = this.id;
+    }
 }
 
 class Attribute {

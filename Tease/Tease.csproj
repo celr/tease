@@ -93,6 +93,8 @@
     <Content Include="src\res\zoom.png" />
     <Content Include="src\style\app.css" />
     <TypeScriptCompile Include="src\tools\Tool.ts" />
+    <Content Include="src\tools\PointerTool.ts" />
+    <Content Include="src\tools\SizableTool.ts" />
     <Content Include="src\tools\Tool.js">
       <DependentUpon>Tool.ts</DependentUpon>
     </Content>
