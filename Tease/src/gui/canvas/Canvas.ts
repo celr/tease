@@ -39,13 +39,10 @@ class Canvas extends Eventable {
             this.handleSelectionTool(e);
         });
         this.DOMElement.on('elementDeleted', (e, element:Tease.Element) => {
-            delete this.currentElements[element.DOMElement.attr('id')];
-            element.DOMElement.remove();
-            this.sizingTool.erase();
-            this.SEOptions.erase();
-            this.selectedGroup.clear();
+            this.handleElementDeleted(element);
         });
         this.move = false;
+        this.DOMElement.css('overflow', 'auto');
     }
 
     public blockInput() {
@@ -74,7 +71,6 @@ class Canvas extends Eventable {
 
     // Inserts an element into the canvas
     public insertElement(element: Tease.Element) {
-        
         element.DOMElement.click((e: Event) => {
             if (this.currentTool.id == 'pointertool') {
                 e.stopPropagation();
@@ -102,6 +98,9 @@ class Canvas extends Eventable {
         this.DOMElement.append(element.DOMElement);
         this.setZIndexProperty(element);
         
+        //set toolName
+        element.DOMElement.attr('toolName', element.parentTool.id + this.environment.getNextToolNumber(element.parentTool.id));
+
         //update nextId
         this.nextElementId = this.nextElementId + 1;
     }
@@ -114,6 +113,14 @@ class Canvas extends Eventable {
     public selectElement(element: Tease.Element) {
         this.currentSelection = element;
         this.fireEvent('canvasselect', element);
+    }
+
+    private handleElementDeleted(element: Tease.Element) {
+        delete this.currentElements[element.DOMElement.attr('id')];
+        element.DOMElement.remove();
+        this.sizingTool.erase();
+        this.SEOptions.erase();
+        this.selectedGroup.clear();
     }
 
     private handleCanvasClick(e) {
@@ -159,7 +166,7 @@ class Canvas extends Eventable {
 
             function handleUp(e: MouseEvent) {
                 that.DOMElement.unbind('mousemove');
-                that.DOMElement.unbind('mouseup');
+                $(document).unbind('mouseup');
                 that.selectedGroup.updateInitialPositions();
                 if (wasGroupVisible) {
                     that.selectedGroup.markElements();
@@ -168,10 +175,11 @@ class Canvas extends Eventable {
                     that.sizingTool.render(element);
                     that.SEOptions.render(element);
                 }
+                console.log(element.DOMElement.css('top') + ' ' +  element.DOMElement.css('left'));
             }
 
             this.DOMElement.bind('mousemove', handleMove);
-            this.DOMElement.bind('mouseup', handleUp);
+            $(document).bind('mouseup', handleUp);
         }
     }
 

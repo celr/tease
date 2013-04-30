@@ -4,6 +4,17 @@
 // Represents the global environment. Contains layers.
 class Environment {
     public layers: Layer[];
+    private toolCount: Object;
+
+    constructor() {
+        this.toolCount = {
+            imagetool: 0,
+            imagetool2: 0,
+            imagetool3: 0,
+            audiotool: 0
+        };
+
+    }
 
     // Returns list containing the elements on all visible layers in a specified timeline position
     public getVisibleElements(position: number) {
@@ -27,5 +38,18 @@ class Environment {
         }
 
         return elements;
+    }
+
+    public getCurrentToolNumber(id: string) {
+        return this.toolCount[id];
+    }
+
+    public getNextToolNumber(id: string) {
+        this.toolCount[id] = this.toolCount[id] + 1;
+        return this.toolCount[id];
+    }
+
+    public generateNextToolNumber(id: string) {
+        this.toolCount[id] = this.toolCount[id] + 1;
     }
 }
