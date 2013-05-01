@@ -11,38 +11,23 @@ class PropertyEditor extends Eventable {
     }
 
     public renderPropertiesForElement(element: Tease.Element) {
-        this.DOMElement.text('');   
+        this.DOMElement.text('');
+
         for (var i in element.parentTool.properties) {
-            var defaultValue = element.attributes.getAttribute(element.parentTool.properties[i]).value;
+            var defaultValue = element.getAttribute(element.parentTool.properties[i]);
             this.renderProperty(element.parentTool.properties[i], defaultValue);
         }
     }
 
-    private findAttributeForProperty(property: Property, attributes: Attribute[]) {
-        var value = null;
-
-        if (attributes) {
-            for (var i = 0; i < attributes.length; i++) {
-                if (property === attributes[i].property) {
-                    value = attributes[i].value;
-                    break;
-                }
-            }
-        }
-
-        return value;
-    }
-
     private handlePropertyBlur(e: Event) {
         var value = $(e.currentTarget).val();
-        var attribute = new Attribute(this.propertyMap[$(e.currentTarget).attr('id')], value);
-        this.currentElement.setAttribute(attribute);
+        this.currentElement.setAttribute(this.propertyMap[$(e.currentTarget).attr('id')], value);
     }
 
-    private renderProperty(property: Property, defaultValue: string) {
-        var newProperty = $('<div>' + property.displayName + '</div>');
-        var newValue = $('<input id="' + property.id + '"></input>');
-        this.propertyMap[property.id] = property;
+    private renderProperty(property: string, defaultValue: string) {
+        var newProperty = $('<div>' + property + '</div>');
+        var newValue = $('<input id="' + property + '"></input>');
+        this.propertyMap[property] = property;
 
         newValue.bind('blur', (e: Event) => {
             this.handlePropertyBlur(e);
