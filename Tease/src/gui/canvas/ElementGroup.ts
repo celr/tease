@@ -138,4 +138,11 @@ class ElementGroup {
         return true;
     }
 
+    public isEmpty() {
+        if (Object.keys(this.elements).length == 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -94,5 +94,9 @@ module Tease {
             }
             return res;
         }
+
+        public setDOMElement(DOMElement: JQuery) {
+            this.DOMElement = DOMElement;
+        }
     }
 }

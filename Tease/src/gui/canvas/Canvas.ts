@@ -8,6 +8,7 @@
 ///<reference path="../canvas/SelectionTool.ts" />
 ///<reference path="../canvas/ElementGroup.ts" />
 ///<reference path="SelectedElementOptions.ts" />
+///<reference path="../../tools/CanvasTool.ts" />
 
 // Canvas
 // Represents a canvas in the GUI
@@ -22,6 +23,7 @@ class Canvas extends Eventable {
     private move: bool;
     private SEOptions: SelectedElementOptions;
     private nextElementId: number;
+    private canvasElement: Tease.Element;
 
     constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment) {
         super();
@@ -32,6 +34,8 @@ class Canvas extends Eventable {
         this.DOMElement.css('position', 'relative');
         this.currentElements = {};
         this.nextElementId = 0;
+        this.canvasElement = new Tease.Element(new CanvasTool('canvastool'));
+        this.canvasElement.setDOMElement(this.DOMElement);
         this.DOMElement.click((e: Event) => {
             this.handleCanvasClick(e);
         });
@@ -175,7 +179,6 @@ class Canvas extends Eventable {
                     that.sizingTool.render(element);
                     that.SEOptions.render(element);
                 }
-                console.log(element.DOMElement.css('top') + ' ' +  element.DOMElement.css('left'));
             }
 
             this.DOMElement.bind('mousemove', handleMove);
@@ -216,6 +219,9 @@ class Canvas extends Eventable {
                 that.selectedGroup = that.selectionTool.getSelectedElements(that.currentElements, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().top);
                 that.selectionTool.erase();
                 that.selectedGroup.markElements();
+                if (that.selectedGroup.isEmpty()) {
+                    that.selectElement(that.canvasElement);
+                }
             }
             this.DOMElement.on('mousemove', handleMove);
             document.addEventListener('mouseup', handleUp);
