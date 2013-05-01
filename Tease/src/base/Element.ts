@@ -1,29 +1,25 @@
 ///<reference path="Frame.ts" />
 ///<reference path="../tools/Tool.ts" />
 class ElementTransition {
-    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element, public changeListToNext: Attribute[]) {
+    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element, public changeListToNext: {}[]) {
     }
 }
 
 module Tease {
     export class Element {
-        attributes: AttributeList;
+        attributes: {};
         DOMElement: JQuery;
         elementTransition: ElementTransition;
         keyframe: Keyframe;
 
         constructor(public parentTool?: Tool) {
-            this.attributes = new AttributeList;
+            this.attributes = {};
 
             if (this.parentTool) {
                 // Clone default attributes
                 var defaultAttributes = this.parentTool.defaultAttributes;
-
-                for (var i in defaultAttributes.attributes) {
-                    this.attributes.setAttribute(new Attribute(defaultAttributes.attributes[i].property, defaultAttributes.attributes[i].value));
-                }
+                this.attributes = new Object(this.parentTool.defaultAttributes);
                 
-
                 this.DOMElement = this.parentTool.defaultDOMElement.clone(true);
                 this.DOMElement.css('z-index', '9999');
                 this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
@@ -32,19 +28,19 @@ module Tease {
             this.elementTransition = new ElementTransition(null, null, []);
         }
 
-        setAttributes(attributes: AttributeList) {
-            for (var i in attributes.attributes) {
-                this.setAttribute(attributes.attributes[i]);
+        setAttributes(attributes: {}) {
+            for (var i in attributes) {
+                this.attributes[i] = attributes[i];
             }
         }
 
-        setAttribute(attribute: Attribute) {
-            this.attributes.setAttribute(attribute);
+        setAttribute(key: string, value: string) {
+            this.attributes[key] = value;
             this.parentTool.setAttributesInDOMElement(this.attributes, this.DOMElement);
 
             // Update changelist in transition
             if (this.elementTransition.previousElement) {
-                this.elementTransition.previousElement.elementTransition.changeListToNext.push(attribute);
+                this.elementTransition.previousElement.elementTransition.changeListToNext[key] = value;
             }
         }
 
@@ -64,18 +60,16 @@ module Tease {
         }
 
         private applyTransition(percentDone: number) {
-            for (var i = 0; i < this.elementTransition.changeListToNext.length; i++) {
-                var attr = this.attributes.getAttribute(this.elementTransition.changeListToNext[i].property);
-                var start = parseInt(attr.value);
-                var end = parseInt(this.elementTransition.changeListToNext[i].value);
-                var currentValue = (end - start) * this.swingEasing(percentDone) + start;
-                var newAttr = new Attribute(attr.property, currentValue.toString());
-                this.setAttribute(newAttr);
+            for (var i in this.elementTransition.changeListToNext) {
+                var startValue = parseInt(this.attributes[i]);
+                var endValue = parseInt(this.elementTransition.changeListToNext[i]);
+                var currentValue = (endValue - startValue) * this.swingEasing(percentDone) + startValue;
+                this.setAttribute(i, currentValue.toString())
             }
         }
 
-        getAttribute(propertyId: string) {
-            return this.attributes.getAttributeByPropertyId(propertyId);
+        getAttribute(key: string) {
+            return this.attributes[key];
         }
 
         getElementWithTransition(percentDone?: number = 100) {

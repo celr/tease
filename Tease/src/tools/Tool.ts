@@ -5,12 +5,12 @@ interface Tool {
     displayName: string;
     displayImagePath: string; // Image to be shown on the toolbar
     id: string; // Unique id for this tool
-    properties: Object; // Supported properties
-    defaultAttributes: AttributeList;
+    properties: string[]; // Supported properties
+    defaultAttributes: Object;
     defaultDOMElement: JQuery; // Vanilla DOM element to be inserted by Tool, WITHOUT any default attributes
     toolbarDOMElement: JQuery; // DOM Element for the tool button in the toolbar
-    sizingToolAttributes: AttributeList;
+    sizingToolAttributes: Object;
 
-    setAttributesInDOMElement(attributes: AttributeList, DOMElement: JQuery): void;
-    getAttributesFromDOMElement(DOMElement: JQuery): Attribute[];
+    setAttributesInDOMElement(attributes: Object, DOMElement: JQuery): void;
+    getAttributesFromDOMElement(DOMElement: JQuery): Object;
 }

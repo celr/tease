@@ -50,10 +50,24 @@
       <DependentUpon>Canvas.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\canvas\SizingTool.ts" />
+    <Content Include="src\gui\canvas\ElementGroup.ts" />
+    <Content Include="src\gui\canvas\SelectedElementOptions.ts" />
+    <Content Include="src\gui\canvas\SelectionTool.ts" />
     <Content Include="src\gui\canvas\SizingTool.js">
       <DependentUpon>SizingTool.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\PropertyEditor.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\PropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\PropertyControl.js">
+      <DependentUpon>PropertyControl.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\StringPropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\StringPropertyControl.js">
+      <DependentUpon>StringPropertyControl.ts</DependentUpon>
+    </Content>
+    <Content Include="src\gui\canvas\SizingTool.js">
+      <DependentUpon>SizingTool.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\PropertyEditor.js">
       <DependentUpon>PropertyEditor.ts</DependentUpon>
     </Content>
@@ -75,6 +89,9 @@
     <Content Include="src\lib\jquery.d.ts" />
     <Content Include="src\lib\jquery.js" />
     <TypeScriptCompile Include="src\Main.ts" />
+    <Content Include="src\Main.js">
+      <DependentUpon>Main.ts</DependentUpon>
+    </Content>
     <Content Include="src\res\audio.mp3" />
     <Content Include="src\res\audio1.mp3" />
     <Content Include="src\res\audioTool.png" />

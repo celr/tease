@@ -6,21 +6,19 @@ class AudioTool implements Tool extends SizableTool {
         super(id, $('<audio id="' + id + '" controls="true"></audio>'));
         this.displayName = 'Audio';
         this.displayImagePath = 'res/audioTool.png';
-        var srcProperty = new Property('source', 'archivo');
-        var apProperty = new Property('autoplay', 'autoplay');
 
-        this.defaultAttributes.setAttribute(new Attribute(apProperty, 'true'));
-        this.defaultAttributes.setAttribute(new Attribute(srcProperty, 'res/audio.mp3'));
+        this.defaultAttributes['source'] = 'archivo';
+        this.defaultAttributes['autoplay'] = 'res/audio.mp3';
     }
 
-    public setAttributesInDOMElement(attributes: AttributeList, DOMElement: JQuery) {
+    public setAttributesInDOMElement(attributes: {}, DOMElement: JQuery) {
         var result = super.setAttributesInDOMElement(attributes, DOMElement);
 
         if (!result && attributes) {
             result = true;
-            for (var i in attributes.attributes) {
-                var value = attributes.attributes[i].value;
-                switch (attributes.attributes[i].property.id) {
+            for (var i in attributes) {
+                var value = attributes[i];
+                switch (i) {
                     case 'source':
                         // Remove any previous source tags
                         DOMElement.empty();
@@ -51,7 +49,7 @@ class AudioTool implements Tool extends SizableTool {
     }
 
     public getAttributesFromDOMElement(DOMElement: JQuery) {
-        var attributes = new Attribute[];
+        var attributes = {};
         return attributes;
     }
 }

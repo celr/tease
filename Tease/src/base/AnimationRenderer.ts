@@ -96,9 +96,11 @@ class AnimationRenderer {
 
     private getAnimatedProperties(transition: ElementTransition) {
         var animatedProperties = {};
+
+        /*
         for (var i = 0; i < transition.changeListToNext.length; i++) {
             animatedProperties[transition.changeListToNext[i].property.reverseProperty] = transition.changeListToNext[i].value;
-        }
+        }*/
         return animatedProperties;
     }
 

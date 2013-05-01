@@ -131,19 +131,11 @@ class Canvas extends Eventable {
         if (!(this.currentTool.id == 'pointertool')) {
             if (this.allowInput) {
                 var element = new Tease.Element(this.currentTool);
-                // TODO: Usar atributos internos en lugar de modificar directamente el DOMElement
-                var posAttr = new Attribute(new Property('position', ''), 'absolute'); //auxiliar variable
-                var topAttr = new Attribute(new Property('top', 'top'), '0px'); //auxiliar variable
-                var leftAttr = new Attribute(new Property('left', 'left'), '0px'); //auxiliar variable
-                element.setAttribute(posAttr);
-
                 var offset = this.DOMElement.offset();
 
-                topAttr.value = (e.clientY - offset.top).toString();
-                element.setAttribute(topAttr);
-
-                leftAttr.value = (e.clientX - offset.left).toString();
-                element.setAttribute(leftAttr);
+                element.setAttribute('position', 'absolute');
+                element.setAttribute('top', (e.clientY - offset.top).toString());
+                element.setAttribute('left', (e.clientX - offset.left).toString());
 
                 this.insertElement(element);
                 this.selectElement(element); // Automatically select newly inserted element
