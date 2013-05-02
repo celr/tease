@@ -271,16 +271,14 @@ class SizingTool {
         }
     }
 
-    private handleUp(handleMove, handleUp, that) {
+    private handleUp(handleMove, handleUp, that: SizingTool) {
         that.canvas.removeEventListener('mousemove', handleMove, true);
         that.canvas.removeEventListener('mouseup', handleUp, true);
-
-        that.SEOptions.render(that.target);
-
         that.updateProperties(that);
+        $(this.canvas).trigger('elementResized', this.target);
     }
 
-    private updateProperties(that) {
+    private updateProperties(that: SizingTool) {
         if (this.targetHeight) {
             that.targetHeight = parseInt(this.target.getAttribute('height'));
         }

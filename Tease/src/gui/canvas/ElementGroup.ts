@@ -127,7 +127,7 @@ class ElementGroup {
     }
 
     public hasMultipleElements() {
-        if (Object.keys(this).length == 1) {
+        if (Object.keys(this.elements).length <= 1) {
             return false;
         }
         return true;
@@ -138,6 +138,12 @@ class ElementGroup {
             return true;
         }
         return false;
+    }
+
+    public getElement() {
+        for (var i in this.elements) {
+            return this.elements[i];
+        }
     }
 
 }

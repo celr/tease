@@ -13,7 +13,8 @@ class SelectionTool {
             'left': left,
             'top': top,
             'border': '2px dotted black',
-            'position': 'absolute'
+            'position': 'absolute',
+            'zIndex' : '100000000'
         });
         canvas.append(this.$rectangle);
         this.initialX = left;
@@ -35,12 +36,12 @@ class SelectionTool {
         var selectedGroup = new ElementGroup(null, this.canvas);
         for (var i in currentElements) {
             var element = currentElements[i];
-            var eleLeft = parseInt(element.getAttribute('left').value);
-            var eleTop = parseInt(element.getAttribute('top').value);
+            var eleLeft = parseInt(element.getAttribute('left'));
+            var eleTop = parseInt(element.getAttribute('top'));
             var temp = element.getAttribute('width');
-            var width = temp == null ? 0 : parseInt(temp.value);
+            var width = temp == null ? 0 : parseInt(temp);
             temp = element.getAttribute('height');
-            var height = temp == null ? 0 : parseInt(temp.value);
+            var height = temp == null ? 0 : parseInt(temp);
 
             var found = true;
             if (width) {

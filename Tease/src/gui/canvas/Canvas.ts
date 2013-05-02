@@ -15,7 +15,6 @@
 // owner: jair
 class Canvas extends Eventable {
     private currentElements: Object; // Elements currently shown on canvas
-    private currentSelection: Tease.Element; // TODO: Multiple selection
     private sizingTool: SizingTool;
     private allowInput: bool;
     private selectionTool: SelectionTool;
@@ -44,6 +43,9 @@ class Canvas extends Eventable {
         });
         this.DOMElement.on('elementDeleted', (e, element:Tease.Element) => {
             this.handleElementDeleted(element);
+        });
+        this.DOMElement.on('elementResized', (e, element: Tease.Element) => {
+            this.handleElementResized(element);
         });
         this.move = false;
         this.DOMElement.css('overflow', 'auto');
@@ -115,7 +117,11 @@ class Canvas extends Eventable {
     }
 
     public selectElement(element: Tease.Element) {
-        this.currentSelection = element;
+        if (element != this.canvasElement) {//if the selected element is not the canvas
+            this.sizingTool.render(element);
+            this.SEOptions.render(element);
+            this.createGroup(element);
+        }
         this.fireEvent('canvasselect', element);
     }
 
@@ -125,6 +131,10 @@ class Canvas extends Eventable {
         this.sizingTool.erase();
         this.SEOptions.erase();
         this.selectedGroup.clear();
+    }
+
+    private handleElementResized(element: Tease.Element) {
+        this.SEOptions.render(element);
     }
 
     private handleCanvasClick(e) {
@@ -138,7 +148,6 @@ class Canvas extends Eventable {
                 element.setAttribute('left', (e.clientX - offset.left).toString());
 
                 this.insertElement(element);
-                this.selectElement(element); // Automatically select newly inserted element
                 this.fireEvent('canvasinsert', element);
             }
         }
@@ -146,15 +155,14 @@ class Canvas extends Eventable {
 
     private handleElementMove(e: MouseEvent, element: Tease.Element) {
         if (this.allowInput) {
-            var wasGroupVisible = this.selectedGroup.isVisible();
             this.sizingTool.erase();
             this.SEOptions.erase();
             this.selectedGroup.eraseDots();
             var that = this;
-            if (!wasGroupVisible || !this.selectedGroup.isInGroup(element.DOMElement.attr('id'))) {
+            if (!this.selectedGroup.isInGroup(element.DOMElement.attr('id'))) {
                 this.createGroup(element);
             }
-
+            this.selectedGroup.updateInitialPositions();
             function handleMove(eMove: MouseEvent) {
                 that.selectedGroup.move(eMove.clientX - e.clientX, eMove.clientY - e.clientY);
                 that.move = true;
@@ -164,15 +172,13 @@ class Canvas extends Eventable {
                 that.DOMElement.unbind('mousemove');
                 $(document).unbind('mouseup');
                 that.selectedGroup.updateInitialPositions();
-                if (wasGroupVisible) {
+                if (that.selectedGroup.hasMultipleElements()) {
                     that.selectedGroup.markElements();
                 }
                 else {
-                    that.sizingTool.render(element);
-                    that.SEOptions.render(element);
+                    that.selectElement(that.selectedGroup.getElement());
                 }
             }
-
             this.DOMElement.bind('mousemove', handleMove);
             $(document).bind('mouseup', handleUp);
         }
@@ -182,9 +188,6 @@ class Canvas extends Eventable {
         if (this.allowInput) {
             var selectedDOME = <HTMLElement> e.target;
             this.selectElement(this.currentElements[selectedDOME.id]);
-            this.sizingTool.render(element);
-            this.createGroup(element);
-            this.SEOptions.render(element);
         }
     }
 
@@ -205,14 +208,20 @@ class Canvas extends Eventable {
             function handleMove(event) {
                 that.selectionTool.resize(event.clientX - e.clientX, event.clientY - e.clientY);
             }
+
             function handleUp(event) {
                 document.removeEventListener('mouseup', handleUp);
                 that.DOMElement.off('mousemove', handleMove);
                 that.selectedGroup = that.selectionTool.getSelectedElements(that.currentElements, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().top);
                 that.selectionTool.erase();
-                that.selectedGroup.markElements();
-                if (that.selectedGroup.isEmpty()) {
+                if (that.selectedGroup.hasMultipleElements()) {
+                    that.selectedGroup.markElements();
+                }
+                else if (that.selectedGroup.isEmpty()) {
                     that.selectElement(that.canvasElement);
+                }
+                else { // then the group has just one element
+                    that.selectElement(that.selectedGroup.getElement());
                 }
             }
             this.DOMElement.on('mousemove', handleMove);

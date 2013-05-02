@@ -45,7 +45,6 @@ class SelectedElementOptions {
             this.$dropDownList.find('#back').click((e: JQueryEventObject) => { this.sendBack(e) });
             this.$dropDownList.find('#forward').click((e: JQueryEventObject) => { this.sendForward(e) });
             this.$dropDownList.find('#backward').click((e: JQueryEventObject) => { this.sendBackward(e) });
-            this.$dropDownList.find('#backward').click((e: JQueryEventObject) => { this.sendBackward(e) });
             this.$dropDownList.find('#delete').click((e: JQueryEventObject) => { this.deleteElement(e) });
             this.visible = true;
         }
