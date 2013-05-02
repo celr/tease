@@ -66,6 +66,10 @@
       <DependentUpon>PropertyControl.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\StringPropertyControl.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\PropertyDisplay.ts" />
+    <Content Include="src\gui\toolbars\property-controls\PropertyDisplay.js">
+      <DependentUpon>PropertyDisplay.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\property-controls\StringPropertyControl.js">
       <DependentUpon>StringPropertyControl.ts</DependentUpon>
     </Content>
@@ -237,6 +241,7 @@
     <Content Include="src\style\app.css" />
     <TypeScriptCompile Include="src\tools\Tool.ts" />
     <Content Include="src\tests\code_editor_test.html" />
+    <Content Include="src\tools\CanvasTool.ts" />
     <Content Include="src\tools\PointerTool.ts" />
     <Content Include="src\tools\SizableTool.ts" />
     <Content Include="src\tools\Tool.js">

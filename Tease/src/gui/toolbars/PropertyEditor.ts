@@ -5,7 +5,7 @@ class PropertyEditor extends Eventable {
     private propertyMap: Object;
     public currentElement: Tease.Element;
 
-    constructor (private DOMElement: JQuery) {
+    constructor (private DOMElement: JQuery, private propertyDisplayMap: Object) {
         super();
         this.propertyMap = new Object;
     }
@@ -19,24 +19,38 @@ class PropertyEditor extends Eventable {
         }
     }
 
-    private handlePropertyBlur(e: Event) {
-        var value = $(e.currentTarget).val();
-        this.currentElement.setAttribute(this.propertyMap[$(e.currentTarget).attr('id')], value);
+    private handlePropertyValueChange(property: string, value: string) {
+        this.currentElement.setAttribute(this.propertyMap[property], value);
     }
 
     private renderProperty(property: string, defaultValue: string) {
-        var newProperty = $('<div>' + property + '</div>');
-        var newValue = $('<input id="' + property + '"></input>');
+        var propertyLabel = $('<div>' + property + '</div>');
+
+        // Default property setter
+        var propertySetter = $('<input id="' + property + '" type="text"></input>');
+        var propertyDisplay = this.propertyDisplayMap[property];
+
+        // Get fancy property control if supported
+        if (propertyDisplay) {
+            var propertyControl = propertyDisplay.control;
+            propertyControl.setValue(defaultValue);
+            propertySetter = propertyControl.DOMElement.clone(true);
+            propertyLabel.text(propertyDisplay.label);
+            propertyControl.addEventListener('valuechange', (e: CustomEvent) => {
+                for (var i in e.detail) {
+                    this.handlePropertyValueChange(i, e.detail[i]);
+                }               
+            });
+        } else {
+            // Event handler for default property setter
+            propertySetter.blur((e: Event) => {
+                this.handlePropertyValueChange($(e.target).attr('id'), $(e.target).val());
+            });
+        }
+        
         this.propertyMap[property] = property;
 
-        newValue.bind('blur', (e: Event) => {
-            this.handlePropertyBlur(e);
-        });
-
-        if (defaultValue) {
-            newValue.val(defaultValue);
-        }
-        newProperty.append(newValue);
-        this.DOMElement.append(newProperty);
+        propertyLabel.append(propertySetter);
+        this.DOMElement.append(propertyLabel);
     }
 }

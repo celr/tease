@@ -7,9 +7,9 @@ class StringPropertyControl implements PropertyControl extends Eventable {
     public DOMElement: JQuery;
     private value: string;
 
-    constructor(public id: string) {
+    constructor(public property: string) {
         super();
-        this.DOMElement = $('<input id="' + this.id + '" type="text"></input>');
+        this.DOMElement = $('<input id="' + this.property + '" type="text"></input>');
         this.DOMElement.blur((e: Event) => {
             this.blurHandler(e);
         });
@@ -20,9 +20,11 @@ class StringPropertyControl implements PropertyControl extends Eventable {
     }
 
     public setValue(value: string) {
+        var attribute = {};
+        attribute[this.property] = value;
         this.value = value;
         this.DOMElement.val(value);
-        this.fireEvent('valuechange', value);
+        this.fireEvent('valuechange', attribute);
     }
 
     private blurHandler(e: Event) {
