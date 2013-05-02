@@ -18,8 +18,11 @@ module Tease {
             if (this.parentTool) {
                 // Clone default attributes
                 var defaultAttributes = this.parentTool.defaultAttributes;
-                this.attributes = new Object(this.parentTool.defaultAttributes);
                 
+                for (var i in defaultAttributes) {
+                    this.attributes[i] = defaultAttributes[i];;
+                }
+                                
                 this.DOMElement = this.parentTool.defaultDOMElement.clone(true);
                 this.DOMElement.css('z-index', '9999');
                 this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
