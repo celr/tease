@@ -22,8 +22,8 @@ class ElementGroup {
 
     public insertElement(id: string, element: Tease.Element) {
         this.elements[id] = element;
-        this.initialX[id] = parseInt(element.getAttribute('left').value);
-        this.initialY[id] = parseInt(element.getAttribute('top').value);
+        this.initialX[id] = parseInt(element.getAttribute('left'));
+        this.initialY[id] = parseInt(element.getAttribute('top'));
     }
 
     public deleteElement(id: string) {
@@ -74,10 +74,10 @@ class ElementGroup {
     public markElements() {
         for (var i in this.elements) {
             var element = <Tease.Element>this.elements[i];
-            var left = parseInt(element.getAttribute('left').value);
-            var top = parseInt(element.getAttribute('top').value);
-            var width = parseInt(element.getAttribute('width').value);
-            var height = parseInt(element.getAttribute('height').value);
+            var left = parseInt(element.getAttribute('left'));
+            var top = parseInt(element.getAttribute('top'));
+            var width = parseInt(element.getAttribute('width'));
+            var height = parseInt(element.getAttribute('height'));
 
             var img0 = this.createDot(top, left);
             var img1 = this.createDot(top, left + width - this.dotSize);

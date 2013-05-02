@@ -30,8 +30,8 @@ class SelectedElementOptions {
             this.element = element;
             this.createHTML();
             //$('dropdown-toggle').dropdown();
-            var left = parseInt(element.getAttribute('left').value) - this.toolSize;
-            var top = parseInt(element.getAttribute('top').value) - this.toolSize;
+            var left = parseInt(element.getAttribute('left')) - this.toolSize;
+            var top = parseInt(element.getAttribute('top')) - this.toolSize;
             this.$dropDownList.css({
                 'left': left + 'px',
                 'top': top + 'px',
