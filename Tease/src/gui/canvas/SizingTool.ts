@@ -25,7 +25,7 @@ class SizingTool {
     private dotSize: number;
     private visible: bool;
 
-    constructor(private SEOptions: SelectedElementOptions) {
+    constructor() {
         var dotImg = new Image();
         dotImg.src = 'res/Dot.png';
 
@@ -144,7 +144,7 @@ class SizingTool {
     }
 
     private registerHandlers(initial: MouseEvent, movX: number, movY: number, dot: HTMLElement) {
-        this.SEOptions.erase();
+        $(this.canvas).trigger('elementResizing', this.target);
 
         //get initial position of dot
         var initialLeft = parseInt($(dot).css('left'));

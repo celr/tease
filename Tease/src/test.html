@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        div {
+            width: 101px;
+            height: 101px;
+            top: 200px;
+            left: 200px;
+            background-color: black;
+            position: absolute;
+            -webkit-transform:rotate(-10deg);
+        }
+    </style>
+    <script src="lib/jquery.js"></script>
+</head>
+<body>
+    <div>
+
+    </div>
+    <script>
+        console.log($('div').css('transform'));
+        console.log($('div').css('transform-origin'));
+        console.log(typeof $('div').css('transform-origin'));
+        console.log($('div').css('top'));
+    </script>
+</body>
+</html>

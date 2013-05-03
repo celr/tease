@@ -9,6 +9,7 @@
 ///<reference path="../canvas/ElementGroup.ts" />
 ///<reference path="SelectedElementOptions.ts" />
 ///<reference path="../../tools/CanvasTool.ts" />
+///<reference path="RotationTool.ts" />
 
 // Canvas
 // Represents a canvas in the GUI
@@ -23,13 +24,15 @@ class Canvas extends Eventable {
     private SEOptions: SelectedElementOptions;
     private nextElementId: number;
     private canvasElement: Tease.Element;
+    private rotationTool: RotationTool;
 
     constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment) {
         super();
         this.allowInput = true;
         this.selectedGroup = new ElementGroup(null, this.DOMElement);
         this.SEOptions = new SelectedElementOptions(this.DOMElement);
-        this.sizingTool = new SizingTool(this.SEOptions);
+        this.sizingTool = new SizingTool();
+        this.rotationTool = new RotationTool();
         this.DOMElement.css('position', 'relative');
         this.currentElements = {};
         this.nextElementId = 0;
@@ -46,6 +49,9 @@ class Canvas extends Eventable {
         });
         this.DOMElement.on('elementResized', (e, element: Tease.Element) => {
             this.handleElementResized(element);
+        });
+        this.DOMElement.on('elementResizing', (e, element: Tease.Element) => {
+            this.handleElementResizing(element);
         });
         this.move = false;
         this.DOMElement.css('overflow', 'auto');
@@ -118,6 +124,7 @@ class Canvas extends Eventable {
 
     public selectElement(element: Tease.Element) {
         if (element != this.canvasElement) {//if the selected element is not the canvas
+            this.rotationTool.render(element);
             this.sizingTool.render(element);
             this.SEOptions.render(element);
             this.createGroup(element);
@@ -135,6 +142,13 @@ class Canvas extends Eventable {
 
     private handleElementResized(element: Tease.Element) {
         this.SEOptions.render(element);
+        this.rotationTool.render(element);
+    }
+
+    private handleElementResizing(element: Tease.Element) {
+        this.SEOptions.erase();
+        this.selectedGroup.eraseDots();
+        this.rotationTool.erase();
     }
 
     private handleCanvasClick(e) {
@@ -157,6 +171,7 @@ class Canvas extends Eventable {
         if (this.allowInput) {
             this.sizingTool.erase();
             this.SEOptions.erase();
+            this.rotationTool.erase();
             this.selectedGroup.eraseDots();
             var that = this;
             if (!this.selectedGroup.isInGroup(element.DOMElement.attr('id'))) {
@@ -195,6 +210,7 @@ class Canvas extends Eventable {
         if (this.currentTool.id == 'pointertool') {
             this.sizingTool.erase();
             this.SEOptions.erase();
+            this.rotationTool.erase();
             if (this.selectedGroup) {
                 this.selectedGroup.clear();
             }
