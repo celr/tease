@@ -1,6 +1,8 @@
+///<reference path="../../tools/TextTool.ts" />
 ///<reference path="../../tools/ImageTool.ts" />
 ///<reference path="../../tools/AudioTool.ts" />
 ///<reference path="../../tools/PointerTool.ts" />
+///<reference path="../../tools/RectangleTool.ts" />
 ///<reference path="../../base/Eventable.ts" />
 
 // Toolbar
@@ -23,9 +25,9 @@ class Toolbar extends Eventable {
 
     // Loads the available tools into the tools array
     private loadTools() {
-        this.tools.push(new ImageTool('imagetool', 'res/jair.png'));
-        this.tools.push(new ImageTool('imagetool2', 'res/chadan.png'));
-        this.tools.push(new ImageTool('imagetool3', 'res/carlos.png'));
+        this.tools.push(new TextTool('texttool'));
+        this.tools.push(new ImageTool('imagetool'));
+        this.tools.push(new RectangleTool('recttool'));
         this.tools.push(new AudioTool('audiotool'));
         this.tools.push(new PointerTool('pointertool'));
     }

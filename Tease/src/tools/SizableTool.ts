@@ -1,25 +1,27 @@
+///<reference path="Tool.ts" />
+
 class SizableTool implements Tool {
     // Menu display properties
     public displayName: string;
     public displayImagePath: string;
 
     // Attributes and properties
-    public properties: string[];
+    public properties: Object;
     public defaultAttributes: Object;
     public sizingToolAttributes: Object; // Properties that indicate how sizing tool manipulates this tool
+    public displayGroups: PropertyDisplayGroup[];
 
     // DOM Elements
     public toolbarDOMElement: JQuery;
     
     constructor(public id: string, public defaultDOMElement: JQuery) {
         this.sizingToolAttributes = {};
-        this.defaultAttributes = {};
-        this.properties = [];
+        this.properties = {};
 
-        this.defaultAttributes['left'] = '0';
-        this.defaultAttributes['top'] = '0';
-        this.defaultAttributes['width'] = '400';
-        this.defaultAttributes['height'] = '400';
+        this.properties['left'] = '0';
+        this.properties['top'] = '0';
+        this.properties['width'] = '400';
+        this.properties['height'] = '400';
     }
 
     public setAttributesInDOMElement(attributes: Object, DOMElement: JQuery) {

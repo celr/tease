@@ -1,7 +1,7 @@
 ///<reference path="Frame.ts" />
 ///<reference path="../tools/Tool.ts" />
 class ElementTransition {
-    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element, public changeListToNext: {}[]) {
+    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element, public changeListToNext: {}) {
     }
 }
 
@@ -17,18 +17,18 @@ module Tease {
 
             if (this.parentTool) {
                 // Clone default attributes
-                var defaultAttributes = this.parentTool.defaultAttributes;
+                var defaultAttributes = this.parentTool.properties;
                 
                 for (var i in defaultAttributes) {
-                    this.attributes[i] = defaultAttributes[i];;
+                    this.attributes[i] = defaultAttributes[i];
                 }
                                 
                 this.DOMElement = this.parentTool.defaultDOMElement.clone(true);
                 this.DOMElement.css('z-index', '9999');
-                this.parentTool.setAttributesInDOMElement(this.parentTool.defaultAttributes, this.DOMElement);
+                this.parentTool.setAttributesInDOMElement(defaultAttributes, this.DOMElement);
             }
 
-            this.elementTransition = new ElementTransition(null, null, []);
+            this.elementTransition = new ElementTransition(null, null, {});
         }
 
         setAttributes(attributes: {}) {
@@ -52,7 +52,11 @@ module Tease {
             newElement.parentTool = this.parentTool;
             newElement.elementTransition.previousElement = this.elementTransition.previousElement;
             newElement.elementTransition.nextElement = this.elementTransition.nextElement;
-            newElement.elementTransition.changeListToNext = [].concat(this.elementTransition.changeListToNext);
+
+            for (var i in this.elementTransition.changeListToNext) {
+                newElement.elementTransition.changeListToNext[i] = this.elementTransition.changeListToNext[i];
+            }
+
             newElement.DOMElement = this.DOMElement.clone(true);
             newElement.setAttributes(this.attributes);
             return newElement;

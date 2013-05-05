@@ -66,10 +66,6 @@
       <DependentUpon>PropertyControl.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\StringPropertyControl.ts" />
-    <TypeScriptCompile Include="src\gui\toolbars\property-controls\PropertyDisplay.ts" />
-    <Content Include="src\gui\toolbars\property-controls\PropertyDisplay.js">
-      <DependentUpon>PropertyDisplay.ts</DependentUpon>
-    </Content>
     <Content Include="src\gui\toolbars\property-controls\StringPropertyControl.js">
       <DependentUpon>StringPropertyControl.ts</DependentUpon>
     </Content>
@@ -241,9 +237,41 @@
     <Content Include="src\style\app.css" />
     <TypeScriptCompile Include="src\tools\Tool.ts" />
     <Content Include="src\tests\code_editor_test.html" />
+    <TypeScriptCompile Include="src\tools\BaseTool.ts" />
+    <TypeScriptCompile Include="src\tools\BackgroundableTool.ts" />
+    <Content Include="src\tools\BackgroundableTool.js">
+      <DependentUpon>BackgroundableTool.ts</DependentUpon>
+    </Content>
+    <Content Include="src\tools\BaseTool.js">
+      <DependentUpon>BaseTool.ts</DependentUpon>
+    </Content>
     <Content Include="src\tools\CanvasTool.ts" />
+    <TypeScriptCompile Include="src\tools\DimensionableTool.ts" />
+    <Content Include="src\tools\DimensionableTool.js">
+      <DependentUpon>DimensionableTool.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\tools\ListTool.ts" />
+    <Content Include="src\tools\ListTool.js">
+      <DependentUpon>ListTool.ts</DependentUpon>
+    </Content>
     <Content Include="src\tools\PointerTool.ts" />
+    <TypeScriptCompile Include="src\tools\PropertyMapping.ts" />
+    <TypeScriptCompile Include="src\tools\PropertyDisplayGroup.ts" />
+    <Content Include="src\tools\PropertyGroup.js">
+      <DependentUpon>PropertyDisplayGroup.ts</DependentUpon>
+    </Content>
+    <Content Include="src\tools\PropertyMapping.js">
+      <DependentUpon>PropertyMapping.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\tools\RectangleTool.ts" />
+    <Content Include="src\tools\RectangleTool.js">
+      <DependentUpon>RectangleTool.ts</DependentUpon>
+    </Content>
     <Content Include="src\tools\SizableTool.ts" />
+    <TypeScriptCompile Include="src\tools\TextTool.ts" />
+    <Content Include="src\tools\TextTool.js">
+      <DependentUpon>TextTool.ts</DependentUpon>
+    </Content>
     <Content Include="src\tools\Tool.js">
       <DependentUpon>Tool.ts</DependentUpon>
     </Content>
@@ -254,6 +282,10 @@
     <Content Include="src\tools\ImageTool.ts" />
     <Content Include="src\tools\ImageTool.js">
       <DependentUpon>ImageTool.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\tools\VideoTool.ts" />
+    <Content Include="src\tools\VideoTool.js">
+      <DependentUpon>VideoTool.ts</DependentUpon>
     </Content>
     <Content Include="web.config" />
     <None Include="web.Debug.config">

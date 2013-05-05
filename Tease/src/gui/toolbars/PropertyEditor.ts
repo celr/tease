@@ -1,11 +1,13 @@
 ///<reference path="../../base/Eventable.ts" />
 ///<reference path="../canvas/Canvas.ts" />
 ///<reference path="../../base/Element.ts" />
+///<reference path="../../tools/PropertyDisplayGroup.ts" />
+
 class PropertyEditor extends Eventable {
     private propertyMap: Object;
     public currentElement: Tease.Element;
 
-    constructor (private DOMElement: JQuery, private propertyDisplayMap: Object) {
+    constructor (private DOMElement: JQuery) {
         super();
         this.propertyMap = new Object;
     }
@@ -13,9 +15,26 @@ class PropertyEditor extends Eventable {
     public renderPropertiesForElement(element: Tease.Element) {
         this.DOMElement.text('');
 
-        for (var i in element.parentTool.properties) {
-            var defaultValue = element.getAttribute(element.parentTool.properties[i]);
-            this.renderProperty(element.parentTool.properties[i], defaultValue);
+        if (element.parentTool.displayGroups) {
+            for (var i in element.parentTool.displayGroups) {
+                this.renderDisplayGroup(element, element.parentTool.displayGroups[i]);
+            }
+        }
+    }
+
+    private renderDisplayGroup(element: Tease.Element, displayGroup: PropertyDisplayGroup) {
+        $('<div class="nav-header">' + displayGroup.label + '</div>').appendTo(this.DOMElement);
+        
+        for (var i in displayGroup.properties) {
+            var property = displayGroup.properties[i];
+            var defaultValue = element.parentTool.properties[property];
+
+            if (element.attributes[property]) {
+                defaultValue = element.attributes[property];
+            }
+
+            this.renderProperty(property, defaultValue, displayGroup.propertyLabels[i],
+                displayGroup.propertyControls[i]);
         }
     }
 
@@ -23,24 +42,22 @@ class PropertyEditor extends Eventable {
         this.currentElement.setAttribute(this.propertyMap[property], value);
     }
 
-    private renderProperty(property: string, defaultValue: string) {
-        var propertyLabel = $('<div>' + property + '</div>');
+    private renderProperty(property: string, defaultValue: string, propertyLabel: string, propertyControl?: PropertyControl) {
+        var propertyLabelDiv = $('<div>' + property + '</div>');
 
         // Default property setter
         var propertySetter = $('<input id="' + property + '" type="text"></input>');
-        var propertyDisplay = this.propertyDisplayMap[property];
 
         // Get fancy property control if supported
-        if (propertyDisplay) {
-            var propertyControl = propertyDisplay.control;
+        if (propertyControl) {
             propertyControl.setValue(defaultValue);
             propertySetter = propertyControl.DOMElement.clone(true);
-            propertyLabel.text(propertyDisplay.label);
+            propertyLabelDiv.text(propertyLabel);
             propertyControl.addEventListener('valuechange', (e: CustomEvent) => {
                 for (var i in e.detail) {
                     this.handlePropertyValueChange(i, e.detail[i]);
                 }               
-            });
+            }, true);
         } else {
             // Event handler for default property setter
             propertySetter.blur((e: Event) => {
@@ -50,7 +67,7 @@ class PropertyEditor extends Eventable {
         
         this.propertyMap[property] = property;
 
-        propertyLabel.append(propertySetter);
-        this.DOMElement.append(propertyLabel);
+        propertyLabelDiv.append(propertySetter);
+        this.DOMElement.append(propertyLabelDiv);
     }
 }

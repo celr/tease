@@ -5,8 +5,6 @@
 ///<reference path="base/Layer.ts" />
 ///<reference path="base/Environment.ts" />
 ///<reference path="base/AnimationRenderer.ts" />
-///<reference path="gui/toolbars/property-controls/StringPropertyControl.ts" />
-///<reference path="gui/toolbars/property-controls/PropertyDisplay.ts" />
 
 // Manages system wide events and global environment
 class MainController {
@@ -27,13 +25,10 @@ class MainController {
         this.environment.layers = [new Layer("Layer 1", true, true, 0)];
         this.currentLayerIndex = 0;
 
-        // Initialize properties
-        this.initPropertyDisplayMap();
-
         // Initialize GUI components
         this.toolbar = new Toolbar($('#toolbar'));
         this.canvas = new Canvas($('#canvas'), this.toolbar.currentTool, this.environment);
-        this.propertyEditor = new PropertyEditor($('#propertyeditor'), this.propertyDisplayMap);
+        this.propertyEditor = new PropertyEditor($('#propertyeditor'));
         this.timeline = new Timeline($('#timeline'), this.environment, { framerate: 12, defaultLength: 30 }); // TODO: Replace settings with real objects
 
         // Add event handlers
@@ -63,13 +58,6 @@ class MainController {
 
         // Initialize animation settings
         this.animationSettings = new AnimationSettings(1, 24); // TODO: Set fps from GUI
-    }
-
-    private initPropertyDisplayMap() {
-        this.propertyDisplayMap = {
-            width: new PropertyDisplay('Ancho', new StringPropertyControl('width')),
-            height: new PropertyDisplay('Alto', new StringPropertyControl('height'))
-        }
     }
 
     // Event handler for play button click

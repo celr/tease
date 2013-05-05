@@ -1,16 +1,17 @@
-///<reference path="SizableTool.ts" />
+///<reference path="BaseTool.ts" />
 ///<reference path="Tool.ts" />
 
-class AudioTool implements Tool extends SizableTool {
+class AudioTool implements Tool extends BaseTool {
     constructor(public id: string) {
         super(id, $('<audio id="' + id + '" controls="true"></audio>'));
         this.displayName = 'Audio';
         this.displayImagePath = 'res/audioTool.png';
 
-        this.defaultAttributes['source'] = 'archivo';
-        this.defaultAttributes['autoplay'] = 'res/audio.mp3';
+        this.properties['source'] = 'archivo';
+        this.properties['autoplay'] = 'res/audio.mp3';
     }
 
+    /*
     public setAttributesInDOMElement(attributes: {}, DOMElement: JQuery) {
         var result = super.setAttributesInDOMElement(attributes, DOMElement);
 
@@ -45,11 +46,11 @@ class AudioTool implements Tool extends SizableTool {
             }
         }
 
-        return result;
+        //return result;
     }
 
     public getAttributesFromDOMElement(DOMElement: JQuery) {
         var attributes = {};
         return attributes;
-    }
+    }*/
 }

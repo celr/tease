@@ -1,33 +1,34 @@
-///<reference path="SizableTool.ts" />
+///<reference path="BackgroundableTool.ts" />
+///<reference path="PropertyDisplayGroup.ts" />
 ///<reference path="Tool.ts" />
 
-class ImageTool implements Tool extends SizableTool {
-    constructor(public id: string, defaultImagePath: string) {
-        super(id, $('<img id="' + id + '" src = "' + defaultImagePath + '"></img>'));
+class ImageTool implements Tool extends BackgroundableTool {
+    private propertyDisplayMap: Object;
+    public propertyDisplayGroups: PropertyDisplayGroup[];
 
-        this.defaultAttributes['height'] = '300';
-        this.defaultAttributes['width'] = '300';
-        this.defaultAttributes['image-source'] = defaultImagePath;
-
+    constructor(public id: string) {
+        super(id, $('<img id="' + id + '" src = "res/default-image.png"></img>'));
         this.displayName = 'Image';
-        this.displayImagePath = 'res/imageTool.png';
-    }
+        this.displayImagePath = 'res/image-tool.png';
 
-    public setAttributesInDOMElement(attributes: {}, DOMElement: JQuery) {
-        var result = super.setAttributesInDOMElement(attributes, DOMElement);
+        this.properties['image-source'] = 'res/default-image.png';
+        this.properties['width'] = '150px';
+        this.properties['height'] = '150px';
 
-        for (var i in attributes) {
-            var value = attributes[i];
-            switch (i) {
-                case 'image-source':
-                    DOMElement.css('background-image', 'url(\'' + value + '\')');
-                    break;
-                default:
-                    result = false;
-                    break;
+        this.displayGroups.push(
+            new PropertyDisplayGroup('Imagen',
+                ['image-source'],
+                ['Fuente de imagen'],
+                [new StringPropertyControl('background-color')]
+            )
+        );
+
+        this.propertyMapper.callbackMapping.mapProperty('image-source',
+            (property: string, value: string, DOMElement: JQuery) => {
+                if (property === 'image-source') {
+                    DOMElement.attr('src', value);
+                }
             }
-        }
-
-        return result;
+        );
     }
 }
