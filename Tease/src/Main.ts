@@ -5,6 +5,7 @@
 ///<reference path="base/Layer.ts" />
 ///<reference path="base/Environment.ts" />
 ///<reference path="base/AnimationRenderer.ts" />
+///<reference path="base/code_generation/CodeGenerator.ts" />
 
 // Manages system wide events and global environment
 class MainController {
@@ -47,7 +48,7 @@ class MainController {
         this.canvas.addEventListener('canvasselect', (e: CustomEvent) => {
             this.handleCanvasSelect(e);
         }, true);
-        
+
         this.canvas.addEventListener('canvasinsert', (e: CustomEvent) => {
             this.handleCanvasInsert(e);
         }, true);
@@ -64,6 +65,9 @@ class MainController {
     private handlePlayButtonClick(e: CustomEvent) {
         var animationRenderer = new AnimationRenderer();
         var renderedEnv = animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
+        // TODO(chadan): Remove this 2 lines. When needed.
+        var codeGenerator: CodeGenerator = new CodeGenerator;
+        var pageCode = codeGenerator.generate(renderedEnv);
         this.canvas.clear();
         this.canvas.blockInput();
         this.canvas.insertRenderedElements(renderedEnv.renderedElements);

@@ -26,6 +26,26 @@
     <Content Include="src\base\Attribute.js">
       <DependentUpon>Attribute.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="src\base\code_generation\CodeGenerator.ts" />
+    <TypeScriptCompile Include="src\base\code_generation\CodeGenerationUtils.ts" />
+    <Content Include="src\base\code_generation\CodeGenerationUtils.js">
+      <DependentUpon>CodeGenerationUtils.ts</DependentUpon>
+    </Content>
+    <Content Include="src\base\code_generation\CodeGenerator.js">
+      <DependentUpon>CodeGenerator.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\base\code_generation\HTMLGenerator.ts" />
+    <TypeScriptCompile Include="src\base\code_generation\CSSGenerator.ts" />
+    <Content Include="src\base\code_generation\CSSGenerator.js">
+      <DependentUpon>CSSGenerator.ts</DependentUpon>
+    </Content>
+    <Content Include="src\base\code_generation\HTMLGenerator.js">
+      <DependentUpon>HTMLGenerator.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\base\code_generation\JSGenerator.ts" />
+    <Content Include="src\base\code_generation\JSGenerator.js">
+      <DependentUpon>JSGenerator.ts</DependentUpon>
+    </Content>
     <Content Include="src\base\Element.js">
       <DependentUpon>Element.ts</DependentUpon>
     </Content>

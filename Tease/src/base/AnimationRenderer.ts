@@ -6,7 +6,7 @@ class AnimationSettings {
 }
 
 class RenderedAnimation {
-    constructor(public animationProperties: Object, public duration: number) {
+    constructor(public animationProperties: Object, public durationMs: number) {
     }
 }
 
@@ -33,7 +33,7 @@ class RenderedEnvironment {
     private animate(renderedElement: RenderedElement) {
         for (var i = 0; i < renderedElement.renderedAnimations.length; i++) {
             var animation = renderedElement.renderedAnimations[i];
-            renderedElement.DOMElement.animate(animation.animationProperties, animation.duration, "swing", (e: Event) => {
+            renderedElement.DOMElement.animate(animation.animationProperties, animation.durationMs, "swing", (e: Event) => {
                 this.animationCallback(e);
             });
             this.animationCount++;
