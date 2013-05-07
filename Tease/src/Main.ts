@@ -92,8 +92,8 @@ class MainController {
 
     // Event handler for canvasselect canvas event
     private handleCanvasSelect(e: CustomEvent) {
-        this.propertyEditor.renderPropertiesForElement(<Tease.Element> e.detail);
         this.propertyEditor.currentElement = <Tease.Element> e.detail;
+        this.propertyEditor.renderPropertiesForElement(<Tease.Element> e.detail);
     }
 
     // Event handler for canvasinsert canvas event

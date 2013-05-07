@@ -19,7 +19,7 @@ class ImageTool implements Tool extends BackgroundableTool {
             new PropertyDisplayGroup('Imagen',
                 ['image-source'],
                 ['Fuente de imagen'],
-                [new StringPropertyControl('background-color')]
+                [new StringPropertyControl('image-source')]
             )
         );
 
