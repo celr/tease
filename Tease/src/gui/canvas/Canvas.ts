@@ -158,8 +158,8 @@ class Canvas extends Eventable {
                 var offset = this.DOMElement.offset();
 
                 element.setAttribute('position', 'absolute');
-                element.setAttribute('top', (e.clientY - offset.top).toString());
-                element.setAttribute('left', (e.clientX - offset.left).toString());
+                element.setAttribute('top', (e.clientY - offset.top).toString() + 'px');
+                element.setAttribute('left', (e.clientX - offset.left).toString() + 'px');
 
                 this.insertElement(element);
                 this.fireEvent('canvasinsert', element);

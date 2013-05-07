@@ -14,6 +14,8 @@ class SizableTool implements Tool {
     // DOM Elements
     public toolbarDOMElement: JQuery;
     
+    private propertyMapper: PropertyMapper;
+
     constructor(public id: string, public defaultDOMElement: JQuery) {
         this.sizingToolAttributes = {};
         this.properties = {};
@@ -52,6 +54,10 @@ class SizableTool implements Tool {
         }
 
         return result;
+    }
+
+    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
+
     }
 
     public getAttributesFromDOMElement(DOMElement: JQuery) {

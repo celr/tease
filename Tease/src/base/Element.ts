@@ -33,13 +33,13 @@ module Tease {
 
         setAttributes(attributes: {}) {
             for (var i in attributes) {
-                this.attributes[i] = attributes[i];
+                this.setAttribute(i, attributes[i]);
             }
         }
 
         setAttribute(key: string, value: string) {
             this.attributes[key] = value;
-            this.parentTool.setAttributesInDOMElement(this.attributes, this.DOMElement);
+            this.parentTool.setAttributeInDOMElement(key, value, this.DOMElement);
 
             // Update changelist in transition
             if (this.elementTransition.previousElement) {

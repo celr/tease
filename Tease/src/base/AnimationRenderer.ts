@@ -85,7 +85,7 @@ class AnimationRenderer {
             var currElement = element;
 
             while (currElement.hasTransition()) {
-                renderedElement.renderedAnimations.push(new RenderedAnimation(this.getAnimatedProperties(currElement.elementTransition),
+                renderedElement.renderedAnimations.push(new RenderedAnimation(this.getAnimatedProperties(currElement),
                                                         this.getAnimationDuration(currElement)));
                 currElement = currElement.elementTransition.nextElement;
             }
@@ -94,14 +94,8 @@ class AnimationRenderer {
         }
     }
 
-    private getAnimatedProperties(transition: ElementTransition) {
-        var animatedProperties = {};
-
-        /*
-        for (var i = 0; i < transition.changeListToNext.length; i++) {
-            animatedProperties[transition.changeListToNext[i].property.reverseProperty] = transition.changeListToNext[i].value;
-        }*/
-        return animatedProperties;
+    private getAnimatedProperties(element: Tease.Element) {
+        return element.parentTool.propertyMapper.getAnimationProperties(element.elementTransition.changeListToNext);
     }
 
     private getAnimationDuration(element: Tease.Element) {

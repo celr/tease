@@ -110,8 +110,8 @@ class ElementGroup {
 
     public move(deltaX: number, deltaY: number) {
         for (var i in this.elements) {
-            this.elements[i].setAttribute('top', (this.initialY[i] + deltaY).toString());
-            this.elements[i].setAttribute('left', (this.initialX[i] + deltaX).toString());
+            this.elements[i].setAttribute('top', (this.initialY[i] + deltaY).toString() + 'px');
+            this.elements[i].setAttribute('left', (this.initialX[i] + deltaX).toString() + 'px');
         }
     }
 

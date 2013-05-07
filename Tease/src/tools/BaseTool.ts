@@ -26,7 +26,8 @@ class BaseTool implements Tool {
             left: '0',
             top: '0',
             visibility: 'visible',
-            border: 'none'
+            border: 'none',
+            position: 'absolute'
         };
 
         this.propertyMapper = new PropertyMapper();
@@ -35,6 +36,7 @@ class BaseTool implements Tool {
         this.propertyMapper.directCSSMapping.mapProperty('top');
         this.propertyMapper.directCSSMapping.mapProperty('visibility');
         this.propertyMapper.directCSSMapping.mapProperty('border');
+        this.propertyMapper.directCSSMapping.mapProperty('position');
 
         this.displayGroups = [
             new PropertyDisplayGroup('Posicionamiento',
@@ -55,6 +57,10 @@ class BaseTool implements Tool {
 
     public setAttributesInDOMElement(attributes: Object, DOMElement: JQuery) {
         this.propertyMapper.applyAttributes(attributes, DOMElement);
+    }
+
+    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
+        this.propertyMapper.applyAttribute(property, value, DOMElement);
     }
 
     public getAnimationPropertiesFromChangeList(changeList: Object) {

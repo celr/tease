@@ -8,6 +8,7 @@ class CanvasTool implements Tool {
     public toolbarDOMElement: JQuery; // DOM Element for the tool button in the toolbar
     public sizingToolAttributes: {};
     public displayGroups: PropertyDisplayGroup[];
+    private propertyMapper: PropertyMapper;
 
 
 
@@ -36,6 +37,10 @@ class CanvasTool implements Tool {
                     break;
             }
         }
+    }
+
+    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
+
     }
 
     public getAttributesFromDOMElement(DOMElement: JQuery) {

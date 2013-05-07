@@ -41,6 +41,17 @@ class DirectCSSPropertyMapping implements AnimatablePropertyMapping {
             properties[i] = changeList[i];
         }
     }
+
+    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+        var result = false;
+
+        if (this.propertyMap.indexOf(property) != -1) {
+            DOMElement.css(property, value);
+            result = true;
+        }
+
+        return result;
+    }
 }
 
 class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
@@ -86,6 +97,20 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
             }
         }
     }
+
+    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+        var result = false;
+
+        if (this.propertyMap[property]) {
+            this.expandProperty(property, value,
+                (targetProperty: string, targetValue: string) => {
+                    DOMElement.css(targetProperty, targetValue);
+                });
+            result = true;
+        }
+
+        return result;
+    }
 }
 
 // Represents a mapping where the property is assigned a callback function
@@ -106,6 +131,16 @@ class CallbackPropertyMapping implements PropertyMapping {
                 this.propertyMap[property](property, attributes[property], DOMElement);
             }
         }
+    }
+
+    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+        var result = false;
+
+        if (this.propertyMap[property]) {
+            this.propertyMap[property](property, value, DOMElement);
+        }
+
+        return result;
     }
 }
 
@@ -136,6 +171,17 @@ class RenameCSSPropertyMapping implements AnimatablePropertyMapping {
             }
         }
     }
+
+    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+        var result = false;
+
+        if (this.propertyMap[property]) {
+            DOMElement.css(this.propertyMap[property], value);
+            result = true;
+        }
+
+        return result;
+    }
 }
 
 class PropertyMapper {
@@ -156,6 +202,13 @@ class PropertyMapper {
         this.callbackMapping.applyAttributes(attributes, DOMElement);
         this.renameCSSMapping.applyAttributes(attributes, DOMElement);
         this.multipleCSSMapping.applyAttributes(attributes, DOMElement);
+    }
+
+    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+        this.directCSSMapping.applyAttribute(property, value, DOMElement);
+        this.callbackMapping.applyAttribute(property, value, DOMElement);
+        this.renameCSSMapping.applyAttribute(property, value, DOMElement);
+        this.multipleCSSMapping.applyAttribute(property, value, DOMElement);
     }
 
     public getAnimationProperties(changeList: Object) {

@@ -1,6 +1,7 @@
 ///<reference path="../base/Attribute.ts" />
 ///<reference path="../lib/jquery.d.ts" />
 ///<reference path="PropertyDisplayGroup.ts" />
+///<reference path="PropertyMapping.ts" />
 
 interface Tool {
     displayName: string;
@@ -11,6 +12,8 @@ interface Tool {
     toolbarDOMElement: JQuery; // DOM Element for the tool button in the toolbar
     sizingToolAttributes: Object;
     displayGroups: PropertyDisplayGroup[]; // Tells us how to display the tool's properties 
+    propertyMapper: PropertyMapper;
 
+    setAttributeInDOMElement(property: string, value: string, JQuery): void;
     setAttributesInDOMElement(attributes: Object, DOMElement: JQuery): void;
 }

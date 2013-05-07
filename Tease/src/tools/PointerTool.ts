@@ -10,6 +10,7 @@ class PointerTool implements Tool{
     public toolbarDOMElement: JQuery; // DOM Element for the tool button in the toolbar
     public sizingToolAttributes: Object;
     public displayGroups: PropertyDisplayGroup[];
+    private propertyMapper: PropertyMapper;
 
     
 
@@ -19,6 +20,9 @@ class PointerTool implements Tool{
     }
 
     public setAttributesInDOMElement(attributes: Object, DOMElement: JQuery) {
+    }
+
+    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
     }
 
     public getAttributesFromDOMElement(DOMElement: JQuery) {
