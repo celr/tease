@@ -1,5 +1,8 @@
+///<reference path="../AnimationRenderer.ts" />
+
 // Utils for code generation.
 
+// Formatting.
 var Tab: string = "  ";
 
 function tabulate(code: string) {
@@ -9,4 +12,19 @@ function tabulate(code: string) {
         newCode = newCode.substr(0, newCode.length - Tab.length);
     }
     return newCode;
+}
+
+// Naming.
+function getElementName(element: RenderedElement) {
+    return element.DOMElement[0].attributes["element-name"].value;
+}
+
+// Returns the animation name corresponding to an element. Currently this function is constant.
+function getAnimationName(element: RenderedElement) {
+    return "animation";
+}
+
+// Returns the concatenated value of getElementName() and getAnimationName().
+function getElementAnimationName(element: RenderedElement) {
+    return getElementName(element) + "-" + getAnimationName(element);
 }

@@ -19,8 +19,8 @@ class CodeGenerator {
     }
 
     // Returns a PageCode object with the codes corresponding to the given Environment.
-    public generate(enviroment: RenderedEnvironment) {
-        var htmlCode: string = this.htmlGenerator.generateHMTL(enviroment);
+    public generate(enviroment : RenderedEnvironment) {
+        var htmlCode: string = this.htmlGenerator.generateHTML(enviroment);
         var jsCode: string = this.jsGenerator.generateScripts(enviroment);
         var cssStylesCode: string = this.cssGenerator.generateStyles(enviroment);
         var cssAnimationsCode: string = this.cssGenerator.generateAnimations(enviroment);

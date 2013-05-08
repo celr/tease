@@ -10,8 +10,7 @@ class CSSGenerator {
         
         for (var i: number = 0; i < enviroment.renderedElements.length; ++i) {
             var element: RenderedElement = enviroment.renderedElements[i];
-            // TODO(chadan): Obtain real values from |element|.
-            var elementName: string = "name" + i.toString();
+            var elementName: string = getElementName(element);
 
             out += "." + elementName + " ";
             out += "\{\n";
@@ -28,24 +27,20 @@ class CSSGenerator {
 
         for (var i: number = 0; i < enviroment.renderedElements.length; ++i) {
             var element: RenderedElement = enviroment.renderedElements[i];
-            // TODO(chadan): Obtain real values from |element|.
-            var elementName: string = "name" + i.toString();
-            var animationName: string = "animation1";
+            var elementAnimationName: string = getElementAnimationName(element);
 
             var animationDurationMs: number = 0;
             for (var j: number = 0; j < element.renderedAnimations.length; ++j) {
                 animationDurationMs += element.renderedAnimations[j].durationMs;
             }
 
-            var concatAnimationName: string = elementName + animationName;
+            if (element.renderedAnimations.length > 0) {    // Generate animation code only if necessary.
+                out += this.GenerateKeyframes(element, elementAnimationName, animationDurationMs, this.BrowserPrefixes.Standar);
+                out += this.GenerateKeyframes(element, elementAnimationName, animationDurationMs, this.BrowserPrefixes.Firefox);
+                out += this.GenerateKeyframes(element, elementAnimationName, animationDurationMs, this.BrowserPrefixes.InternetExplorer);
+                out += this.GenerateKeyframes(element, elementAnimationName, animationDurationMs, this.BrowserPrefixes.Webkit);
 
-            if (element.renderedAnimations.length > 0) { // Generate animation code only if necessary.
-                out += this.GenerateKeyframes(element, concatAnimationName, animationDurationMs, this.BrowserPrefixes.Standar);
-                out += this.GenerateKeyframes(element, concatAnimationName, animationDurationMs, this.BrowserPrefixes.Firefox);
-                out += this.GenerateKeyframes(element, concatAnimationName, animationDurationMs, this.BrowserPrefixes.InternetExplorer);
-                out += this.GenerateKeyframes(element, concatAnimationName, animationDurationMs, this.BrowserPrefixes.Webkit);
-
-                out += this.GenerateAnimationClass(concatAnimationName, animationDurationMs);
+                out += this.GenerateAnimationClass(elementAnimationName, animationDurationMs);
             }
         }
 

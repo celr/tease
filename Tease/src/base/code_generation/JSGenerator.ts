@@ -11,18 +11,15 @@ class JSGenerator {
         out += "{\n";
         for (var i: number = 0; i < enviroment.renderedElements.length; i++) {
             var element: RenderedElement = enviroment.renderedElements[i];
-            // TODO(chadan): Obtain real values from |element|.
-            var elementName: string = 'name' + i.toString();;
-            var animationName: string = 'animation1';
+            var elementName: string = getElementName(element);
+            var elementAnimationName: string = getElementAnimationName(element);
 
-            var concatAnimationName: string = elementName + animationName;
-
-            out += tabulate("\$\(\"\." + elementName + "\"\)\.toggleClass\(\"" + concatAnimationName + "\"\);\n");
+            out += tabulate("\$\(\"\." + elementName + "\"\)\.toggleClass\(\"" + elementAnimationName + "\"\);\n");
         }
         out += "}\n";
 
         // TODO(chadan): Generate code for not initial animations?.
-
+        
         return out;
     }
 }
