@@ -1,0 +1,54 @@
+﻿@model Tease_Server.Models.Project
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Proyecto</legend>
+
+        @Html.HiddenFor(model => model.ProjectID)
+
+        
+      @* <div class="editor-label">
+            @Html.LabelFor(model => model.CreationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreationDate)
+            @Html.ValidationMessageFor(model => model.CreationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModificationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ModificationDate)
+            @Html.ValidationMessageFor(model => model.ModificationDate)
+        </div>*@
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <p>
+            <input type="submit" value="Guardar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <title>@ViewBag.Title - Tease </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        @Styles.Render("~/lib/bootstrap/css/bootstrap.css")
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top top-nav">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <div class="offset7 span3" style="margin-top: 5px">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <a href="/Project">Tease</a>
+                        }
+                        else
+                        {
+                            <a href="/" class="brand">Tease</a>
+                        }
+                        
+                    </div>
+                    <div class="span10" style="margin-top: 10px">
+                        <section id="login">
+                            @Html.Partial("_LoginPartial")
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="margin-top: 10px">
+            <div class="row-fluid">
+                <div class="offset7 span10">
+    &nbsp;
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        @RenderBody()
+
+        @*<header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>*@
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

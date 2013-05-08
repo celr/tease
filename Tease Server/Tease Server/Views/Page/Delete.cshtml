@@ -1,0 +1,43 @@
+﻿@model Tease_Server.Models.Page
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>@Model.Project.Name - Eliminar página</h2>
+
+<h3>¿Estás seguro de que quieres eliminar esta página?</h3>
+<fieldset>
+    <legend>Página</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-label">
+         @Html.DisplayName("Proyecto")
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Project.Name)
+    </div>
+    <div>
+        @Html.DisplayNameFor(model => model.CreationDate)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.CreationDate)
+    </div>
+    <div>
+        @Html.DisplayNameFor(model => model.ModificationDate)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.ModificationDate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Eliminar" /> |
+        Regresar a lista de páginas @Html.ActionLink(Model.Project.Name, "Index", new { projectID = Model.ProjectID})
+    </p>
+}

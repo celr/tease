@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Tease_Server.Models.Page>
+
+@{
+    ViewBag.Title = "Páginas";
+}
+
+<h2> @ViewBag.ProjectName - Lista de páginas </h2>
+
+<p>
+    @Html.ActionLink("Crear nueva", "Create", new { projectID = ViewBag.projectID})
+</p>
+@if(Model.Count() > 0){
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.PageID }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.PageID }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.PageID })
+        </td>
+    </tr>
+}
+
+</table>
+    @Html.ActionLink("Regresar a lista de proyectos", "Index", "Project");
+}
+else{
+    <p>Aún no has creado páginas en este proyecto</p>
+}

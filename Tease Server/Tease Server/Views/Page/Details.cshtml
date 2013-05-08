@@ -1,0 +1,40 @@
+﻿@model Tease_Server.Models.Page
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>@Model.Project.Name - Detalles de página</h2>
+
+<fieldset>
+    <legend>Page</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-label">
+         @Html.DisplayName("Proyecto")
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Project.Name)
+    </div>
+    <div>
+        @Html.DisplayNameFor(model => model.CreationDate)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.CreationDate)
+    </div>
+    <div>
+        @Html.DisplayNameFor(model => model.ModificationDate)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.ModificationDate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id=Model.PageID }) |
+    Regresar a proyecto @Html.ActionLink(Model.Project.Name, "Index", new { projectID = Model.ProjectID })
+</p>

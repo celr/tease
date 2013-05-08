@@ -1,0 +1,37 @@
+﻿@model Tease_Server.Models.Page
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>@Model.Project.Name -  Editar</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Página</legend>
+
+        @Html.HiddenFor(model => model.PageID)
+        @Html.HiddenFor(model => model.ProjectID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <p>
+            <input type="submit" value="Guardar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    Regresar a @Html.ActionLink(Model.Project.Name, "Index", new { projectID = Model.ProjectID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

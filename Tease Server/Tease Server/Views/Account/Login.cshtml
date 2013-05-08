@@ -1,0 +1,31 @@
+﻿@model Tease_Server.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<section id="loginForm">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName)
+
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+        <div>
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+        </div>
+        <input type="submit" value="Log in" />
+    </fieldset>
+    <p>
+        @Html.ActionLink("Register", "Register") si aún no lo has hecho.
+    </p>
+}
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
