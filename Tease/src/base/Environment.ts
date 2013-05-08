@@ -8,10 +8,10 @@ class Environment {
 
     constructor() {
         this.toolCount = {
+            audiotool: 0,
             imagetool: 0,
-            imagetool2: 0,
-            imagetool3: 0,
-            audiotool: 0
+            recttool: 0,
+            texttool: 0
         };
 
     }
