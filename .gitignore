@@ -1,3 +1,4 @@
+*.suo
 *.js
 !Tease/src/lib/*.js
 !Tease/src/lib/ace/*.js

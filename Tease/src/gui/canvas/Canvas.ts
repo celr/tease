@@ -110,8 +110,8 @@ class Canvas extends Eventable {
         this.DOMElement.append(element.DOMElement);
         this.setZIndexProperty(element);
         
-        //set toolName
-        element.DOMElement.attr('toolName', element.parentTool.id + this.environment.getNextToolNumber(element.parentTool.id));
+        //set element-name
+        element.DOMElement.attr('element-name', element.parentTool.id + this.environment.getNextToolNumber(element.parentTool.id));
 
         //update nextId
         this.nextElementId = this.nextElementId + 1;
