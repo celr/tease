@@ -8,8 +8,8 @@ class RectangleTool implements Tool extends BackgroundableTool {
         this.displayName = 'Rectangle';
         this.displayImagePath = 'res/rect-tool.png';
 
-        this.properties['width'] = '150px';
-        this.properties['height'] = '150px';
+        this.properties['width'] = '150';
+        this.properties['height'] = '150';
         this.properties['border'] = 'solid black 1px';
         this.properties['background-color'] = '#ccc';
     }

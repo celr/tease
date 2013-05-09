@@ -1,7 +1,7 @@
 ///<reference path="Frame.ts" />
 ///<reference path="../tools/Tool.ts" />
 class ElementTransition {
-    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element, public changeListToNext: {}) {
+    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element) {
     }
 }
 
@@ -11,9 +11,11 @@ module Tease {
         DOMElement: JQuery;
         elementTransition: ElementTransition;
         keyframe: Keyframe;
+        propertyUnits: Object;
 
-        constructor(public parentTool?: Tool) {
+        constructor(public parentTool: Tool, public id: number) {
             this.attributes = {};
+            this.propertyUnits = {};
 
             if (this.parentTool) {
                 // Clone default attributes
@@ -22,13 +24,18 @@ module Tease {
                 for (var i in defaultAttributes) {
                     this.attributes[i] = defaultAttributes[i];
                 }
+
+                var propertyUnits = this.parentTool.propertyUnits;
+                for (var i in propertyUnits) {
+                    this.propertyUnits[i] = propertyUnits[i];
+                }
                                 
                 this.DOMElement = this.parentTool.defaultDOMElement.clone(true);
                 this.DOMElement.css('z-index', '9999');
-                this.parentTool.setAttributesInDOMElement(defaultAttributes, this.DOMElement);
+                this.parentTool.setAttributesInDOMElement(defaultAttributes, propertyUnits, this.DOMElement);
             }
 
-            this.elementTransition = new ElementTransition(null, null, {});
+            this.elementTransition = new ElementTransition(null, null);
         }
 
         setAttributes(attributes: {}) {
@@ -39,25 +46,14 @@ module Tease {
 
         setAttribute(key: string, value: string) {
             this.attributes[key] = value;
-            this.parentTool.setAttributeInDOMElement(key, value, this.DOMElement);
-
-            // Update changelist in transition
-            if (this.elementTransition.previousElement) {
-                this.elementTransition.previousElement.elementTransition.changeListToNext[key] = value;
-            }
+            this.parentTool.setAttributeInDOMElement(key, value, this.propertyUnits[key], this.DOMElement);
         }
 
         getCopy() {
-            var newElement = new Tease.Element();
-            newElement.parentTool = this.parentTool;
+            var newElement = new Tease.Element(this.parentTool, this.id);
             newElement.elementTransition.previousElement = this.elementTransition.previousElement;
             newElement.elementTransition.nextElement = this.elementTransition.nextElement;
 
-            for (var i in this.elementTransition.changeListToNext) {
-                newElement.elementTransition.changeListToNext[i] = this.elementTransition.changeListToNext[i];
-            }
-
-            newElement.DOMElement = this.DOMElement.clone(true);
             newElement.setAttributes(this.attributes);
             return newElement;
         }
@@ -67,9 +63,9 @@ module Tease {
         }
 
         private applyTransition(percentDone: number) {
-            for (var i in this.elementTransition.changeListToNext) {
+            for (var i in this.elementTransition.nextElement.attributes) {
                 var startValue = parseInt(this.attributes[i]);
-                var endValue = parseInt(this.elementTransition.changeListToNext[i]);
+                var endValue = parseInt(this.elementTransition.nextElement.attributes[i]);
                 var currentValue = (endValue - startValue) * this.swingEasing(percentDone) + startValue;
                 this.setAttribute(i, currentValue.toString())
             }

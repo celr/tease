@@ -15,28 +15,32 @@
 // Represents a canvas in the GUI
 // owner: jair
 class Canvas extends Eventable {
-    private currentElements: Object; // Elements currently shown on canvas
+    private elementMap: Object; // Elements currently shown on canvas
     private sizingTool: SizingTool;
     private allowInput: bool;
     private selectionTool: SelectionTool;
     private selectedGroup: ElementGroup;
+    private layerGroups: ElementGroup[];
     private move: bool;
     private SEOptions: SelectedElementOptions;
     private nextElementId: number;
     private canvasElement: Tease.Element;
     private rotationTool: RotationTool;
+    public currentLayerIndex: number;
 
     constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment) {
         super();
+        this.currentLayerIndex = 0;
         this.allowInput = true;
         this.selectedGroup = new ElementGroup(null, this.DOMElement);
+        this.layerGroups = [];
         this.SEOptions = new SelectedElementOptions(this.DOMElement);
         this.sizingTool = new SizingTool();
         this.rotationTool = new RotationTool();
         this.DOMElement.css('position', 'relative');
-        this.currentElements = {};
+        this.elementMap = {};
         this.nextElementId = 0;
-        this.canvasElement = new Tease.Element(new CanvasTool('canvastool'));
+        this.canvasElement = new Tease.Element(new CanvasTool('canvastool'), this.nextElementId++);
         this.canvasElement.setDOMElement(this.DOMElement);
         this.DOMElement.click((e: Event) => {
             this.handleCanvasClick(e);
@@ -55,6 +59,11 @@ class Canvas extends Eventable {
         });
         this.move = false;
         this.DOMElement.css('overflow', 'auto');
+
+        // Create element groups for layers
+        for (var i = 0; i < this.environment.layers.length; i++) {
+            this.createLayerGroup();
+        }
     }
 
     public blockInput() {
@@ -66,7 +75,13 @@ class Canvas extends Eventable {
     }
 
     public clear() {
+        this.sizingTool.erase();
         this.DOMElement.text('');
+        this.elementMap = {};
+
+        for (var i = 0; i < this.layerGroups.length; i++) {
+            this.layerGroups[i].clear();
+        }
     }
 
     public insertRenderedElements(elements: RenderedElement[]) {
@@ -75,14 +90,25 @@ class Canvas extends Eventable {
         }
     }
 
-    public insertElements(elements: Tease.Element[]) {
-        for (var i = 0; i < elements.length; i++) {
-            this.insertElement(elements[i]);
+    public insertElements(elementLayers: Tease.Element[][]) {
+        for (var i = 0; i < elementLayers.length; i++) {
+            for (var j = 0; j < elementLayers[i].length; j++) {
+                this.insertElementInLayer(elementLayers[i][j], i);
+            }
         }
     }
 
-    // Inserts an element into the canvas
+    public createLayerGroup() {
+        var elementGroup = new ElementGroup([], this.DOMElement);
+        this.layerGroups.push(elementGroup);
+    }
+
     public insertElement(element: Tease.Element) {
+        this.insertElementInLayer(element, this.currentLayerIndex);
+    }
+
+    // Inserts an element into the canvas
+    public insertElementInLayer(element: Tease.Element, layerIndex: number) {
         element.DOMElement.click((e: Event) => {
             if (this.currentTool.id == 'pointertool') {
                 e.stopPropagation();
@@ -105,16 +131,16 @@ class Canvas extends Eventable {
             }
         });
         //set id and zIndex properties, insert element into canvas and currentElements
-        element.DOMElement.attr('id', this.nextElementId);
-        this.currentElements[this.nextElementId.toString()] = element;
+        element.DOMElement.attr('id', element.id);
+        this.elementMap[element.id.toString()] = element;
         this.DOMElement.append(element.DOMElement);
         this.setZIndexProperty(element);
         
         //set element-name
         element.DOMElement.attr('element-name', element.parentTool.id + this.environment.getNextToolNumber(element.parentTool.id));
 
-        //update nextId
-        this.nextElementId = this.nextElementId + 1;
+        // Insert element into layer group
+        this.layerGroups[layerIndex].insertElement(element.id.toString(), element);
     }
 
     private setZIndexProperty(element: Tease.Element) {
@@ -132,8 +158,14 @@ class Canvas extends Eventable {
         this.fireEvent('canvasselect', element);
     }
 
+    public selectLayerElements(layerIndex: number) {
+        if (this.layerGroups[layerIndex]) {
+            this.layerGroups[layerIndex].markElements();
+        }
+    }
+
     private handleElementDeleted(element: Tease.Element) {
-        delete this.currentElements[element.DOMElement.attr('id')];
+        delete this.elementMap[element.id.toString()];
         element.DOMElement.remove();
         this.sizingTool.erase();
         this.SEOptions.erase();
@@ -154,12 +186,12 @@ class Canvas extends Eventable {
     private handleCanvasClick(e) {
         if (!(this.currentTool.id == 'pointertool')) {
             if (this.allowInput) {
-                var element = new Tease.Element(this.currentTool);
+                var element = new Tease.Element(this.currentTool, this.nextElementId++);
                 var offset = this.DOMElement.offset();
 
                 element.setAttribute('position', 'absolute');
-                element.setAttribute('top', (e.clientY - offset.top).toString() + 'px');
-                element.setAttribute('left', (e.clientX - offset.left).toString() + 'px');
+                element.setAttribute('top', (e.clientY - offset.top).toString());
+                element.setAttribute('left', (e.clientX - offset.left).toString());
 
                 this.insertElement(element);
                 this.fireEvent('canvasinsert', element);
@@ -174,7 +206,7 @@ class Canvas extends Eventable {
             this.rotationTool.erase();
             this.selectedGroup.eraseDots();
             var that = this;
-            if (!this.selectedGroup.isInGroup(element.DOMElement.attr('id'))) {
+            if (!this.selectedGroup.isInGroup(element.id.toString())) {
                 this.createGroup(element);
             }
             this.selectedGroup.updateInitialPositions();
@@ -202,7 +234,7 @@ class Canvas extends Eventable {
     private handleElementSelect(e: Event, element: Tease.Element) {
         if (this.allowInput) {
             var selectedDOME = <HTMLElement> e.target;
-            this.selectElement(this.currentElements[selectedDOME.id]);
+            this.selectElement(this.elementMap[selectedDOME.id]);
         }
     }
 
@@ -228,7 +260,7 @@ class Canvas extends Eventable {
             function handleUp(event) {
                 document.removeEventListener('mouseup', handleUp);
                 that.DOMElement.off('mousemove', handleMove);
-                that.selectedGroup = that.selectionTool.getSelectedElements(that.currentElements, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().top);
+                that.selectedGroup = that.selectionTool.getSelectedElements(that.elementMap, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().top);
                 that.selectionTool.erase();
                 if (that.selectedGroup.hasMultipleElements()) {
                     that.selectedGroup.markElements();
@@ -250,6 +282,6 @@ class Canvas extends Eventable {
     private createGroup(element: Tease.Element) {
         this.selectedGroup.clear();
         this.selectedGroup = new ElementGroup(null, this.DOMElement);
-        this.selectedGroup.insertElement(element.DOMElement.attr('id'), element);
+        this.selectedGroup.insertElement(element.id.toString(), element);
     }
 }

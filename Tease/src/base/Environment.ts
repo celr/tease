@@ -16,28 +16,29 @@ class Environment {
 
     }
 
-    // Returns list containing the elements on all visible layers in a specified timeline position
+    // Returns list containing the visible elements by layer
     public getVisibleElements(position: number) {
-        var elements = [];
+        var elementLayers = [];
 
         for (var i = 0; i < this.layers.length; i++) {
+            elementLayers.push([]);
             if (this.layers[i].visible) {
                 var visibleKeyframe = this.layers[i].findKeyframeForPosition(position);
 
-                for (var i = 0; i < visibleKeyframe.elements.length; i++) {
-                    var elementToInsert = visibleKeyframe.elements[i];
-
-                    if (visibleKeyframe.elements[i].hasTransition() && visibleKeyframe.position != position) {
-                        var transitionPercent = position / visibleKeyframe.elements[i].elementTransition.nextElement.keyframe.position;
-                        elementToInsert = visibleKeyframe.elements[i].getElementWithTransition(transitionPercent);
+                for (var j = 0; j < visibleKeyframe.elements.length; j++) {
+                    var elementToInsert = visibleKeyframe.elements[j];
+                    
+                    if (visibleKeyframe.elements[j].hasTransition() && visibleKeyframe.position != position) {
+                        var transitionPercent = position / visibleKeyframe.elements[j].elementTransition.nextElement.keyframe.position;
+                        elementToInsert = visibleKeyframe.elements[j].getElementWithTransition(transitionPercent);
                     }
 
-                    elements.push(elementToInsert);
+                    elementLayers[i].push(elementToInsert);
                 }
             }
         }
 
-        return elements;
+        return elementLayers;
     }
 
     public getCurrentToolNumber(id: string) {

@@ -11,6 +11,7 @@ class BaseTool implements Tool {
     
     // Attributes and properties
     public properties: Object;
+    public propertyUnits: Object;
     public sizingToolAttributes: Object; // Properties that indicate how sizing tool manipulates this tool
     public propertyMapper: PropertyMapper;
 
@@ -28,6 +29,11 @@ class BaseTool implements Tool {
             visibility: 'visible',
             border: 'none',
             position: 'absolute'
+        };
+
+        this.propertyUnits = {
+            left: 'px',
+            top: 'px'
         };
 
         this.propertyMapper = new PropertyMapper();
@@ -55,15 +61,15 @@ class BaseTool implements Tool {
         ];
     }
 
-    public setAttributesInDOMElement(attributes: Object, DOMElement: JQuery) {
-        this.propertyMapper.applyAttributes(attributes, DOMElement);
+    public setAttributesInDOMElement(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        this.propertyMapper.applyAttributes(attributes, propertyUnits, DOMElement);
     }
 
-    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
-        this.propertyMapper.applyAttribute(property, value, DOMElement);
+    public setAttributeInDOMElement(property: string, value: string, unit: string, DOMElement: JQuery) {
+        this.propertyMapper.applyAttribute(property, value, unit, DOMElement);
     }
 
-    public getAnimationPropertiesFromChangeList(changeList: Object) {
-        this.propertyMapper.getAnimationProperties(changeList);
+    public getAnimationPropertiesFromChangeList(changeList: Object, propertyUnits: Object) {
+        this.propertyMapper.getAnimationProperties(changeList, propertyUnits);
     }
 }

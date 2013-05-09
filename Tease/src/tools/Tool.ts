@@ -13,7 +13,8 @@ interface Tool {
     sizingToolAttributes: Object;
     displayGroups: PropertyDisplayGroup[]; // Tells us how to display the tool's properties 
     propertyMapper: PropertyMapper;
+    propertyUnits: Object;
 
-    setAttributeInDOMElement(property: string, value: string, JQuery): void;
-    setAttributesInDOMElement(attributes: Object, DOMElement: JQuery): void;
+    setAttributeInDOMElement(property: string, value: string, propertyUnit: string, DOMElement: JQuery): void;
+    setAttributesInDOMElement(attributes: Object, propertyUnits: Object, DOMElement: JQuery): void;
 }

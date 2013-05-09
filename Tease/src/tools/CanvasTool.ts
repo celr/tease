@@ -9,12 +9,14 @@ class CanvasTool implements Tool {
     public sizingToolAttributes: {};
     public displayGroups: PropertyDisplayGroup[];
     private propertyMapper: PropertyMapper;
+    private propertyUnits: Object;
 
 
 
     constructor(public id: string) {
         this.displayName = 'Canvas';
         this.properties = {};
+        this.propertyUnits = {};
 
         this.properties['width'] = '650';
         this.properties['height'] = '500';
@@ -22,16 +24,22 @@ class CanvasTool implements Tool {
         this.defaultDOMElement = $('<div></div>');
     }
 
-    public setAttributesInDOMElement(attributes: {}, DOMElement: JQuery) {
+    public setAttributesInDOMElement(attributes: {}, propertyUnits: {}, DOMElement: JQuery) {
         
         for (var i in attributes) {
             var value = attributes[i];
+
+            var unit = '';
+            if (propertyUnits[i]) {
+                unit = propertyUnits[i];
+            }
+
             switch (i) {
                 case 'width':
-                    DOMElement.css('width', value + 'px');
+                    DOMElement.css('width', value + unit);
                     break;
                 case 'height':
-                    DOMElement.css('height', value + 'px');
+                    DOMElement.css('height', value + unit);
                     break;
                 default:
                     break;
@@ -39,12 +47,7 @@ class CanvasTool implements Tool {
         }
     }
 
-    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
+    public setAttributeInDOMElement(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
 
-    }
-
-    public getAttributesFromDOMElement(DOMElement: JQuery) {
-        var attributes = {};
-        return attributes;
     }
 }

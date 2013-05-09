@@ -23,7 +23,7 @@ class RotationTool {
             this.handleMouseDown(e);
         });
         this.image.css('top', (parseInt(element.getAttribute('top')) - this.toolsize) + 'px');
-        this.image.css('left', element.getAttribute('left'));
+        this.image.css('left', element.getAttribute('left') + element.propertyUnits['left']);
         this.image.css('transform', element.DOMElement.css('transform'));
         this.image.css('transform-origin', 'left top');
         this.image.appendTo(this.$canvas);

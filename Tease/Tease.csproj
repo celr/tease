@@ -71,7 +71,17 @@
     </Content>
     <TypeScriptCompile Include="src\gui\canvas\SizingTool.ts" />
     <Content Include="src\gui\canvas\ElementGroup.ts" />
+    <Content Include="src\gui\canvas\ElementGroup.js">
+      <DependentUpon>ElementGroup.ts</DependentUpon>
+    </Content> 
+    <Content Include="src\gui\canvas\RotationTool.ts" />
+    <Content Include="src\gui\canvas\RotationTool.js">
+      <DependentUpon>RotationTool.ts</DependentUpon>
+    </Content> 
     <Content Include="src\gui\canvas\SelectedElementOptions.ts" />
+    <Content Include="src\gui\canvas\SelectedElementOptions.js">
+      <DependentUpon>SelectedElementOptions.ts</DependentUpon>
+    </Content> 
     <Content Include="src\gui\canvas\SelectionTool.ts" />
     <Content Include="src\gui\canvas\SizingTool.js">
       <DependentUpon>SizingTool.ts</DependentUpon>
@@ -287,7 +297,6 @@
     <Content Include="src\tools\RectangleTool.js">
       <DependentUpon>RectangleTool.ts</DependentUpon>
     </Content>
-    <Content Include="src\tools\SizableTool.ts" />
     <TypeScriptCompile Include="src\tools\TextTool.ts" />
     <Content Include="src\tools\TextTool.js">
       <DependentUpon>TextTool.ts</DependentUpon>

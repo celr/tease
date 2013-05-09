@@ -10,11 +10,20 @@ class Layer {
         this.keyframes = [new Keyframe(1)];
     }
 
-    // Inserts a frame to the layer
+    // Inserts a frame to the layer, returns its index in the keyframe list
     public insertKeyframe(keyframe: Keyframe) {
         var i;
         for (i = 0; i < this.keyframes.length && this.keyframes[i].position <= keyframe.position; i++);
         this.keyframes.splice(i, 0, keyframe);
+        return i;
+    }
+
+    // Removes the keyframe in the specified position, returns the index of the removed keyframe
+    public removeKeyframe(position: number) {
+        var keyframeIndex = this.findFrameIndexForPosition(position);
+        delete this.keyframes[keyframeIndex];
+        this.keyframes.splice(keyframeIndex, 1);
+        return keyframeIndex;
     }
 
     // Inserts an element in the specified timeline position

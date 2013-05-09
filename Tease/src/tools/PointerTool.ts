@@ -1,4 +1,3 @@
-///<reference path="SizableTool.ts" />
 ///<reference path="Tool.ts" />
 
 class PointerTool implements Tool{
@@ -11,7 +10,7 @@ class PointerTool implements Tool{
     public sizingToolAttributes: Object;
     public displayGroups: PropertyDisplayGroup[];
     private propertyMapper: PropertyMapper;
-
+    private propertyUnits: Object;
     
 
     constructor(public id: string) {
@@ -19,14 +18,9 @@ class PointerTool implements Tool{
         this.displayImagePath = 'res/pointerTool.png';
     }
 
-    public setAttributesInDOMElement(attributes: Object, DOMElement: JQuery) {
+    public setAttributesInDOMElement(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
     }
 
-    public setAttributeInDOMElement(property: string, value: string, DOMElement: JQuery) {
-    }
-
-    public getAttributesFromDOMElement(DOMElement: JQuery) {
-        var attributes = {};
-        return attributes;
+    public setAttributeInDOMElement(property: string, value: string, propertyUnits: Object, DOMElement: JQuery) {
     }
 }

@@ -128,18 +128,18 @@ class SizingTool {
 
     handleUpdateTarget(movX: number, movY: number, deltaLeft: number, deltaTop: number, that: SizingTool) {
         if (movY == that.dots['north']) {
-            that.target.setAttribute('height', (that.targetHeight - deltaTop).toString() + 'px');
-            that.target.setAttribute('top', (that.targetTop + deltaTop).toString() + 'px');
+            that.target.setAttribute('height', (that.targetHeight - deltaTop).toString());
+            that.target.setAttribute('top', (that.targetTop + deltaTop).toString());
         }
         if (movY == that.dots['south']) {
-            that.target.setAttribute('height', (that.targetHeight + deltaTop).toString() + 'px');
+            that.target.setAttribute('height', (that.targetHeight + deltaTop).toString());
         }
         if (movX == that.dots['east']) {
-            that.target.setAttribute('width', (that.targetWidth + deltaLeft).toString() + 'px');
+            that.target.setAttribute('width', (that.targetWidth + deltaLeft).toString());
         }
         if (movX == that.dots['west']) {
-            that.target.setAttribute('width', (that.targetWidth - deltaLeft).toString() + 'px');
-            that.target.setAttribute('left', (that.targetLeft + deltaLeft).toString() + 'px');
+            that.target.setAttribute('width', (that.targetWidth - deltaLeft).toString());
+            that.target.setAttribute('left', (that.targetLeft + deltaLeft).toString());
         }
     }
 

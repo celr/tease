@@ -6,12 +6,12 @@ interface PropertyMapping {
     mapProperty(property: string, details: any): void;
 
     // Applies an attribute object to a DOM Element
-    applyAttributes(attributes: Object, DOMElement: JQuery): void;
+    applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery): void;
 }
 
 interface AnimatablePropertyMapping extends PropertyMapping {
     // Generates the animation properties and appends them to the specified properties object.
-    appendAnimationProperties(changeList: Object, properties: Object): void;
+    appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object): void;
 }
 
 // Represents a direct mapping between abstract and CSS property domains
@@ -27,26 +27,25 @@ class DirectCSSPropertyMapping implements AnimatablePropertyMapping {
         this.propertyMap.push(property);
     }
 
-    public applyAttributes(attributes: Object, DOMElement: JQuery) {
-        for (var i in this.propertyMap) {
-            var property = this.propertyMap[i];
-            if (attributes[property]) {
-                DOMElement.css(property, attributes[property]);
-            }
+    public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        for (var i in attributes) {
+            this.applyAttribute(i, attributes[i], propertyUnits[i], DOMElement);
         }
     }
 
-    public appendAnimationProperties(changeList: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
         for (var i in changeList) {
-            properties[i] = changeList[i];
+            var unit = propertyUnits[i] || '';
+            properties[i] = changeList[i] + unit;
         }
     }
 
-    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+    public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
         var result = false;
 
         if (this.propertyMap.indexOf(property) != -1) {
-            DOMElement.css(property, value);
+            var unit = propertyUnit || ''; 
+            DOMElement.css(property, value + unit);
             result = true;
         }
 
@@ -65,46 +64,42 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
         this.propertyMap[property] = transformMap;
     }
 
-    public applyAttributes(attributes: Object, DOMElement: JQuery) {
-        for (var property in this.propertyMap) {
-            if (attributes[property]) {
-                this.expandProperty(property, attributes[property],
-                    (targetProperty: string, targetValue: string) => {
-                        DOMElement.css(targetProperty, targetValue);
-                    }
-                );
-            }
+    public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        for (var i in attributes) {
+            this.applyAttribute(i, attributes[i], propertyUnits[i], DOMElement);
         }
     }
 
-    public appendAnimationProperties(changeList: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
         for (var i in changeList) {
-            this.expandProperty(i, changeList[i],
-                (targetProperty: string, targetValue: string) => {
-                    properties[targetProperty] = targetValue;
+            this.expandProperty(i, changeList[i], propertyUnits[i],
+                (targetProperty: string, targetValue: string, targetUnit: string) => {
+                    var unit = targetUnit || '';
+                    properties[targetProperty] = targetValue + unit;
                 }
             );
         }
     }
 
-    private expandProperty(property: string, value: string, callback: Function) {
+    private expandProperty(property: string, value: string, propertyUnit: string, callback: Function) {
         var transformMap = this.propertyMap[property];
 
         if (transformMap) {
             for (var targetProperty in transformMap) {
-                callback(targetProperty, transformMap(value));
+                callback(targetProperty, transformMap(value), propertyUnit);
 
             }
         }
     }
 
-    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+    public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
         var result = false;
 
         if (this.propertyMap[property]) {
-            this.expandProperty(property, value,
-                (targetProperty: string, targetValue: string) => {
-                    DOMElement.css(targetProperty, targetValue);
+            this.expandProperty(property, value, propertyUnit,
+                (targetProperty: string, targetValue: string, targetUnit: string) => {
+                    var unit = targetUnit || '';
+                    DOMElement.css(targetProperty, targetValue + unit);
                 });
             result = true;
         }
@@ -125,19 +120,18 @@ class CallbackPropertyMapping implements PropertyMapping {
         this.propertyMap[property] = callback;
     }
 
-    public applyAttributes(attributes: Object, DOMElement: JQuery) {
-        for (var property in this.propertyMap) {
-            if (attributes[property]) {
-                this.propertyMap[property](property, attributes[property], DOMElement);
-            }
+    public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        for (var i in attributes) {
+            this.applyAttribute(i, attributes[i], propertyUnits[i], DOMElement);
         }
     }
 
-    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+    public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
         var result = false;
-
+        
         if (this.propertyMap[property]) {
-            this.propertyMap[property](property, value, DOMElement);
+            var unit = propertyUnit || '';
+            this.propertyMap[property](property, value + unit, DOMElement);
         }
 
         return result;
@@ -156,27 +150,27 @@ class RenameCSSPropertyMapping implements AnimatablePropertyMapping {
         this.propertyMap[property] = targetProperty;
     }
 
-    public applyAttributes(attributes: Object, DOMElement: JQuery) {
-        for (var property in this.propertyMap) {
-            if (attributes[property]) {
-                DOMElement.css(this.propertyMap[property], attributes[property]);
-            }
+    public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        for (var i in attributes) {
+            this.applyAttribute(i, attributes[i], propertyUnits[i], DOMElement);
         }
     }
 
-    public appendAnimationProperties(changeList: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
         for (var i in changeList) {
             if (this.propertyMap[i]) {
-                properties[this.propertyMap[i]] = changeList[i];
+                var unit = propertyUnits[i] || '';
+                properties[this.propertyMap[i]] = changeList[i] + unit;
             }
         }
     }
-
-    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
+    
+    public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
         var result = false;
 
         if (this.propertyMap[property]) {
-            DOMElement.css(this.propertyMap[property], value);
+            var unit = propertyUnit || '';
+            DOMElement.css(this.propertyMap[property], value + propertyUnit);
             result = true;
         }
 
@@ -197,26 +191,26 @@ class PropertyMapper {
         this.multipleCSSMapping = new MultipleCSSPropertyMapping();
     }
 
-    public applyAttributes(attributes: Object, DOMElement: JQuery) {
-        this.directCSSMapping.applyAttributes(attributes, DOMElement);
-        this.callbackMapping.applyAttributes(attributes, DOMElement);
-        this.renameCSSMapping.applyAttributes(attributes, DOMElement);
-        this.multipleCSSMapping.applyAttributes(attributes, DOMElement);
+    public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        this.directCSSMapping.applyAttributes(attributes, propertyUnits, DOMElement);
+        this.callbackMapping.applyAttributes(attributes, propertyUnits, DOMElement);
+        this.renameCSSMapping.applyAttributes(attributes, propertyUnits, DOMElement);
+        this.multipleCSSMapping.applyAttributes(attributes, propertyUnits, DOMElement);
     }
 
-    public applyAttribute(property: string, value: string, DOMElement: JQuery) {
-        this.directCSSMapping.applyAttribute(property, value, DOMElement);
-        this.callbackMapping.applyAttribute(property, value, DOMElement);
-        this.renameCSSMapping.applyAttribute(property, value, DOMElement);
-        this.multipleCSSMapping.applyAttribute(property, value, DOMElement);
+    public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
+        this.directCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
+        this.callbackMapping.applyAttribute(property, value, propertyUnit, DOMElement);
+        this.renameCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
+        this.multipleCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
     }
 
-    public getAnimationProperties(changeList: Object) {
+    public getAnimationProperties(changeList: Object, propertyUnits: Object) {
         var animationProperties = {};
 
-        this.directCSSMapping.appendAnimationProperties(changeList, animationProperties);
-        this.renameCSSMapping.appendAnimationProperties(changeList, animationProperties);
-        this.multipleCSSMapping.appendAnimationProperties(changeList, animationProperties);
+        this.directCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
+        this.renameCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
+        this.multipleCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
 
         return animationProperties;
     }

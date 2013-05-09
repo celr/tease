@@ -6,8 +6,11 @@ class DimensionableTool extends BaseTool implements Tool {
         super(id, DOMElement);
 
         // Set default values
-        this.properties['width'] = '300px';
-        this.properties['height'] = '300px';
+        this.properties['width'] = '300';
+        this.properties['height'] = '300';
+        
+        this.propertyUnits['width'] = 'px';
+        this.propertyUnits['height'] = 'px';
 
         this.propertyMapper.directCSSMapping.mapProperty('width');
         this.propertyMapper.directCSSMapping.mapProperty('height');

@@ -16,6 +16,7 @@ class MainController {
     private timeline: Timeline;
     private animationSettings: AnimationSettings;
     private propertyDisplayMap: Object;
+    private elementLayerMap: Object;
 
     private currentLayerIndex;
 
@@ -25,6 +26,7 @@ class MainController {
         this.environment = new Environment;
         this.environment.layers = [new Layer("Layer 1", true, true, 0)];
         this.currentLayerIndex = 0;
+        this.elementLayerMap = {};
 
         // Initialize GUI components
         this.toolbar = new Toolbar($('#toolbar'));
@@ -41,6 +43,10 @@ class MainController {
             this.handleLayerSelect(e);
         }, true);
 
+        this.timeline.addEventListener('layercreate', (e: CustomEvent) => {
+            this.handleLayerCreate(e);
+        }, true);
+
         this.timeline.addEventListener('playbuttonclick', (e: CustomEvent) => {
             this.handlePlayButtonClick(e);
         }, true);
@@ -48,7 +54,7 @@ class MainController {
         this.canvas.addEventListener('canvasselect', (e: CustomEvent) => {
             this.handleCanvasSelect(e);
         }, true);
-
+        
         this.canvas.addEventListener('canvasinsert', (e: CustomEvent) => {
             this.handleCanvasInsert(e);
         }, true);
@@ -81,29 +87,40 @@ class MainController {
         var elements = this.environment.getVisibleElements(<number> e.detail);
         this.canvas.clear();
         this.canvas.insertElements(elements);
-
-        if (elements.length > 0) {
-            this.canvas.selectElement(elements[0]);
-        }
-
         this.animationSettings.initialPosition = <number> e.detail;
+        //this.canvas.selectLayerElements(this.currentLayerIndex);
     }
 
     // Event handler for layerselect timeline event
     private handleLayerSelect(e: CustomEvent) {
         this.currentLayerIndex = <number> e.detail;
+        this.canvas.currentLayerIndex = this.currentLayerIndex;
+    }
+
+    // Event handler for layercreate timeline event
+    private handleLayerCreate(e: CustomEvent) {
+        this.canvas.createLayerGroup();
     }
 
     // Event handler for canvasselect canvas event
     private handleCanvasSelect(e: CustomEvent) {
-        this.propertyEditor.currentElement = <Tease.Element> e.detail;
-        this.propertyEditor.renderPropertiesForElement(<Tease.Element> e.detail);
-    }
+        var element = <Tease.Element> e.detail;
+        this.propertyEditor.currentElement = element;
+        this.propertyEditor.renderPropertiesForElement(element);
 
+        if (element.parentTool.id != 'canvastool') {
+            var elementId = element.id.toString();
+            this.timeline.selectCurrentPositionInLayer(this.elementLayerMap[elementId]);
+        }
+    }
+    
     // Event handler for canvasinsert canvas event
     private handleCanvasInsert(e: CustomEvent) {
         // Add element to the environment
-        this.timeline.selectedFrame.addElement(<Tease.Element> e.detail);
+        var element = <Tease.Element> e.detail;
+        var elementId = element.id.toString();
+        this.timeline.selectedFrame.addElement(element);
+        this.elementLayerMap[elementId] = this.currentLayerIndex;
     }
 
     // Event handler for toolselect toolbar event

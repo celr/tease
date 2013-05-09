@@ -122,6 +122,20 @@
     display: inline-block;
 }
 
+.timeline-frame-transition a.timeline-frame-link {
+    background: url('../res/transition-frame.png') repeat-x  #e9dfff;
+    background-position-y: center;
+    border-right: none;
+    padding-right: 1px;
+}
+
+.timeline-frame-transition-arrow a.timeline-frame-link {
+    background: url('../res/transition-frame-arrow.png') no-repeat  #e9dfff;
+    background-position-y: center;
+    border-right: none;
+    padding-right: 1px;
+}
+
 .timeline-frame-top {
     border-top: dashed 2px #5c5c5c;
 }
