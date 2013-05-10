@@ -6,6 +6,7 @@
 ///<reference path="base/Environment.ts" />
 ///<reference path="base/AnimationRenderer.ts" />
 ///<reference path="base/code_generation/CodeGenerator.ts" />
+///<reference path="base/PageSynchronizer.ts" />
 
 // Manages system wide events and global environment
 class MainController {
@@ -20,7 +21,8 @@ class MainController {
 
     private currentLayerIndex: number;
     private fps: number;
-
+	private pageSynchrohizer: PageSynchronizer;
+	
     // Initializes the app
     constructor() {
         // Initialize layers
@@ -71,15 +73,18 @@ class MainController {
 
         // Initialize animation settings
         this.animationSettings = new AnimationSettings(1, this.fps); // TODO: Set fps from GUI
+		
+		// Initialize Synchronizer
+        this.pageSynchrohizer = new PageSynchronizer(this.environment, this.animationSettings);
     }
 
     // Event handler for play button click
     private handlePlayButtonClick(e: CustomEvent) {
         var animationRenderer = new AnimationRenderer();
         var renderedEnv = animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
-        // TODO(chadan): Remove this 2 lines. When needed.
-        var codeGenerator: CodeGenerator = new CodeGenerator;
-        var pageCode = codeGenerator.generate(renderedEnv);
+        // TODO(chadan): Remove this line. When needed.
+        this.pageSynchrohizer.updatePageFiles();
+		
         this.timeline.hideWorkspace();
         this.canvas.clear();
         this.canvas.blockInput();
