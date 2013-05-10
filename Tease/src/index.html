@@ -59,22 +59,22 @@
         <div id="timeline" class="navbar-inner">
             <div class="container-fluid">
                 <div class="row-fluid">
-                    <img src="res/play-icon.png" id="play-button" />
+                    <img src="res/play-icon.png" id="play-button" /> <img src="res/stop-icon.png" id="stop-button" />
                 </div>
-                <div class="row-fluid">                                    
+                <div id ="timeline-workspace" class="row-fluid">                                    
                     <div id="timeline-layers" class="span2">
                         <div class="timeline-layercontrols"><img id="newlayer-btn" src="res/new-layer.jpg" /> <img id="trashlayer-btn" src="res/trash.gif" /></div>
                         <div id="timeline-layerlist"></div>
                     </div>
-                    <div id="timeline-framelist" class="span19">
+                    <div id="timeline-framelist" class="span20">
                         <div id="timeline-numbers"></div>
                         <div id="timeline-ruler"></div>
                         <div id="timeline-frames">
                         </div>
                     </div>
-                    <div id="frame-properties" class="span3">
-                        Frame rate: <span id="framerate-value">12</span> fps
-                        <br />Tiempo total: <span id="totaltime-value">0</span> sec
+
+                    <div id="timeline-options" class="span2">
+                        <img id="timelinenav-leftbutton" src="res/previousframes-icon.png" /> <img id="timelinenav-rightbutton" src="res/nextframes-icon.png" />
                     </div>
                 </div>
                 <div class="nav-collapse collapse">

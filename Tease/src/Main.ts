@@ -18,7 +18,8 @@ class MainController {
     private propertyDisplayMap: Object;
     private elementLayerMap: Object;
 
-    private currentLayerIndex;
+    private currentLayerIndex: number;
+    private fps: number;
 
     // Initializes the app
     constructor() {
@@ -27,12 +28,13 @@ class MainController {
         this.environment.layers = [new Layer("Layer 1", true, true, 0)];
         this.currentLayerIndex = 0;
         this.elementLayerMap = {};
+        this.fps = 10;
 
         // Initialize GUI components
         this.toolbar = new Toolbar($('#toolbar'));
         this.canvas = new Canvas($('#canvas'), this.toolbar.currentTool, this.environment);
         this.propertyEditor = new PropertyEditor($('#propertyeditor'));
-        this.timeline = new Timeline($('#timeline'), this.environment, { framerate: 12, defaultLength: 30 }); // TODO: Replace settings with real objects
+        this.timeline = new Timeline($('#timeline'), this.environment, this.fps); // TODO: Replace settings with real objects
 
         // Add event handlers
         this.timeline.addEventListener('frameselect', (e: CustomEvent) => {
@@ -51,6 +53,10 @@ class MainController {
             this.handlePlayButtonClick(e);
         }, true);
 
+        this.timeline.addEventListener('stopbuttonclick', (e: CustomEvent) => {
+            this.handleStopButtonClick(e);
+        }, true);
+
         this.canvas.addEventListener('canvasselect', (e: CustomEvent) => {
             this.handleCanvasSelect(e);
         }, true);
@@ -64,7 +70,7 @@ class MainController {
         }, true);
 
         // Initialize animation settings
-        this.animationSettings = new AnimationSettings(1, 24); // TODO: Set fps from GUI
+        this.animationSettings = new AnimationSettings(1, this.fps); // TODO: Set fps from GUI
     }
 
     // Event handler for play button click
@@ -74,12 +80,24 @@ class MainController {
         // TODO(chadan): Remove this 2 lines. When needed.
         var codeGenerator: CodeGenerator = new CodeGenerator;
         var pageCode = codeGenerator.generate(renderedEnv);
+        this.timeline.hideWorkspace();
         this.canvas.clear();
         this.canvas.blockInput();
         this.canvas.insertRenderedElements(renderedEnv.renderedElements);
+        $('#play-button').hide();
+        $('#stop-button').show();
         renderedEnv.play(() => {
             this.canvas.unblockInput();
+            this.handleStopButtonClick(e);
         });
+    }
+
+    // Event handler for stop button click
+    private handleStopButtonClick(e: CustomEvent) {
+        $('#play-button').show();
+        $('#stop-button').hide();
+        this.timeline.showWorkspace();
+        this.timeline.selectFirstFrame();
     }
 
     // Event handler for frameselect timeline event

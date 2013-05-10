@@ -15,6 +15,16 @@ class Keyframe extends Frame {
         this.elements = [];
     }
 
+    // Returns whether any element in the frame contains transitions
+    public hasTransition() {
+        var res = false;
+        for (var i = 0; i < this.elements.length; i++) {
+            res = this.elements[i].hasTransition();
+            if (res) break;
+        }
+        return res;
+    }
+
     // Adds copies of the specified elements to the keyframe
     public copyElements(copyElements: Tease.Element[]) {
         for (var i = 0; i < copyElements.length; i++) {

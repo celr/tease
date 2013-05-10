@@ -14,12 +14,17 @@ class Timeline extends Eventable {
     private selectedLayerGUI: JQuery;
     private frameOptionsGUI: JQuery;
     private selectedFrameGUI: JQuery;
+    private workspaceGUI: JQuery;
+    private timelineNumbersGUI: JQuery;
 
     // Indexes
     private selectedLayerIndex: number;
     private selectedFrameIndex: number;
+    private nextLayerNum: number;
+    private numFrames: number; // Number of frames we are able to draw
+    private startPosition: number; // First position shown on timeline
 
-    constructor(private element: JQuery, private environment: any, private timelineSettings: any) {
+    constructor(private element: JQuery, private environment: Environment, private fps: number) {
         super();
 
         // Get different containers within the timeline DOM Element
@@ -28,18 +33,19 @@ class Timeline extends Eventable {
         this.framePropertiesGUI = this.element.find('#frame-properties');
         this.frameContainerGUI = this.frameListGUI.find('#timeline-frames');
         this.frameOptionsGUI = this.element.find('#frame-options');
-
-        // Set general information
-        this.framePropertiesGUI.find('#framerate-value').text(timelineSettings.framerate);
-        this.framePropertiesGUI.find('#totaltime-value').text(timelineSettings.defaultLength);
+        this.workspaceGUI = this.element.find('#timeline-workspace');
+        this.timelineNumbersGUI = this.frameListGUI.find('#timeline-numbers');
+        this.nextLayerNum = this.environment.layers.length + 1;
+        this.numFrames = Math.floor(this.frameContainerGUI.innerWidth() / 16);
+        this.startPosition = 1;
 
         // Add event listeners for adding / removing layers
         this.element.find('#newlayer-btn').click((e: Event) => {
             this.addNewLayer();
         });
-
+        
         this.element.find('#trashlayer-btn').click((e: Event) => {
-            this.trashLayer();
+            this.trashCurrentLayer();
         });
 
         // Add event listener for play button
@@ -47,42 +53,102 @@ class Timeline extends Eventable {
             this.fireEvent('playbuttonclick', e);
         });
 
+        this.element.find('#stop-button').hide();
+
+        this.element.find('#stop-button').click((e: Event) => {
+            this.fireEvent('stopbuttonclick', e);
+        });
+
+        // Add event listener for timeline navigation
+        this.element.find('#timelinenav-leftbutton').click((e: Event) => {
+            this.moveTimelineToLeft();
+        });
+
+        this.element.find('#timelinenav-rightbutton').click((e: Event) => {
+            this.moveTimelineToRight();
+        });
+
         this.drawTimeline();
 
         // Select first frame
+        this.selectFirstFrame();
+    }
+
+    public selectFirstFrame() {
         this.selectFrame(this.frameContainerGUI.find('div .timeline-frame').first());
+    }
+
+    public showWorkspace() {
+        this.workspaceGUI.show(300);
+    }
+
+    public hideWorkspace() {
+        this.workspaceGUI.hide(300);
     }
 
     public selectCurrentPositionInLayer(layerIndex: number) {
         this.selectLayerByIndex(layerIndex);
-        this.highlightFrameByPosition(this.selectedFrameIndex + 1);
+        this.highlightFrameByPosition(this.selectedFrameIndex + this.startPosition);
     }
 
     private selectLayerByIndex(layerIndex: number) {
         this.selectLayer($(this.layerListGUI.children()[layerIndex]));
     }
+
+    private getPadding(num: number) {
+        var res = num.toString();
+        if (num < 10) {
+            res = '0' + res;
+        }
+        return res;
+    }
+
+    private moveTimelineToLeft() {
+        if (this.startPosition > 1) {
+            this.startPosition -= this.numFrames;
+            this.clearTimelineNumbers();
+            this.redrawTimeline(); // Update timeline GUI
+            this.selectFrameByPosition(this.startPosition);
+        }
+    }
+
+    private moveTimelineToRight() {
+        this.startPosition += this.numFrames;
+        this.clearTimelineNumbers();
+        this.redrawTimeline(); // Update timeline GUI
+        this.selectFrameByPosition(this.startPosition);
+    }
+
+    private clearTimelineNumbers() {
+        this.timelineNumbersGUI.empty();
+    }
     
-    private drawTimelineRulerNumbers(e: JQuery) {
-        // TODO: fix number margin according to number of digits.
+    private drawTimelineRulerNumbers() {
+        var e = this.timelineNumbersGUI;
+        var currMin = 0;
+        var currSec = 0;
 
-        var limit = this.frameContainerGUI.innerWidth() / 16;
-        for (var i = 0; i <= limit; i += 5) {
-            var num;
+        var totalSec = Math.floor(this.startPosition / this.fps);
+        currMin = Math.floor(totalSec / 60);
+        currSec = totalSec % 60;
 
-            if (i == 0) {
-                num = 1;
-            } else {
-                num = i;
+        for (var i = 0; i < this.numFrames; i += this.fps) {
+            
+            if (i != 0 && i % this.fps == 0) {
+                currSec++;
             }
 
-            $('<span class="timeline-number">' + num + '</span>').appendTo(e);
+            if ((i + 1) % (60 * this.fps) == 0) {
+                currMin++;
+            }
+
+            $('<span class="timeline-number">' + this.getPadding(currMin) + ':' + this.getPadding(currSec) + '</span>').appendTo(e);
         }
     }
 
     private drawTimeline() {
         // Create timeline ruler
-        var timelineNumbers = this.frameListGUI.find('#timeline-numbers');
-        this.drawTimelineRulerNumbers(timelineNumbers);
+        this.drawTimelineRulerNumbers();
 
         for (var i in this.environment.layers) {
             var layer = this.drawLayer(this.environment.layers[i]);
@@ -92,6 +158,17 @@ class Timeline extends Eventable {
                 this.selectLayer(layer);
             }
         }
+    }
+
+    private redrawTimeline() {
+        // Create timeline ruler
+        this.drawTimelineRulerNumbers();
+
+        for (var i = 0; i < this.environment.layers.length; i++) {
+            this.redrawLayerFrames(this.environment.layers[i], i);
+        }
+
+        this.selectLayerByIndex(this.selectedLayerIndex);
     }
 
     private unselectLayer(layer: JQuery) {
@@ -134,8 +211,15 @@ class Timeline extends Eventable {
         frame.removeClass('timeline-frame-selected');
     }
 
+    private selectFrameByPosition(position: number) {
+        var frameIndex = position - this.startPosition;
+        var frame = $($(this.frameListGUI.find('#timeline-frames').children()[this.selectedLayerIndex]).find('.timeline-frame')[frameIndex]);
+        this.selectFrame(frame);
+    }
+
     private highlightFrameByPosition(position: number) {
-        var frame = $($(this.frameListGUI.find('#timeline-frames').children()[this.selectedLayerIndex]).find('.timeline-frame')[position - 1]);
+        var frameIndex = position - this.startPosition;
+        var frame = $($(this.frameListGUI.find('#timeline-frames').children()[this.selectedLayerIndex]).find('.timeline-frame')[frameIndex]);
         this.highlightFrame(frame); // TODO: Break this down
     }
 
@@ -146,26 +230,20 @@ class Timeline extends Eventable {
         frame.addClass('timeline-frame-selected');
         this.selectedFrameGUI = frame;
         this.selectedFrameIndex = frame.index();
-        this.selectedFrame = this.selectedLayer.findKeyframeForPosition(this.selectedFrameIndex + 1);
+        this.selectedFrame = this.selectedLayer.findKeyframeForPosition(this.selectedFrameIndex + this.startPosition);
     }
 
     private selectFrame(frame: JQuery) {
         this.highlightFrame(frame);
-        this.fireEvent('frameselect', this.selectedFrameIndex + 1);
+        this.fireEvent('frameselect', this.selectedFrameIndex + this.startPosition);
     }
 
     private insertKeyframe() {
         this.selectedFrameGUI.addClass('timeline-frame-keyframe');
 
-        var keyframe = new Keyframe(this.selectedFrameIndex + 1);
+        var keyframe = new Keyframe(this.selectedFrameIndex + this.startPosition);
         this.environment.layers[this.selectedLayerIndex].insertKeyframe(keyframe);
         this.selectFrame(this.selectedFrameGUI); // Reselect frame to update dependencies (ie. Canvas)
-    }
-
-    private deleteFrame() {
-    }
-
-    private emptyFrame() {
     }
 
     private handleTimelineFrameClick(e: Event) {
@@ -177,25 +255,31 @@ class Timeline extends Eventable {
     }
 
     private addTransitionStyle(firstPosition: number, lastPosition: number) {
+        var firstIndex = firstPosition - this.startPosition;
+        var lastIndex = lastPosition - this.startPosition;
+
         var layerFrames = this.frameContainerGUI.children();
         var frames = $(layerFrames[this.selectedLayerIndex]).children();
 
-        for (var currPos = firstPosition; currPos < lastPosition; currPos++) {
-            $(frames[currPos - 1]).addClass('timeline-frame-transition');
+        for (var currPos = firstIndex; currPos < lastIndex; currPos++) {
+            $(frames[currPos]).addClass('timeline-frame-transition');
         }
 
-        $(frames[lastPosition - 2]).addClass('timeline-frame-transition-arrow');
+        $(frames[lastIndex - 1]).addClass('timeline-frame-transition-arrow');
     }
 
     private removeTransitionStyle(firstPosition: number, lastPosition: number) {
+        var firstIndex = firstPosition - this.startPosition;
+        var lastIndex = lastPosition - this.startPosition;
+
         var layerFrames = this.frameContainerGUI.children();
         var frames = $(layerFrames[this.selectedLayerIndex]).children();
 
-        for (var currPos = firstPosition; currPos < lastPosition; currPos++) {
-            $(frames[currPos - 1]).removeClass('timeline-frame-transition');
+        for (var currPos = firstIndex; currPos < lastIndex; currPos++) {
+            $(frames[currPos]).removeClass('timeline-frame-transition');
         }
 
-        $(frames[lastPosition - 2]).removeClass('timeline-frame-transition-arrow');
+        $(frames[lastIndex - 1]).removeClass('timeline-frame-transition-arrow');
     }
 
     private animateToFrame(e: Event) {
@@ -213,7 +297,7 @@ class Timeline extends Eventable {
     private removeKeyframe() {
         var layer = this.environment.layers[this.selectedLayerIndex];
         this.selectedFrameGUI.removeClass('timeline-frame-keyframe');
-        var keyframeIndex = layer.removeKeyframe(this.selectedFrameIndex + 1);
+        var keyframeIndex = layer.removeKeyframe(this.selectedFrameIndex + this.startPosition);
 
         if (keyframeIndex > 0) {
             var previousKeyframe = layer.keyframes[keyframeIndex - 1];
@@ -231,14 +315,63 @@ class Timeline extends Eventable {
         this.removeTransitionStyle(this.selectedFrame.position, previousKeyframe.position);
     }
 
+    private redrawLayerFrames(layer: Layer, layerIndex: number) {
+        var isTransition = false;
+
+        var frames = $(this.frameListGUI.find('#timeline-frames').children()[layerIndex]).children();
+
+        // Intialize k to first keyframe index beginning at this.startPosition
+        var k;
+        for (k = 0; k < layer.keyframes.length && layer.keyframes[k].position < this.startPosition; k++);
+
+        // Check if there's an ongoing transition
+        isTransition = layer.findKeyframeForPosition(this.startPosition).hasTransition();
+        for (var i = this.startPosition - 1, p = 0; i < this.numFrames + this.startPosition; i++, p++) {
+            var timelineFrame = $(frames[p]);
+
+            // Check if current frame is keyframe
+            if (k < layer.keyframes.length && layer.keyframes[k].position == i + 1) {
+                timelineFrame.addClass('timeline-frame-keyframe');
+
+                // Check if keyframe has transitions
+                if (layer.keyframes[k].hasTransition()) {
+                    isTransition = true;
+                }
+
+                k++;
+            } else {
+                timelineFrame.removeClass('timeline-frame-keyframe');
+            }
+
+            if (isTransition) {
+                // Check if next frame is keyframe
+                if (layer.keyframes[k].position == i + 2) {
+                    timelineFrame.removeClass('timeline-frame-transition');
+                    timelineFrame.addClass('timeline-frame-transition-arrow');
+                    isTransition = false;
+                } else {
+                    timelineFrame.addClass('timeline-frame-transition');
+                    timelineFrame.removeClass('timeline-frame-transition-arrow');
+                }
+            } else {
+                timelineFrame.removeClass('timeline-frame-transition-arrow');
+                timelineFrame.removeClass('timeline-frame-transition');
+            }
+        }
+    }
+
     private drawLayerFrames(layer: Layer) {
-        // TODO: Add support for initializing frames
-
-        // Determine limit according to resolution
-        var limit = this.frameContainerGUI.innerWidth() / 16;
         var layerFramesDiv = $('<div></div>');
+        var isTransition = false;
 
-        for (var i = 0, k = 0; i < limit; i++) {
+        // Intialize k to first keyframe index beginning at this.startPosition
+        var k;
+        for (k = 0; k < layer.keyframes.length && layer.keyframes[k].position < this.startPosition; k++);
+
+        // Check if there's an ongoing transition
+        isTransition = layer.findKeyframeForPosition(this.startPosition).hasTransition();
+
+        for (var i = this.startPosition - 1; i < this.numFrames + this.startPosition; i++){ 
             var timelineFrame = $('<div class="timeline-frames-container dropup timeline-frame"><a class="timeline-frame-link" data-toggle="dropdown" href="#"></a><ul class="dropdown-menu frame-options" role="menu">\
                                 <li><a tabindex="-1" href="#" class ="insert-keyframe">Insertar keyframe</a></li>\
                                 <li><a tabindex="-1" href="#" class ="empty-frame">Vaciar frame</a></li>\
@@ -256,7 +389,23 @@ class Timeline extends Eventable {
             // Check if current frame is keyframe
             if (k < layer.keyframes.length && layer.keyframes[k].position == i + 1) {
                 timelineFrame.addClass('timeline-frame-keyframe');
+                
+                // Check if keyframe has transitions
+                if (layer.keyframes[k].hasTransition()) {
+                    isTransition = true;
+                }
+
                 k++;
+            }
+
+            if (isTransition) {
+                // Check if next frame is keyframe
+                if (layer.keyframes[k].position == i + 2) {
+                    timelineFrame.addClass('timeline-frame-transition-arrow');
+                    isTransition = false;
+                } else {
+                    timelineFrame.addClass('timeline-frame-transition');
+                }
             }
 
             timelineFrame.find('.remove-animation').hide();
@@ -266,11 +415,11 @@ class Timeline extends Eventable {
             });
 
             timelineFrame.find('.empty-frame').click((e: Event) => {
-                this.emptyFrame();
+                //this.emptyFrame();
             });
 
             timelineFrame.find('.delete-frame').click((e: Event) => {
-                this.deleteFrame();
+                //this.deleteFrame();
             });
 
             timelineFrame.find('.animar-frame').click((e: Event) => {
@@ -291,30 +440,31 @@ class Timeline extends Eventable {
     }
 
     private removeLayerWithIndex(i: number) {
-        this.layerListGUI.find(':nth-child(' + (i + 1) + ')').remove();
-        this.frameContainerGUI.find(':nth-child(' + (i + 1) + ')').remove();
+        $(this.layerListGUI.children()[i]).remove();
+        $(this.frameContainerGUI.children()[i]).remove();
     }
 
-    private addNewLayer() {
-        var layer = new Layer('Layer ' + (this.environment.layers.length + 1), true, true, this.environment.layers.length);
-        this.drawLayer(layer);
-        this.environment.layers.push(layer);
-        this.fireEvent('layercreate', null);
-    }
-
-    private trashLayer() {
+    private trashCurrentLayer() {
         var numLayers = this.layerListGUI.children().length;
         if (numLayers > 1) { // Never remove last element
             var layerIndex = this.selectedLayerGUI.index();
             this.unselectLayer(this.selectedLayerGUI);
             this.removeLayerWithIndex(layerIndex);
+
             if (layerIndex < numLayers - 1) {
-                this.selectLayer(this.layerListGUI.find(':nth-child(' + (layerIndex + 1) + ')'));
-            } else {
-                this.selectLayer(this.layerListGUI.find(':nth-child(' + layerIndex + ')'));
+                this.selectLayer($(this.layerListGUI.children()[layerIndex]));
+            } else { // Removed last layer
+                this.selectLayer($(this.layerListGUI.children()[layerIndex - 1]));
             }
 
             this.environment.layers.splice(layerIndex - 1, 1);
         }
+    }
+
+    private addNewLayer() {
+        var layer = new Layer('Layer ' + this.nextLayerNum++, true, true, this.environment.layers.length);
+        this.drawLayer(layer);
+        this.environment.layers.push(layer);
+        this.fireEvent('layercreate', null);
     }
 }

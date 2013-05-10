@@ -110,6 +110,10 @@
     display: inline-block;
 }
 
+#timeline-options {
+    text-align: center;
+}
+
 .timeline-frame a.timeline-frame-link {
     border-right: solid 1px #5c5c5c;
     border-bottom: solid 1px #5c5c5c;
@@ -178,7 +182,7 @@
 }
 
 .timeline-number {
-    margin-right: 64px;
+    margin-right: 122px;
     color: #c6c6c6;
     font-size: 11px;
 }

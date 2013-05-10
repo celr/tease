@@ -73,15 +73,15 @@
     <Content Include="src\gui\canvas\ElementGroup.ts" />
     <Content Include="src\gui\canvas\ElementGroup.js">
       <DependentUpon>ElementGroup.ts</DependentUpon>
-    </Content> 
+    </Content>
     <Content Include="src\gui\canvas\RotationTool.ts" />
     <Content Include="src\gui\canvas\RotationTool.js">
       <DependentUpon>RotationTool.ts</DependentUpon>
-    </Content> 
+    </Content>
     <Content Include="src\gui\canvas\SelectedElementOptions.ts" />
     <Content Include="src\gui\canvas\SelectedElementOptions.js">
       <DependentUpon>SelectedElementOptions.ts</DependentUpon>
-    </Content> 
+    </Content>
     <Content Include="src\gui\canvas\SelectionTool.ts" />
     <Content Include="src\gui\canvas\SizingTool.js">
       <DependentUpon>SizingTool.ts</DependentUpon>
@@ -106,10 +106,10 @@
       <DependentUpon>PropertyEditor.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\Timeline.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\Toolbar.ts" />
     <Content Include="src\gui\toolbars\Timeline.js">
       <DependentUpon>Timeline.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="src\gui\toolbars\Toolbar.ts" />
     <Content Include="src\gui\toolbars\Toolbar.js">
       <DependentUpon>Toolbar.ts</DependentUpon>
     </Content>
