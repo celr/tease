@@ -66,6 +66,7 @@
       <DependentUpon>Layer.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\canvas\Canvas.ts" />
+    <Content Include="src\base\PageSynchronizer.ts" />
     <Content Include="src\gui\canvas\Canvas.js">
       <DependentUpon>Canvas.ts</DependentUpon>
     </Content>

@@ -1,7 +1,7 @@
 ///<reference path="Frame.ts" />
 ///<reference path="../tools/Tool.ts" />
 class ElementTransition {
-    constructor(public previousElement: Tease.Element, public nextElement: Tease.Element) {
+    constructor(public hasPreviousElement: bool, public nextElement: Tease.Element) {
     }
 }
 
@@ -51,7 +51,7 @@ module Tease {
 
         getCopy() {
             var newElement = new Tease.Element(this.parentTool, this.id);
-            newElement.elementTransition.previousElement = this.elementTransition.previousElement;
+            newElement.elementTransition.hasPreviousElement = this.elementTransition.hasPreviousElement;
             newElement.elementTransition.nextElement = this.elementTransition.nextElement;
 
             newElement.setAttributes(this.attributes);

@@ -40,10 +40,10 @@ class Keyframe extends Frame {
             // If there's already a transition remap the linked list
             if (transitionElements[i].elementTransition.nextElement) {
                 newElement.elementTransition.nextElement = transitionElements[i].elementTransition.nextElement;
-                transitionElements[i].elementTransition.nextElement.elementTransition.previousElement = newElement;
+                transitionElements[i].elementTransition.nextElement.elementTransition.hasPreviousElement = true;
             }
 
-            newElement.elementTransition.previousElement = transitionElements[i];
+            newElement.elementTransition.hasPreviousElement = true;
             transitionElements[i].elementTransition.nextElement = newElement;
             this.addElement(newElement);
         }
@@ -53,13 +53,6 @@ class Keyframe extends Frame {
     public removeFutureTransitions() {
         for (var i = 0; i < this.elements.length; i++) {
             this.elements[i].elementTransition.nextElement = null;
-        }
-    }
-
-    // Removes previousElement transition on the elements in the keyframe
-    public removePastTransitions() {
-        for (var i = 0; i < this.elements.length; i++) {
-            this.elements[i].elementTransition.previousElement = null;
         }
     }
 

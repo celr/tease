@@ -80,7 +80,7 @@ class AnimationRenderer {
     }
 
     private renderElement(element: Tease.Element) {
-        if (!element.elementTransition.previousElement) { // Do not render transitioned elements
+        if (!element.elementTransition.hasPreviousElement) { // Do not render transitioned elements
             var renderedElement = new RenderedElement($(element.DOMElement).clone(true));
             var currElement = element;
 
