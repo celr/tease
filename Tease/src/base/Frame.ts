@@ -58,7 +58,7 @@ class Keyframe extends Frame {
 
     // Adds an element to the keyframe
     public addElement(element: Tease.Element) {
-        element.keyframe = this;
+        element.keyframePosition = this.position;
         this.elements.push(element);
     }
 }

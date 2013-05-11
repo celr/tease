@@ -29,7 +29,7 @@ class Environment {
                     var elementToInsert = visibleKeyframe.elements[j];
                     
                     if (visibleKeyframe.elements[j].hasTransition() && visibleKeyframe.position != position) {
-                        var transitionPercent = position / visibleKeyframe.elements[j].elementTransition.nextElement.keyframe.position;
+                        var transitionPercent = position / visibleKeyframe.elements[j].elementTransition.nextElement.keyframePosition;
                         elementToInsert = visibleKeyframe.elements[j].getElementWithTransition(transitionPercent);
                     }
 

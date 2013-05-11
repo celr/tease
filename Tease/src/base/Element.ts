@@ -10,9 +10,9 @@ module Tease {
         attributes: {};
         DOMElement: JQuery;
         elementTransition: ElementTransition;
-        keyframe: Keyframe;
+        keyframePosition: number;
         propertyUnits: Object;
-
+        
         constructor(public parentTool: Tool, public id: number) {
             this.attributes = {};
             this.propertyUnits = {};

@@ -99,8 +99,8 @@ class AnimationRenderer {
     }
 
     private getAnimationDuration(element: Tease.Element) {
-        var initialPosition = element.keyframe.position;
-        var finalPosition = element.elementTransition.nextElement.keyframe.position;
+        var initialPosition = element.keyframePosition;
+        var finalPosition = element.elementTransition.nextElement.keyframePosition;
         return ((finalPosition - initialPosition) / this.settings.fps) * 1000;
     }
 }
