@@ -78,66 +78,41 @@ class SizingTool {
     }
 
 
-    handleMoveDot(movX: number, movY: number, initial: MouseEvent, final: MouseEvent, initialLeft: number, initialTop: number, that: SizingTool, dot: HTMLElement) {
-        //calculate delta x and y
-        var deltaX = final.clientX - initial.clientX;
-        var deltaY = final.clientY - initial.clientY;
-
-        var top = initialTop + deltaY;
-        var left = initialLeft + deltaX;
-
-        var DOMElement = <JQuery> that.target.DOMElement;
-
-        if (movY == that.dots['north']) {
-
-            var middle = parseInt(DOMElement.css('top')) + (parseInt(DOMElement.css('height')) >> 1);
-            $(that.ulDot).css('top', top + 'px');
-            $(that.uDot).css('top', top + 'px');
-            $(that.urDot).css('top', top + 'px');
-            $(that.lDot).css('top', middle);
-            $(that.rDot).css('top', middle);
-        }
-
-        if (movY == that.dots['south']) {
-            var middle = parseInt(DOMElement.css('top')) + (parseInt(DOMElement.css('height')) >> 1);
-            $(that.blDot).css('top', top + 'px');
-            $(that.bDot).css('top', top + 'px');
-            $(that.brDot).css('top', top + 'px');
-            $(that.lDot).css('top', middle);
-            $(that.rDot).css('top', middle);
-        }
-
-        if (movX == that.dots['east']) {
-            var middle = parseInt(DOMElement.css('left')) + (parseInt(DOMElement.css('width')) >> 1);
-            $(that.urDot).css('left', left + 'px');
-            $(that.rDot).css('left', left + 'px');
-            $(that.brDot).css('left', left + 'px');
-            $(that.bDot).css('left', middle);
-            $(that.uDot).css('left', middle);
-        }
-
-        if (movX == that.dots['west']) {
-            var middle = parseInt(DOMElement.css('left')) + (parseInt(DOMElement.css('width')) >> 1);
-            $(that.ulDot).css('left', left + 'px');
-            $(that.lDot).css('left', left + 'px');
-            $(that.blDot).css('left', left + 'px');
-            $(that.bDot).css('left', middle);
-            $(that.uDot).css('left', middle);
-        }
+    handleMoveDot(that: SizingTool) {
+        var x1 = parseInt(that.target.getAttribute('left'));
+        var x3 = x1 + parseInt(that.target.getAttribute('width')) - that.dotSize;
+        var x2 = (x1 + x3) >> 1;
+        var y1 = parseInt(that.target.getAttribute('top'));
+        var y3 = y1 + parseInt(that.target.getAttribute('height')) - that.dotSize;
+        var y2 = (y1 + y3) >> 1;
+        that.setDotPosition(x1, y1, that.ulDot);
+        that.setDotPosition(x2, y1, that.uDot);
+        that.setDotPosition(x3, y1, that.urDot);
+        that.setDotPosition(x1, y2, that.lDot);
+        that.setDotPosition(x3, y2, that.rDot);
+        that.setDotPosition(x1, y3, that.blDot);
+        that.setDotPosition(x2, y3, that.bDot);
+        that.setDotPosition(x3, y3, that.brDot);
     }
 
     handleUpdateTarget(movX: number, movY: number, deltaLeft: number, deltaTop: number, that: SizingTool) {
+        var k = that.dotSize << 2; // maximum possible value of height and width
+
         if (movY == that.dots['north']) {
+            deltaTop = Math.min(deltaTop, that.targetHeight - k);
             that.target.setAttribute('height', (that.targetHeight - deltaTop).toString());
             that.target.setAttribute('top', (that.targetTop + deltaTop).toString());
         }
         if (movY == that.dots['south']) {
+            deltaTop = Math.max(deltaTop, k - that.targetHeight);
             that.target.setAttribute('height', (that.targetHeight + deltaTop).toString());
         }
         if (movX == that.dots['east']) {
+            deltaLeft = Math.max(deltaLeft, k - that.targetWidth);
             that.target.setAttribute('width', (that.targetWidth + deltaLeft).toString());
         }
         if (movX == that.dots['west']) {
+            deltaLeft = Math.min(deltaLeft, that.targetWidth - k);
             that.target.setAttribute('width', (that.targetWidth - deltaLeft).toString());
             that.target.setAttribute('left', (that.targetLeft + deltaLeft).toString());
         }
@@ -154,7 +129,7 @@ class SizingTool {
 
         function handleMove(final: MouseEvent) {
             that.handleUpdateTarget(movX, movY, final.clientX - initial.clientX, final.clientY - initial.clientY, that);
-            that.handleMoveDot(movX, movY, initial, final, initialLeft, initialTop, that, that.ulDot);
+            that.handleMoveDot(that);
         }
 
         //uphandler
@@ -163,7 +138,7 @@ class SizingTool {
         }
         //register events on canvas
         this.canvas.addEventListener('mousemove', handleMove, true);
-        this.canvas.addEventListener('mouseup', handleUp, true);
+        document.addEventListener('mouseup', handleUp, true);
 
         initial.stopPropagation();
         initial.preventDefault();
@@ -273,7 +248,7 @@ class SizingTool {
 
     private handleUp(handleMove, handleUp, that: SizingTool) {
         that.canvas.removeEventListener('mousemove', handleMove, true);
-        that.canvas.removeEventListener('mouseup', handleUp, true);
+        document.removeEventListener('mouseup', handleUp, true);
         that.updateProperties(that);
         $(this.canvas).trigger('elementResized', this.target);
     }

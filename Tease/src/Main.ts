@@ -71,6 +71,10 @@ class MainController {
             this.handleToolSelect(e);
         }, true);
 
+        $('#btnSave').on('click', () => {
+            this.handleSavePage();
+        });
+
         // Initialize animation settings
         this.animationSettings = new AnimationSettings(1, this.fps); // TODO: Set fps from GUI
 		
@@ -82,9 +86,6 @@ class MainController {
     private handlePlayButtonClick(e: CustomEvent) {
         var animationRenderer = new AnimationRenderer();
         var renderedEnv = animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
-        // TODO(chadan): Remove this line. When needed.
-        this.pageSynchrohizer.updatePageFiles();
-		
         this.timeline.hideWorkspace();
         this.canvas.clear();
         this.canvas.blockInput();
@@ -149,6 +150,10 @@ class MainController {
     // Event handler for toolselect toolbar event
     private handleToolSelect(e: CustomEvent) {
         this.canvas.currentTool = <Tool> e.detail;
+    }
+
+    private handleSavePage() {
+        this.pageSynchrohizer.updatePageFiles();
     }
 }
 

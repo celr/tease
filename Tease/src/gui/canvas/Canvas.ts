@@ -170,6 +170,7 @@ class Canvas extends Eventable {
         this.sizingTool.erase();
         this.SEOptions.erase();
         this.selectedGroup.clear();
+        this.rotationTool.erase();
     }
 
     private handleElementResized(element: Tease.Element) {
@@ -190,8 +191,8 @@ class Canvas extends Eventable {
                 var offset = this.DOMElement.offset();
 
                 element.setAttribute('position', 'absolute');
-                element.setAttribute('top', (e.clientY - offset.top).toString());
-                element.setAttribute('left', (e.clientX - offset.left).toString());
+                element.setAttribute('top', (e.clientY + $(document).scrollTop() - offset.top).toString());
+                element.setAttribute('left', (e.clientX + $(document).scrollLeft() - offset.left).toString());
 
                 this.insertElement(element);
                 this.fireEvent('canvasinsert', element);
@@ -246,8 +247,10 @@ class Canvas extends Eventable {
             if (this.selectedGroup) {
                 this.selectedGroup.clear();
             }
-            var initialX = e.clientX - this.DOMElement.offset().left;
-            var initialY = e.clientY - this.DOMElement.offset().top;
+
+            var initialX = e.clientX + $(document).scrollLeft() - this.DOMElement.offset().left;
+            var initialY = e.clientY + $(document).scrollTop() - this.DOMElement.offset().top;
+
             this.selectionTool = new SelectionTool(initialY, initialX, this.DOMElement);
 
 
@@ -260,7 +263,9 @@ class Canvas extends Eventable {
             function handleUp(event) {
                 document.removeEventListener('mouseup', handleUp);
                 that.DOMElement.off('mousemove', handleMove);
-                that.selectedGroup = that.selectionTool.getSelectedElements(that.elementMap, event.clientX - that.DOMElement.offset().left, event.clientY - that.DOMElement.offset().top);
+                var finalX = event.clientX + $(document).scrollLeft() - that.DOMElement.offset().left;
+                var finalY = event.clientY + $(document).scrollTop()  - that.DOMElement.offset().top;
+                that.selectedGroup = that.selectionTool.getSelectedElements(that.elementMap, finalX, finalY);
                 that.selectionTool.erase();
                 if (that.selectedGroup.hasMultipleElements()) {
                     that.selectedGroup.markElements();

@@ -21,7 +21,6 @@ class PageSynchronizer {
 
 
     public updatePageFiles() {
-        //console.log('done');
         var renderedEnv = this.animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
         var pageCode = <PageCode> this.codeGenerator.generate(renderedEnv);
         this.sendFile("UpdateCSSStyles", pageCode.CSSStylesCode, "css");
@@ -48,7 +47,7 @@ class PageSynchronizer {
         dataObject[dataName] = data;
         var AjaxSettings = {
             type: "POST",
-            url: "http://localhost:51237/Json/" + url,
+            url: "http://localhost:50008/Json/" + url,
             data: JSON2.stringify(dataObject),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
