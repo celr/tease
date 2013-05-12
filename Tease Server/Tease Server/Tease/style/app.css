@@ -1,0 +1,206 @@
+﻿body {
+    font-size: 12px;
+}
+
+.tool img {
+    border: solid 2px #FFF;
+}
+
+.tool img:hover {
+    border: solid 2px #808080;
+}
+
+.selectedtool img {
+    border: solid 2px;
+}
+
+.selected {
+    border: solid 2px;
+}
+
+.top-nav {
+    background: #385774;
+}
+
+#timeline {
+    padding: 15px;
+    padding-bottom: 35px;
+    max-height: 210px;
+    background: #203141;
+    color: white;
+}
+
+#canvas {
+    border:1px solid #cecece;
+}
+
+.timeline-frame-prototype {
+    display: none !important;
+}
+
+#toolbar {
+    padding-left: 15px;
+}
+
+#propertyeditor {
+    padding-left: 15px;
+}
+
+#propertyeditor h2 {
+    font-size: 16px;
+}
+
+.noselection {
+    color: #a7a7a7;
+}
+
+#statusbar {
+    border-top: 1px solid #cecece;
+    background: #eaeaea;
+    padding-left: 10px;
+}
+
+#zoombar .zoom {
+    background: #eaeaea;
+    padding: 4px;
+    border:1px solid #cecece;
+}
+
+.timeline-layer.layer-selected .timeline-layer-decor {
+	width:0px; 
+	height:0px; 
+	border-bottom:15px solid transparent;  /* left arrow slant */
+	border-top:15px solid transparent; /* right arrow slant */
+	border-right:15px solid #34536f; /* bottom, add background color here */
+	font-size:0px;
+	line-height:0px;
+    display: inline;
+    position: absolute;
+}
+
+.timeline-layer.layer-selected .timeline-layer-text {
+    display: inline-block;
+    background: #34536f;
+    margin-left: 15px;
+    width: 500px;
+    z-index: 0;
+    padding: 5px;
+    font-weight:bold;
+}
+
+.timeline-layer {
+    vertical-align: top;
+    position: relative;
+    height: 30px;
+}
+
+.timeline-layer .timeline-layer-text {
+    padding: 5px;
+    margin-left: 15px;
+}
+
+#timeline-frames {
+    letter-spacing: -3px;
+    line-height: 0px;
+    white-space: nowrap;
+}
+
+.timeline-frame {
+    position: relative;
+    display: inline-block;
+}
+
+#timeline-options {
+    text-align: center;
+}
+
+.timeline-frame a.timeline-frame-link {
+    border-right: solid 1px #5c5c5c;
+    border-bottom: solid 1px #5c5c5c;
+    background-image: linear-gradient(#e9dfff, #faf7ff);
+    background-image: -webkit-linear-gradient(#e9dfff, #faf7ff);
+    background-image: -moz-linear-gradient(#e9dfff, #faf7ff);
+    background-image: -ms-linear-gradient(#e9dfff, #faf7ff);
+    height: 30px;
+    width: 15px;
+    display: inline-block;
+}
+
+.timeline-frame-transition a.timeline-frame-link {
+    background: url('../res/transition-frame.png') repeat-x  #e9dfff;
+    background-position-y: center;
+    border-right: none;
+    padding-right: 1px;
+}
+
+.timeline-frame-transition-arrow a.timeline-frame-link {
+    background: url('../res/transition-frame-arrow.png') no-repeat  #e9dfff;
+    background-position-y: center;
+    border-right: none;
+    padding-right: 1px;
+}
+
+.timeline-frame-top {
+    border-top: dashed 2px #5c5c5c;
+}
+
+.timeline-frame-selected a.timeline-frame-link, .timeline-frame:focus a.timeline-frame-link {
+    background-image: linear-gradient(#8a8a8a, #a7a7a7);
+    background-image: -webkit-linear-gradient(#8a8a8a, #a7a7a7);
+    background-image: -moz-linear-gradient(#8a8a8a, white);
+    background-image: -ms-linear-gradient(#8a8a8a, white);
+    outline: 0;
+}
+
+.timeline-frame-selected.timeline-frame-keyframe a.timeline-frame-link {
+    background: url('../res/keyframe-selected.png') no-repeat #8a8a8a;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.timeline-frame-keyframe a.timeline-frame-link {
+    background: url('../res/keyframe.png') no-repeat #e9dfff;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+#timeline-framelist {
+    border-left: solid 1px #cecece;
+}
+
+.ruler-line {
+    background: #b7b7b7;
+    height: 5px;
+    width: 1px;
+    margin-right: 3px;
+    display:inline-block;
+    vertical-align: top;
+}
+
+#frame-properties {
+    padding-left: 20px;
+}
+
+.timeline-number {
+    margin-right: 122px;
+    color: #c6c6c6;
+    font-size: 11px;
+}
+
+.timeline-layercontrols {
+    margin-bottom: 3px;
+    text-align: right;
+}
+
+.frame-options {
+    letter-spacing: normal;
+    white-space: normal;
+}
+
+.codeeditor {
+    position: relative !important;
+    border: 1px solid lightgray;
+    margin: auto;
+    height: 800px;
+    width: 80%;
+}

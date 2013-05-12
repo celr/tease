@@ -17,6 +17,7 @@ namespace Tease_Server.Models
         public DateTime ModificationDate { get; set; }
         [Required(ErrorMessage="El nombre es requerido.")]
         [Display(Name="Nombre")]
+        [RegularExpression("([a-z]|[A-Z]|[0-9])+", ErrorMessage = "El nombre solo puede contener letras y números")]
         public string Name { get; set; }
         public int UserID { get; set; }
         public virtual UserProfile User{ get; set; }
@@ -28,6 +29,7 @@ namespace Tease_Server.Models
         public int PageID { get; set; }
         [Required(ErrorMessage = "El nombre es requerido")]
         [Display(Name = "Nombre")]
+        [RegularExpression("([a-z]|[A-Z]|[0-9])+", ErrorMessage = "El nombre solo puede contener letras y números")]
         public string Name { get; set; }
         [Display(Name = "Fecha de creación")]
         public DateTime CreationDate { get; set; }
@@ -36,6 +38,16 @@ namespace Tease_Server.Models
         public string codePath { get; set; }
         public int ProjectID { get; set; }
         public virtual Project Project { get; set; }
+    }
+
+    public class Resource
+    {
+        public int ResourceID { get; set; }
+        public int PageID { get; set; }
+        public int ProjectID { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Url { get; set; }
     }
 }
 

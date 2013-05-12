@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <div id="main" style="background-color:black; width:50px; height:50px;">
+    </div>
+    <form action="http://localhost:51237/Resource/upload?pageId=1" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileOne" />
+        <input type="submit" value="test"/>
+    </form>
+    <script>
+        /*var environment = {"code":"hal"};
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:51237/Json/UpdateCSSAnimations",
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify({ "environment": environment }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) { alert(data); },
+            failure: function (errMsg) {
+                alert(errMsg);
+            }
+        });
+        */
+    </script>
+</body>
+
+</html>

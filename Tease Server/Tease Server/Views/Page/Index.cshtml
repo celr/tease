@@ -26,7 +26,9 @@
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.PageID }) |
             @Html.ActionLink("Detalles", "Details", new { id=item.PageID }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.PageID })
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.PageID }) |
+            @Html.ActionLink("Abrir", "Index", "Main", new { pageID = item.PageID }, null) |
+            @Html.ActionLink("Descargar", "Zip", new {projectID = item.ProjectID, pageID = item.PageID})
         </td>
     </tr>
 }

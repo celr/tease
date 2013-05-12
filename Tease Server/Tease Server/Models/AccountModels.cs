@@ -14,6 +14,7 @@ namespace Tease_Server.Models
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Project> Projects { set; get; }
         public DbSet<Page> Pages { set; get; }
+        public DbSet<Resource> Resources { set; get; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
