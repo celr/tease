@@ -108,6 +108,46 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
     }
 }
 
+class TransformCSSPropertyMapping implements AnimatablePropertyMapping {
+    private propertyMap: Object;
+
+    constructor() {
+        this.propertyMap = {};
+    }
+
+    public mapProperty(property: string, transform: string) {
+        this.propertyMap[property] = transform;
+    }
+
+    public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
+        for (var i in attributes) {
+            this.applyAttribute(i, attributes[i], propertyUnits[i], DOMElement);
+        }
+    }
+
+    public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
+        if (this.propertyMap[property]) {
+            switch (property) {
+                case 'rotation':
+                    DOMElement.css('transform', 'rotate(' + value + propertyUnit + ')');
+                    break;
+            }
+        }
+    }
+
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
+        for (var i in changeList) {
+            if (this.propertyMap[i]) {
+                switch (i) {
+                    case 'rotation':
+                        properties['transform'] = 'rotate(' + changeList[i] + propertyUnits[i] + ')';
+                        break;
+                }
+            }
+        }
+    }
+}
+
 // Represents a mapping where the property is assigned a callback function
 class CallbackPropertyMapping implements PropertyMapping {
     private propertyMap: Object;
@@ -183,12 +223,14 @@ class PropertyMapper {
     public callbackMapping: CallbackPropertyMapping;
     public renameCSSMapping: RenameCSSPropertyMapping;
     public multipleCSSMapping: MultipleCSSPropertyMapping;
+    public transformCSSMapping: TransformCSSPropertyMapping;
 
     constructor() {
         this.directCSSMapping = new DirectCSSPropertyMapping();
         this.callbackMapping = new CallbackPropertyMapping();
         this.renameCSSMapping = new RenameCSSPropertyMapping();
         this.multipleCSSMapping = new MultipleCSSPropertyMapping();
+        this.transformCSSMapping = new TransformCSSPropertyMapping();
     }
 
     public applyAttributes(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {
@@ -196,6 +238,7 @@ class PropertyMapper {
         this.callbackMapping.applyAttributes(attributes, propertyUnits, DOMElement);
         this.renameCSSMapping.applyAttributes(attributes, propertyUnits, DOMElement);
         this.multipleCSSMapping.applyAttributes(attributes, propertyUnits, DOMElement);
+        this.transformCSSMapping.applyAttributes(attributes, propertyUnits, DOMElement);
     }
 
     public applyAttribute(property: string, value: string, propertyUnit: string, DOMElement: JQuery) {
@@ -203,6 +246,7 @@ class PropertyMapper {
         this.callbackMapping.applyAttribute(property, value, propertyUnit, DOMElement);
         this.renameCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
         this.multipleCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
+        this.transformCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
     }
 
     public getAnimationProperties(changeList: Object, propertyUnits: Object) {

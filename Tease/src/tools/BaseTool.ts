@@ -28,12 +28,14 @@ class BaseTool implements Tool {
             top: '0',
             visibility: 'visible',
             border: 'none',
-            position: 'absolute'
+            position: 'absolute',
+            rotation: '0'
         };
 
         this.propertyUnits = {
             left: 'px',
-            top: 'px'
+            top: 'px',
+            rotation: 'deg'
         };
 
         this.propertyMapper = new PropertyMapper();
@@ -43,12 +45,13 @@ class BaseTool implements Tool {
         this.propertyMapper.directCSSMapping.mapProperty('visibility');
         this.propertyMapper.directCSSMapping.mapProperty('border');
         this.propertyMapper.directCSSMapping.mapProperty('position');
+        this.propertyMapper.transformCSSMapping.mapProperty('rotation', 'rotate');
 
         this.displayGroups = [
-            new PropertyDisplayGroup('Posicionamiento',
-                ['top', 'left'],
-                ['Arriba', 'Izquierda'],
-                [new StringPropertyControl('top'), new StringPropertyControl('left')]
+            new PropertyDisplayGroup('Posicionamiento y tamaño',
+                ['width', 'height', 'top', 'left', 'rotation'],
+                ['Ancho', 'Alto', 'Arriba', 'Izquierda', 'Rotación'],
+                [new StringPropertyControl('width'), new StringPropertyControl('height'), new StringPropertyControl('top'), new StringPropertyControl('left'), new StringPropertyControl('rotation')]
             ),
 
             new PropertyDisplayGroup('Visibilidad',
