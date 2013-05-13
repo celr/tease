@@ -5,11 +5,11 @@ class RotationTool {
     private image: JQuery;
     private toolsize: number;
     private $canvas: JQuery;
-    private $element: JQuery;
+    private element: Tease.Element;
+    private visible = false;
     
     constructor() {
         this.$canvas = $('#canvas');
-        console.log(this.$canvas)
         this.image = $('<img></img>');
         this.image.attr('src', 'res/rotationTool.png');
         this.image.css('position', 'absolute');
@@ -18,15 +18,18 @@ class RotationTool {
     }
 
     public render(element: Tease.Element) {
-        this.$element = element.DOMElement;
-        this.image.on('mousedown', (e: MouseEvent) => {
-            this.handleMouseDown(e);
-        });
-        this.image.css('top', (parseInt(element.getAttribute('top')) - this.toolsize) + 'px');
-        this.image.css('left', element.getAttribute('left') + element.propertyUnits['left']);
-        this.image.css('transform', element.DOMElement.css('transform'));
-        this.image.css('transform-origin', 'left top');
-        this.image.appendTo(this.$canvas);
+        if (this.visible == false) {
+            this.element = element;
+            this.image.on('mousedown', (e: MouseEvent) => {
+                this.handleMouseDown(e);
+            });
+            this.image.css('top', (parseInt(element.getAttribute('top')) - this.toolsize) + 'px');
+            this.image.css('left', element.getAttribute('left') + element.propertyUnits['left']);
+            this.image.css('transform', "rotate(" + element.getAttribute('rotation') + "deg)");
+            this.image.css('transform-origin', 'left top');
+            this.image.appendTo(this.$canvas);
+            this.visible = true;
+        }
     }
     
 
@@ -41,7 +44,7 @@ class RotationTool {
             var deltaX = (final.clientX - that.$canvas.offset().left) - initialX;
             var deg = (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
             that.image.css('transform', 'rotate(' + deg + 'deg)');
-            that.$element.css('transform', 'rotate(' + deg + 'deg)');
+            that.element.setAttribute('rotation', deg.toString());
         }
 
         
@@ -55,6 +58,7 @@ class RotationTool {
             updateRotation(final);
             that.$canvas.off('mousemove', handleMove);
             $(document).off('mouseup', handleMouseUp);
+            that.$canvas.trigger('elementRotated', that.element);
             final.stopPropagation();
             final.preventDefault();
         }
@@ -66,6 +70,9 @@ class RotationTool {
     }
 
     public erase() {
-        this.image.remove();
+        if (this.visible == true) {
+            this.image.remove();
+            this.visible = false;
+        }
     }
 }

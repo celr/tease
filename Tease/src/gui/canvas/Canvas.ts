@@ -52,10 +52,18 @@ class Canvas extends Eventable {
             this.handleElementDeleted(element);
         });
         this.DOMElement.on('elementResized', (e, element: Tease.Element) => {
-            this.handleElementResized(element);
+            this.selectElement(element);
         });
         this.DOMElement.on('elementResizing', (e, element: Tease.Element) => {
             this.handleElementResizing(element);
+        });
+        this.DOMElement.on('elementRotated', (e, element: Tease.Element) => {
+            this.selectElement(element);
+        });
+
+        this.DOMElement.on('elementEdited', (e, element: Tease.Element) => {
+            this.eraseEditionTools();
+            this.selectElement(element);
         });
         this.move = false;
         this.DOMElement.css('overflow', 'auto');
@@ -173,11 +181,6 @@ class Canvas extends Eventable {
         this.rotationTool.erase();
     }
 
-    private handleElementResized(element: Tease.Element) {
-        this.SEOptions.render(element);
-        this.rotationTool.render(element);
-    }
-
     private handleElementResizing(element: Tease.Element) {
         this.SEOptions.erase();
         this.selectedGroup.eraseDots();
@@ -288,5 +291,11 @@ class Canvas extends Eventable {
         this.selectedGroup.clear();
         this.selectedGroup = new ElementGroup(null, this.DOMElement);
         this.selectedGroup.insertElement(element.id.toString(), element);
+    }
+
+    private eraseEditionTools() {
+        this.rotationTool.erase();
+        this.sizingTool.erase();
+        this.SEOptions.erase();
     }
 }

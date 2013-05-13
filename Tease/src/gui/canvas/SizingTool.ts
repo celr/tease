@@ -50,6 +50,7 @@ class SizingTool {
 
         this.canvas = document.getElementById('canvas');
         this.zindex = 2000000;
+        this.visible = false;
     }
 
     private createDot(src: string) {
@@ -145,104 +146,106 @@ class SizingTool {
     }
 
     render(target: Tease.Element) {
-        this.target = target;
-        this.visible = true;
+        if (this.visible == false) {
+            this.target = target;
+            this.visible = true;
 
-        this.targetLeft = this.askForAttribute('left');
-        this.targetTop = this.askForAttribute('top');
-        this.targetWidth = this.askForAttribute('width');
-        this.targetHeight = this.askForAttribute('height');
-        this.targetMirrorX = this.askForAttribute('mirroX');
-        this.targetMirrorY = this.askForAttribute('mirroY');
-
-
-
-        //set initial positions of the dots
-        this.setDotPosition(this.targetLeft, this.targetTop, this.ulDot);
-        this.setDotPosition(this.targetLeft + this.targetWidth - this.dotSize, this.targetTop, this.urDot);
-        this.setDotPosition(this.targetLeft, this.targetTop + this.targetHeight - this.dotSize, this.blDot);
-        this.setDotPosition(this.targetLeft + this.targetWidth - this.dotSize, this.targetTop + this.targetHeight - this.dotSize, this.brDot);
-        this.setDotPosition(this.targetLeft, this.targetTop + (this.targetHeight >> 1), this.lDot);
-        this.setDotPosition(this.targetLeft + (this.targetWidth >> 1), this.targetTop, this.uDot);
-        this.setDotPosition(this.targetLeft + this.targetWidth - this.dotSize, this.targetTop + (this.targetHeight >> 1), this.rDot);
-        this.setDotPosition(this.targetLeft + (this.targetWidth >> 1), this.targetTop + this.targetHeight - this.dotSize, this.bDot);
-
-        //adding drag events handlers for each dot
-        //upper-left
-        this.ulDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, this.dots['west'], this.dots['north'], this.ulDot);
-        });
-
-        //upper-right
-        this.urDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, this.dots['east'], this.dots['north'], this.urDot);
-        });
-
-        //bottom-left
-        this.blDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, this.dots['west'], this.dots['south'], this.blDot);
-        });
-
-        //bottom-right
-        this.brDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, this.dots['east'], this.dots['south'], this.brDot);
-        });
+            this.targetLeft = this.askForAttribute('left');
+            this.targetTop = this.askForAttribute('top');
+            this.targetWidth = this.askForAttribute('width');
+            this.targetHeight = this.askForAttribute('height');
+            this.targetMirrorX = this.askForAttribute('mirroX');
+            this.targetMirrorY = this.askForAttribute('mirroY');
 
 
 
-        //bottom
-        this.bDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, null, this.dots['south'], this.bDot);
-        });
+            //set initial positions of the dots
+            this.setDotPosition(this.targetLeft, this.targetTop, this.ulDot);
+            this.setDotPosition(this.targetLeft + this.targetWidth - this.dotSize, this.targetTop, this.urDot);
+            this.setDotPosition(this.targetLeft, this.targetTop + this.targetHeight - this.dotSize, this.blDot);
+            this.setDotPosition(this.targetLeft + this.targetWidth - this.dotSize, this.targetTop + this.targetHeight - this.dotSize, this.brDot);
+            this.setDotPosition(this.targetLeft, this.targetTop + (this.targetHeight >> 1), this.lDot);
+            this.setDotPosition(this.targetLeft + (this.targetWidth >> 1), this.targetTop, this.uDot);
+            this.setDotPosition(this.targetLeft + this.targetWidth - this.dotSize, this.targetTop + (this.targetHeight >> 1), this.rDot);
+            this.setDotPosition(this.targetLeft + (this.targetWidth >> 1), this.targetTop + this.targetHeight - this.dotSize, this.bDot);
+
+            //adding drag events handlers for each dot
+            //upper-left
+            this.ulDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, this.dots['west'], this.dots['north'], this.ulDot);
+            });
+
+            //upper-right
+            this.urDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, this.dots['east'], this.dots['north'], this.urDot);
+            });
+
+            //bottom-left
+            this.blDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, this.dots['west'], this.dots['south'], this.blDot);
+            });
+
+            //bottom-right
+            this.brDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, this.dots['east'], this.dots['south'], this.brDot);
+            });
 
 
-        //upper
-        this.uDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, null, this.dots['north'], this.uDot);
-        });
+
+            //bottom
+            this.bDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, null, this.dots['south'], this.bDot);
+            });
 
 
-        //left
-        this.lDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, this.dots['west'], null, this.lDot);
-        });
+            //upper
+            this.uDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, null, this.dots['north'], this.uDot);
+            });
 
 
-        //right
-        this.rDot.addEventListener('mousedown', (initial: MouseEvent) => {
-            this.registerHandlers(initial, this.dots['east'], null, this.rDot);
-        });
+            //left
+            this.lDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, this.dots['west'], null, this.lDot);
+            });
 
 
-        //stop propagation of click event on each dot
-        function stopPropagation(e: MouseEvent) {
-            e.stopPropagation();
-        }
-
-        this.ulDot.addEventListener('click', stopPropagation, false);
-        this.urDot.addEventListener('click', stopPropagation, false);
-        this.blDot.addEventListener('click', stopPropagation, false);
-        this.brDot.addEventListener('click', stopPropagation, false);
-        this.bDot.addEventListener('click', stopPropagation, false);
-        this.lDot.addEventListener('click', stopPropagation, false);
-        this.rDot.addEventListener('click', stopPropagation, false);
-        this.uDot.addEventListener('click', stopPropagation, false);
+            //right
+            this.rDot.addEventListener('mousedown', (initial: MouseEvent) => {
+                this.registerHandlers(initial, this.dots['east'], null, this.rDot);
+            });
 
 
-        if (this.targetHeight && this.targetWidth) {
-            this.canvas.appendChild(this.ulDot);
-            this.canvas.appendChild(this.urDot);
-            this.canvas.appendChild(this.blDot);
-            this.canvas.appendChild(this.brDot);
-        }
+            //stop propagation of click event on each dot
+            function stopPropagation(e: MouseEvent) {
+                e.stopPropagation();
+            }
 
-        if (this.targetHeight != null) {
-            this.canvas.appendChild(this.uDot);
-            this.canvas.appendChild(this.bDot);
-        }
-        if (this.targetWidth != null) {
-            this.canvas.appendChild(this.lDot);
-            this.canvas.appendChild(this.rDot);
+            this.ulDot.addEventListener('click', stopPropagation, false);
+            this.urDot.addEventListener('click', stopPropagation, false);
+            this.blDot.addEventListener('click', stopPropagation, false);
+            this.brDot.addEventListener('click', stopPropagation, false);
+            this.bDot.addEventListener('click', stopPropagation, false);
+            this.lDot.addEventListener('click', stopPropagation, false);
+            this.rDot.addEventListener('click', stopPropagation, false);
+            this.uDot.addEventListener('click', stopPropagation, false);
+
+
+            if (this.targetHeight && this.targetWidth) {
+                this.canvas.appendChild(this.ulDot);
+                this.canvas.appendChild(this.urDot);
+                this.canvas.appendChild(this.blDot);
+                this.canvas.appendChild(this.brDot);
+            }
+
+            if (this.targetHeight != null) {
+                this.canvas.appendChild(this.uDot);
+                this.canvas.appendChild(this.bDot);
+            }
+            if (this.targetWidth != null) {
+                this.canvas.appendChild(this.lDot);
+                this.canvas.appendChild(this.rDot);
+            }
         }
     }
 
