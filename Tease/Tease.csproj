@@ -264,6 +264,7 @@
     <Content Include="src\res\play-icon.png" />
     <Content Include="src\res\ruler-line.png" />
     <Content Include="src\res\trash.gif" />
+    <Content Include="src\res\video.mp4" />
     <Content Include="src\res\zoom.png" />
     <Content Include="src\style\app.css" />
     <TypeScriptCompile Include="src\tools\Tool.ts" />
@@ -284,6 +285,10 @@
     <TypeScriptCompile Include="src\tools\ListTool.ts" />
     <Content Include="src\tools\ListTool.js">
       <DependentUpon>ListTool.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="src\tools\MediaTool.ts" />
+    <Content Include="src\tools\MediaTool.js">
+      <DependentUpon>MediaTool.ts</DependentUpon>
     </Content>
     <Content Include="src\tools\PointerTool.ts" />
     <TypeScriptCompile Include="src\tools\PropertyMapping.ts" />

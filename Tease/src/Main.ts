@@ -21,8 +21,8 @@ class MainController {
 
     private currentLayerIndex: number;
     private fps: number;
-    private pageSynchrohizer: PageSynchronizer;
-	
+    private pageSynchronizer: PageSynchronizer;
+
     // Initializes the app
     constructor() {
         // Initialize layers
@@ -62,7 +62,7 @@ class MainController {
         this.canvas.addEventListener('canvasselect', (e: CustomEvent) => {
             this.handleCanvasSelect(e);
         }, true);
-        
+
         this.canvas.addEventListener('canvasinsert', (e: CustomEvent) => {
             this.handleCanvasInsert(e);
         }, true);
@@ -77,9 +77,9 @@ class MainController {
 
         // Initialize animation settings
         this.animationSettings = new AnimationSettings(1, this.fps); // TODO: Set fps from GUI
-		
-		// Initialize Synchronizer
-        this.pageSynchrohizer = new PageSynchronizer(this.environment, this.animationSettings);
+
+        // Initialize Synchronizer
+        this.pageSynchronizer = new PageSynchronizer(this.environment, this.animationSettings);
     }
 
     // Event handler for play button click
@@ -137,7 +137,7 @@ class MainController {
             this.timeline.selectCurrentPositionInLayer(this.elementLayerMap[elementId]);
         }
     }
-    
+
     // Event handler for canvasinsert canvas event
     private handleCanvasInsert(e: CustomEvent) {
         // Add element to the environment
@@ -153,7 +153,7 @@ class MainController {
     }
 
     private handleSavePage() {
-        this.pageSynchrohizer.updatePageFiles();
+        this.pageSynchronizer.updatePageFiles();
     }
 }
 

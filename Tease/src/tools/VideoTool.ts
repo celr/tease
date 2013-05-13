@@ -1,21 +1,13 @@
-///<reference path="DimensionableTool.ts" />
+///<reference path="MediaTool.ts" />
 ///<reference path="Tool.ts" />
 
-class VideoTool implements Tool extends DimensionableTool {
-    constructor(public id: string, defaultImagePath: string) {
-        super(id, $('<video controls></video>'));
-        
+class VideoTool implements Tool extends MediaTool {
+    constructor(public id: string) {
+        super(id, $('<video id="' + id + '">Your browser does not support the video element.</video>'));
+
         this.displayName = 'Video';
-        this.displayImagePath = 'res/videoTool.png';
+        // TODO(chadan): Change to proper icon.
+        this.displayImagePath = 'res/play-icon.png';
 
-        this.properties['video-source'] = '';
-
-        this.propertyMapper.callbackMapping.mapProperty('video-source',
-            (property: string, value: string, DOMElement: JQuery) => {
-                if (property === 'image-source') {
-                    DOMElement.attr('src', value);
-                }
-            }
-        );
     }
 }

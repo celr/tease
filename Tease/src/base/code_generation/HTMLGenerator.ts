@@ -3,7 +3,7 @@
 // Generates the multi-browser HTML code of a given enviroment.
 class HTMLGenerator {
 
-    public generateHTML(enviroment : RenderedEnvironment) {
+    public generateHTML(enviroment: RenderedEnvironment) {
         var out = this.generateDoctypeElement() + "\n";
 
         out += this.generateTag("html", this.TagTypes.Start) + "\n";
@@ -85,7 +85,7 @@ class HTMLGenerator {
 
     // Generates the div that will contain all the elements created in the UI Canvas.
     private generateTeaseCanvasElement(enviroment: RenderedEnvironment) {
-        var out = this.generateTag("div", this.TagTypes.Start, {"id": "TeaseCanvas"}) + "\n";
+        var out = this.generateTag("div", this.TagTypes.Start, { "id": "TeaseCanvas" }) + "\n";
 
         for (var i: number = 0; i < enviroment.renderedElements.length; ++i) {
             var element: RenderedElement = enviroment.renderedElements[i];
@@ -102,9 +102,9 @@ class HTMLGenerator {
 
         var elementName: string = getElementName(element);
         var elementTagName: string = element.DOMElement[0].tagName;
-        var attributes: Object = {"class": ""};
+        var attributes: Object = { "class": "" };
 
-        for (var attribute : number = 0; attribute < element.DOMElement[0].attributes.length; ++attribute) {
+        for (var attribute: number = 0; attribute < element.DOMElement[0].attributes.length; ++attribute) {
             if (element.DOMElement[0].attributes[attribute].name !== "style" &&  //Ignored attributes.
                 element.DOMElement[0].attributes[attribute].name !== "element-name"
                 ) {
@@ -120,7 +120,8 @@ class HTMLGenerator {
 
         out += this.generateTag(elementTagName, this.TagTypes.Start, attributes) + "\n";
 
-        // TODO(chadan): Generate inner code for specific tags.
+        // TODO(chadan): Improve this generation.
+        out += tabulate(element.DOMElement[0].innerHTML) + "\n";
 
         out += this.generateTag(elementTagName, this.TagTypes.End);
         return out;
@@ -130,13 +131,13 @@ class HTMLGenerator {
         return this.generateTag("title", this.TagTypes.Start) + pageName + this.generateTag("title", this.TagTypes.End);
     }
 
-    private generateCSSLinkElement(fileName : string) {
+    private generateCSSLinkElement(fileName: string) {
         return this.generateTag("link", this.TagTypes.Void, { "rel": "stylesheet", "type": "text/css", "href": fileName })
     }
 
     private generateScriptElement(code: string, src?: string = "") {
         if (src.length == 0) {
-            return this.generateTag("script", this.TagTypes.Start, { "type": "text/javascript"}) + "\n" + tabulate(code) +
+            return this.generateTag("script", this.TagTypes.Start, { "type": "text/javascript" }) + "\n" + tabulate(code) +
                     this.generateTag("script", this.TagTypes.End);
         } else {
             return this.generateTag("script", this.TagTypes.Start, { "type": "text/javascript", "src": src }) + " " +

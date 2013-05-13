@@ -3,6 +3,7 @@
 ///<reference path="../../tools/AudioTool.ts" />
 ///<reference path="../../tools/PointerTool.ts" />
 ///<reference path="../../tools/RectangleTool.ts" />
+///<reference path="../../tools/VideoTool.ts" />
 ///<reference path="../../base/Eventable.ts" />
 
 // Toolbar
@@ -14,7 +15,7 @@ class Toolbar extends Eventable {
     private tools: Tool[];
     private toolMap: Object; // id => tool mapping
 
-    constructor (private DOMElement: JQuery) {
+    constructor(private DOMElement: JQuery) {
         super();
         this.tools = new Tool[];
         this.toolMap = new Object();
@@ -29,6 +30,7 @@ class Toolbar extends Eventable {
         this.tools.push(new ImageTool('imagetool'));
         this.tools.push(new RectangleTool('recttool'));
         this.tools.push(new AudioTool('audiotool'));
+        this.tools.push(new VideoTool('videotool'));
         this.tools.push(new PointerTool('pointertool'));
     }
 
