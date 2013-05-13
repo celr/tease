@@ -21,7 +21,7 @@ class MainController {
 
     private currentLayerIndex: number;
     private fps: number;
-	private pageSynchrohizer: PageSynchronizer;
+    private pageSynchrohizer: PageSynchronizer;
 	
     // Initializes the app
     constructor() {

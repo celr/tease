@@ -28,27 +28,36 @@ class PageSynchronizer {
         this.sendFile("UpdateHTML", pageCode.HTMLCode, "html");
         this.sendFile("UpdateJavaScript", pageCode.JSCode, "javascript");
         this.updateEnvironment();
-        console.log('sync');
+        //console.log('sync');
     }
 
     private updateEnvironment() {
-        var url = "UpdatePage/";
-        //this.callAjax(url, this.environment, "environment");
-        //console.log(this.environment);
+        var seen = [];
+        var data = JSON.stringify(this.environment, function (key, val) {
+            if (typeof val == "object") {
+                if (val instanceof jQuery)
+                    return;
+                if (val instanceof HTMLElement)
+                    return;
+                if (seen.indexOf(val) >= 0)
+                    return;
+                seen.push(val);
+            }
+            return val;
+        });
+        this.callAjax('UpdatePage?pageID=' + this.pageID, data);
     }
 
     private sendFile(url: string, code: string, type: string) {
         var file = { pageID: this.pageID, code: code, type: type };
-        this.callAjax(url, file, "file");
+        this.callAjax(url, JSON.stringify({file : file}));
     }
 
-    private callAjax(url: string, data: Object, dataName: string) {
-        var dataObject = new Object();
-        dataObject[dataName] = data;
+    private callAjax(url: string, data: string) {
         var AjaxSettings = {
             type: "POST",
             url: "http://localhost:50008/Json/" + url,
-            data: JSON2.stringify(dataObject),
+            data: data,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         };
