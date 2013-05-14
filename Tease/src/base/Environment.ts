@@ -4,7 +4,7 @@
 // Represents the global environment. Contains layers.
 class Environment {
     public layers: Layer[];
-    private toolCount: Object;
+    public toolCount: Object;
 
     constructor() {
         this.toolCount = {
