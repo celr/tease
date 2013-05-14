@@ -3,6 +3,7 @@
 !Tease/src/lib/*.js
 !Tease/src/lib/ace/*.js
 !Tease/src/lib/bootstrap/js/*.js
+!Tease/src/lib/colorpicker/*.js
 *.map
 bin
 obj
