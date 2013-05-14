@@ -56,7 +56,7 @@ class PageSynchronizer {
     private callAjax(url: string, data: string) {
         var AjaxSettings = {
             type: "POST",
-            url: "http://localhost:50008/Json/" + url,
+            url: "/Json/" + url,
             data: data,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
