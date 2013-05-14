@@ -44,6 +44,8 @@
 
 #propertyeditor {
     padding-left: 15px;
+    height: 600px;
+    overflow-y: auto;
 }
 
 #propertyeditor h2 {

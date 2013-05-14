@@ -5,7 +5,8 @@
 interface PropertyControl {
     DOMElement: JQuery;
     getValue();
-    setValue(value: string);
     addEventListener(type: string, listener: EventListener, useCapture: bool);
     removeEventListener(type: string, listener: EventListener, useCapture: bool);
+    getCopy(): PropertyControl;
+    setGUIValue(value: string, propertyUnit: string);
 }

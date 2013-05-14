@@ -39,8 +39,8 @@ class ListTool implements Tool extends BaseTool {
         this.displayGroups.push(
             new PropertyDisplayGroup('Lista',
                 ['ordered', 'values'],
-                ['Ordenada', 'Valores'],
-                [new StringPropertyControl('ordered'), new ListPropertyControl('values')]
+                ['Tipo', 'Valores'],
+                [new SelectPropertyControl('ordered', ['true', 'false'], ['Ordenada', 'Desordenada']), new ListPropertyControl('values')]
             )
         );
     }

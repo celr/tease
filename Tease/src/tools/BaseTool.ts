@@ -2,6 +2,9 @@
 ///<reference path="PropertyMapping.ts" />
 ///<reference path="PropertyDisplayGroup.ts" />
 ///<reference path="../gui/toolbars/property-controls/StringPropertyControl.ts" />
+///<reference path="../gui/toolbars/property-controls/DimensionPropertyControl.ts" />
+///<reference path="../gui/toolbars/property-controls/SliderPropertyControl.ts" />
+///<reference path="../gui/toolbars/property-controls/SelectPropertyControl.ts" />
 
 class BaseTool implements Tool {
     // Menu display properties
@@ -47,18 +50,28 @@ class BaseTool implements Tool {
         this.propertyMapper.directCSSMapping.mapProperty('position');
         this.propertyMapper.transformCSSMapping.mapProperty('rotation', 'rotate');
 
+        var dimensionUnits = ['px', 'in', 'pt'];
+        var dimensionUnitLabels = ['pixeles', 'pulgadas', 'puntos'];
+
+        var rotationUnits = ['deg', 'rad'];
+        var rotationUnitLabels = ['grados', 'radianes'];
+
         this.displayGroups = [
             new PropertyDisplayGroup('Posicionamiento y tamaño',
                 ['width', 'height', 'top', 'left', 'rotation'],
                 ['Ancho', 'Alto', 'Arriba', 'Izquierda', 'Rotación'],
-                [new StringPropertyControl('width'), new StringPropertyControl('height'), new StringPropertyControl('top'), new StringPropertyControl('left'), new StringPropertyControl('rotation')]
+                [new DimensionPropertyControl('width', dimensionUnits, dimensionUnitLabels),
+                    new DimensionPropertyControl('height', dimensionUnits, dimensionUnitLabels),
+                    new DimensionPropertyControl('top', dimensionUnits, dimensionUnitLabels),
+                    new DimensionPropertyControl('left', dimensionUnits, dimensionUnitLabels),
+                    new DimensionPropertyControl('rotation', rotationUnits, rotationUnitLabels)]
             ),
 
             new PropertyDisplayGroup('Visibilidad',
                 ['visibility', 'opacity', 'border'],
                 ['Ocultar', 'Opacidad', 'Bordes'],
-                [new StringPropertyControl('visibility'),
-                 new StringPropertyControl('opacity'),
+                [new SelectPropertyControl('visibility', ['visible', 'hidden'], ['Mostrar', 'Ocultar']),
+                 new SliderPropertyControl('opacity', 0, 1, 0.1, 1),
                  new StringPropertyControl('border')]
             )
         ];

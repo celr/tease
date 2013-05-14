@@ -3,20 +3,27 @@
 ///<reference path="PropertyControl.ts" />
 
 // PropertyControl to manipulate the value of attributes with string properties
-class StringPropertyControl implements PropertyControl extends Eventable {
+class SelectPropertyControl implements PropertyControl extends Eventable {
     public DOMElement: JQuery;
+    public inputDOMElement: JQuery;
+    public displayValue: JQuery;
     private value: string;
 
-    constructor(public property: string) {
+    constructor(public property: string, public optionValues: string[], public optionLabels: string[]) {
         super();
-        this.DOMElement = $('<input id="' + this.property + '" type="text"></input>');
+        this.DOMElement = $('<select></select>');
+
+        for (var i in optionValues) {
+            $('<option value="' + optionValues[i] + '">' + optionLabels[i] + '</option>').appendTo(this.DOMElement);
+        }
+
         this.DOMElement.change((e: Event) => {
             this.handleChange(e);
         });
     }
 
     public getCopy() {
-        var copy = new StringPropertyControl(this.property);
+        var copy = new SelectPropertyControl(this.property, this.optionValues, this.optionLabels);
         return copy;
     }
 
@@ -25,7 +32,7 @@ class StringPropertyControl implements PropertyControl extends Eventable {
     }
 
     public setGUIValue(value: string, propertyUnit: string) {
-        this.DOMElement.val(value);
+        this.DOMElement.find('[value="' + value + '"]').prop('selected', true);
         this.value = value;
     }
 
@@ -34,7 +41,7 @@ class StringPropertyControl implements PropertyControl extends Eventable {
         this.setGUIValue(this.value, null);
         this.triggerEvent();
     }
-
+    
     private triggerEvent() {
         var attributes = {};
         attributes[this.property] = this.value;
@@ -43,5 +50,16 @@ class StringPropertyControl implements PropertyControl extends Eventable {
         propertyUnits[this.property] = null;
 
         this.fireEvent('valuechange', { attributes: attributes, propertyUnits: propertyUnits });
+    }
+
+
+    private setValue(value: string, propertyUnit: string) {
+        var attribute = {};
+        var propertyUnits = {};
+
+        attribute[this.property] = value;
+        propertyUnits[this.property] = propertyUnit;
+        this.value = value;
+        this.fireEvent('valuechange', { attributes: attribute, propertyUnits: propertyUnits });
     }
 }

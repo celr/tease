@@ -38,6 +38,10 @@ module Tease {
             this.elementTransition = new ElementTransition(null, null);
         }
 
+        setPropertyUnit(property: string, unit: string) {
+            this.propertyUnits[property] = unit;
+        }
+
         setAttributes(attributes: {}) {
             for (var i in attributes) {
                 this.setAttribute(i, attributes[i]);

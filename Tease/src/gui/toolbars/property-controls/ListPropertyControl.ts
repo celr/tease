@@ -11,7 +11,7 @@ class ListPropertyControl implements PropertyControl extends Eventable {
         super();
         this.DOMElement = $('<textarea rows="10" cols="50" id="' + this.property + '" type="text"></input>');
         this.DOMElement.blur((e: Event) => {
-            this.blurHandler(e);
+            this.handleChange(e);
         });
     }
 
@@ -19,22 +19,34 @@ class ListPropertyControl implements PropertyControl extends Eventable {
         return this.value;
     }
 
-    public setValue(value: string) {
+    public getCopy() {
+        var copy = new ListPropertyControl(this.property);
+        return copy;
+    }
+
+    public setGUIValue(value: string, propertyUnit: string) {
+        this.value = value;
         var kDefaultValue = "Lista";
         if (value.trim().length === 0) {
             value = kDefaultValue;
         }
 
-        var attribute = {};
-        attribute[this.property] = value;
-        this.value = value;
         this.DOMElement.val(value.replace(/\|\&\|/g, "\n"));
-        this.fireEvent('valuechange', attribute);
     }
 
-    private blurHandler(e: Event) {
+    private handleChange(e: Event) {
         var valuesString = $(e.target).val().replace(/\n/g, "\|\&\|");
+        this.setGUIValue(valuesString, null);
+        this.triggerEvent();
+    }
 
-        this.setValue(valuesString);
+    private triggerEvent() {
+        var attributes = {};
+        attributes[this.property] = this.value;
+
+        var propertyUnits = {};
+        propertyUnits[this.property] = null;
+
+        this.fireEvent('valuechange', { attributes: attributes, propertyUnits: propertyUnits });
     }
 }

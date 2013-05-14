@@ -1,5 +1,6 @@
 ///<reference path="Tool.ts" />
 ///<reference path="DimensionableTool.ts" />
+///<reference path="../gui/toolbars/property-controls/ColorPropertyControl.ts" />
 
 class BackgroundableTool extends DimensionableTool implements Tool {
     constructor(id: string, DOMElement: JQuery) {
@@ -16,7 +17,7 @@ class BackgroundableTool extends DimensionableTool implements Tool {
             new PropertyDisplayGroup('Fondo',
                 ['background-color', 'background-image'],
                 ['Color de fondo', 'Imagen de fondo'],
-                [new StringPropertyControl('background-color'), new StringPropertyControl('background-image')]
+                [new ColorPropertyControl('background-color'), new StringPropertyControl('background-image')]
             )
         );
     }

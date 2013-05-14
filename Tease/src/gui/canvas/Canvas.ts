@@ -238,7 +238,7 @@ class Canvas extends Eventable {
     private handleElementSelect(e: Event, element: Tease.Element) {
         if (this.allowInput) {
             var selectedDOME = <HTMLElement> e.target;
-            this.selectElement(this.elementMap[selectedDOME.id]);
+            this.selectElement(element);
         }
     }
 

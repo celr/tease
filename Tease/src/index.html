@@ -9,6 +9,7 @@
 
     <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="style/app.css" rel="stylesheet">
+    <link href="lib/colorpicker/farbtastic.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -45,9 +46,9 @@
       <div class="row-fluid">
         <div class="span2" id="toolbar">
         </div>
-        <div class="span19" style="min-height:650px; padding: 5px" id="canvas">
+        <div class="span18" style="min-height:650px; padding: 5px" id="canvas">
         </div>
-        <div class="span3" id="propertyeditor">
+        <div class="span4" id="propertyeditor">
           <p class="noselection">No hay elemento seleccionado</p>
         </div>
       </div>
@@ -103,6 +104,7 @@
       <script src="lib/ace/ace.js"></script>
       <script src="lib/jquery.js"></script>
       <script src="lib/jquery.color.js"></script>
+      <script src="lib/colorpicker/farbtastic.js"></script>
       <script src="lib/bootstrap/js/bootstrap.js"></script>
       <script src="base/Attribute.js"></script>
       <script src="base/Environment.js"></script>
@@ -133,6 +135,10 @@
       <script src="tools/PointerTool.js"></script>
       <script src="tools/CanvasTool.js"></script>
       <script src="gui/toolbars/Toolbar.js"></script>
+      <script src="gui/toolbars/property-controls/ColorPropertyControl.js"></script>
+      <script src="gui/toolbars/property-controls/SelectPropertyControl.js"></script>
+      <script src="gui/toolbars/property-controls/SliderPropertyControl.js"></script>
+      <script src="gui/toolbars/property-controls/DimensionPropertyControl.js"></script>
       <script src="gui/toolbars/property-controls/StringPropertyControl.js"></script>
       <script src="gui/toolbars/property-controls/ListPropertyControl.js"></script>
       <script src="gui/toolbars/property-controls/PropertyDisplay.js"></script>

@@ -97,10 +97,26 @@
     <Content Include="src\gui\toolbars\property-controls\ListPropertyControl.js">
       <DependentUpon>ListPropertyControl.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\DimensionPropertyControl.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\ColorPropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\ColorPropertyControl.js">
+      <DependentUpon>ColorPropertyControl.ts</DependentUpon>
+    </Content>
+    <Content Include="src\gui\toolbars\property-controls\DimensionPropertyControl.js">
+      <DependentUpon>DimensionPropertyControl.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\property-controls\PropertyControl.js">
       <DependentUpon>PropertyControl.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\StringPropertyControl.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\SliderPropertyControl.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\SelectPropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\SelectPropertyControl.js">
+      <DependentUpon>SelectPropertyControl.ts</DependentUpon>
+    </Content>
+    <Content Include="src\gui\toolbars\property-controls\SliderPropertyControl.js">
+      <DependentUpon>SliderPropertyControl.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\property-controls\StringPropertyControl.js">
       <DependentUpon>StringPropertyControl.ts</DependentUpon>
     </Content>

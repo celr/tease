@@ -11,6 +11,6 @@ class RectangleTool implements Tool extends BackgroundableTool {
         this.properties['width'] = '150';
         this.properties['height'] = '150';
         this.properties['border'] = 'solid black 1px';
-        this.properties['background-color'] = '#ccc';
+        this.properties['background-color'] = '#cccccc';
     }
 }

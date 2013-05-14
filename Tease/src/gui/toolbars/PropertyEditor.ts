@@ -27,47 +27,52 @@ class PropertyEditor extends Eventable {
         
         for (var i in displayGroup.properties) {
             var property = displayGroup.properties[i];
-            var defaultValue = element.parentTool.properties[property];
+            var defaultValue = element.attributes[property] || element.parentTool.properties[property];
+            var propertyUnit = element.propertyUnits[property] || '';
 
-            if (element.attributes[property]) {
-                defaultValue = element.attributes[property];
-            }
-
-            this.renderProperty(property, defaultValue, displayGroup.propertyLabels[i],
+            this.renderProperty(property, defaultValue, propertyUnit, displayGroup.propertyLabels[i],
                 displayGroup.propertyControls[i]);
         }
     }
 
-    private handlePropertyValueChange(property: string, value: string) {
+    private handlePropertyValueChange(property: string, value: string, unit: string) {
+        this.currentElement.setPropertyUnit(property, unit);
         this.currentElement.setAttribute(this.propertyMap[property], value);
     }
 
-    private renderProperty(property: string, defaultValue: string, propertyLabel: string, propertyControl?: PropertyControl) {
-        var propertyLabelDiv = $('<div>' + property + '</div>');
+    private renderProperty(property: string, defaultValue: string, propertyUnit: string, propertyLabel: string, propertyControl?: PropertyControl) {
+        // Create property label
+        var propertyLabelDiv = $('<div>' + propertyLabel + '</div>');
 
         // Default property setter
         var propertySetter = $('<input id="' + property + '" type="text"></input>');
 
         // Get fancy property control if supported
         if (propertyControl) {
-            propertyControl.setValue(defaultValue);
-            propertySetter = propertyControl.DOMElement.clone(true);
-            propertyLabelDiv.text(propertyLabel);
-            propertyControl.addEventListener('valuechange', (e: CustomEvent) => {
-                for (var i in e.detail) {
-                    this.handlePropertyValueChange(i, e.detail[i]);
+            var propertyControlInstance = propertyControl.getCopy();
+            propertySetter = propertyControlInstance.DOMElement;
+            propertyLabelDiv.append(propertySetter);
+            this.DOMElement.append(propertyLabelDiv);
+            propertyControlInstance.setGUIValue(defaultValue, propertyUnit);
+
+            propertyControlInstance.addEventListener('valuechange', (e: CustomEvent) => {
+                var attributes = e.detail['attributes'];
+                var propertyUnits = e.detail['propertyUnits'];
+                for (var i in attributes) {
+                    var unit = propertyUnits[i] || '';
+                    this.handlePropertyValueChange(i, attributes[i], unit);
                 }               
             }, true);
         } else {
             // Event handler for default property setter
             propertySetter.blur((e: Event) => {
-                this.handlePropertyValueChange($(e.target).attr('id'), $(e.target).val());
+                this.handlePropertyValueChange($(e.target).attr('id'), $(e.target).val(), '');
             });
+
+            propertyLabelDiv.append(propertySetter);
+            this.DOMElement.append(propertyLabelDiv);
         }
         
         this.propertyMap[property] = property;
-
-        propertyLabelDiv.append(propertySetter);
-        this.DOMElement.append(propertyLabelDiv);
     }
 }

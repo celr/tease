@@ -69,8 +69,11 @@ class MediaTool extends DimensionableTool implements Tool {
         this.displayGroups.push(
             new PropertyDisplayGroup('Media',
                 ['media-src', 'controls', 'autoplay', 'loop'],
-                ['Fuente del medio:', 'Controles', 'Reproducir automaticamente', 'Repetir'],
-                [new StringPropertyControl('media-src'), new StringPropertyControl('controls'), new StringPropertyControl('autoplay'), new StringPropertyControl('loop')]
+                ['Fuente del medio:', 'Mostrar controles', 'Reproducir automaticamente', 'Repetir'],
+                [new StringPropertyControl('media-src'),
+                    new SelectPropertyControl('controls', ['true', 'false'], ['Mostrar', 'Ocultar']),
+                    new SelectPropertyControl('autoplay', ['true', 'false'], ['Activado', 'Desactivado']),
+                    new SelectPropertyControl('loop', ['true', 'false'], ['Activar', 'Desactivar'])]
             )
         );
     }
