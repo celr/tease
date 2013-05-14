@@ -4,6 +4,7 @@
 ///<reference path="../../tools/PointerTool.ts" />
 ///<reference path="../../tools/RectangleTool.ts" />
 ///<reference path="../../tools/VideoTool.ts" />
+///<reference path="../../tools/ListTool.ts" />
 ///<reference path="../../base/Eventable.ts" />
 
 // Toolbar
@@ -31,6 +32,7 @@ class Toolbar extends Eventable {
         this.tools.push(new RectangleTool('recttool'));
         this.tools.push(new AudioTool('audiotool'));
         this.tools.push(new VideoTool('videotool'));
+        this.tools.push(new ListTool('listtool'));
         this.tools.push(new PointerTool('pointertool'));
     }
 

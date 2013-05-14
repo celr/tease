@@ -9,29 +9,40 @@ class ListTool implements Tool extends BaseTool {
         this.displayImagePath = 'res/list-tool.png';
 
         this.properties['ordered'] = 'false';
+        this.properties['values'] = 'Lista';
 
         this.propertyMapper.callbackMapping.mapProperty('ordered',
             (property: string, value: string, DOMElement: JQuery) => {
                 if (property === 'ordered') {
                     if (value === 'true') {
-                        this.orderList(DOMElement);
+                        DOMElement[0].style.listStyle = "decimal";
                     } else {
-                        this.unorderList(DOMElement);
+                        DOMElement[0].style.listStyle = "circle";
                     }
                 }
             }
         );
+
+        this.propertyMapper.callbackMapping.mapProperty('values',
+            (property: string, value: string, DOMElement: JQuery) => {
+                DOMElement[0].innerHTML = "";  // Clears the contents of the list.
+                var singleValues: string[] = value.split("\|\&\|");
+                for (var i: number = 0; i < singleValues.length; ++i) {
+                    if (singleValues[i].trim().length > 0) {  // If value is not only spaces.
+                        var child = $("<li>" + singleValues[i] + "</li>");
+                        DOMElement.append(child);
+                    }
+                }
+            }
+        );
+
+        this.displayGroups.push(
+            new PropertyDisplayGroup('Lista',
+                ['ordered', 'values'],
+                ['Ordenada', 'Valores'],
+                [new StringPropertyControl('ordered'), new ListPropertyControl('values')]
+            )
+        );
     }
 
-    private orderList(DOMElement: JQuery) {
-        var currentList = DOMElement.clone(true);
-        DOMElement = $('<ol></ol>');
-        DOMElement.append(currentList.find('li'));
-    }
-
-    private unorderList(DOMElement: JQuery) {
-        var currentList = DOMElement.clone(true);
-        DOMElement = $('<ul></ul>');
-        DOMElement.append(currentList.find('li'));
-    }
 }

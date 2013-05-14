@@ -93,6 +93,10 @@
     <Content Include="src\gui\CodeEditor.js">
       <DependentUpon>CodeEditor.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\ListPropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\ListPropertyControl.js">
+      <DependentUpon>ListPropertyControl.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\property-controls\PropertyControl.js">
       <DependentUpon>PropertyControl.ts</DependentUpon>
     </Content>
@@ -254,16 +258,29 @@
     <Content Include="src\res\audioTool.png" />
     <Content Include="src\res\carlos.png" />
     <Content Include="src\res\chadan.png" />
+    <Content Include="src\res\default-image.png" />
     <Content Include="src\res\defaultImage.png" />
     <Content Include="src\res\Dot.png" />
+    <Content Include="src\res\image-tool.png" />
     <Content Include="src\res\imageTool.png" />
     <Content Include="src\res\jair.png" />
     <Content Include="src\res\keyframe-selected.png" />
     <Content Include="src\res\keyframe.png" />
+    <Content Include="src\res\list-tool.png" />
     <Content Include="src\res\new-layer.jpg" />
+    <Content Include="src\res\nextframes-icon.png" />
     <Content Include="src\res\play-icon.png" />
+    <Content Include="src\res\pointerTool.png" />
+    <Content Include="src\res\previousframes-icon.png" />
+    <Content Include="src\res\rect-tool.png" />
+    <Content Include="src\res\rotationTool.png" />
     <Content Include="src\res\ruler-line.png" />
+    <Content Include="src\res\stop-icon.png" />
+    <Content Include="src\res\text-tool.png" />
+    <Content Include="src\res\transition-frame-arrow.png" />
+    <Content Include="src\res\transition-frame.png" />
     <Content Include="src\res\trash.gif" />
+    <Content Include="src\res\video-tool.png" />
     <Content Include="src\res\video.mp4" />
     <Content Include="src\res\zoom.png" />
     <Content Include="src\style\app.css" />

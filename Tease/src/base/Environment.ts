@@ -4,14 +4,16 @@
 // Represents the global environment. Contains layers.
 class Environment {
     public layers: Layer[];
-    public toolCount: Object;
+    private toolCount: Object;
 
     constructor() {
         this.toolCount = {
             audiotool: 0,
             imagetool: 0,
             recttool: 0,
-            texttool: 0
+            texttool: 0,
+            videotool: 0,
+            listtool: 0
         };
 
     }
@@ -27,7 +29,7 @@ class Environment {
 
                 for (var j = 0; j < visibleKeyframe.elements.length; j++) {
                     var elementToInsert = visibleKeyframe.elements[j];
-                    
+
                     if (visibleKeyframe.elements[j].hasTransition() && visibleKeyframe.position != position) {
                         var transitionPercent = position / visibleKeyframe.elements[j].elementTransition.nextElement.keyframePosition;
                         elementToInsert = visibleKeyframe.elements[j].getElementWithTransition(transitionPercent);
