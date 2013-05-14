@@ -38,6 +38,7 @@ class PropertyEditor extends Eventable {
     private handlePropertyValueChange(property: string, value: string, unit: string) {
         this.currentElement.setPropertyUnit(property, unit);
         this.currentElement.setAttribute(this.propertyMap[property], value);
+        this.currentElement.DOMElement.trigger('elementEdited', this.currentElement);
     }
 
     private renderProperty(property: string, defaultValue: string, propertyUnit: string, propertyLabel: string, propertyControl?: PropertyControl) {
