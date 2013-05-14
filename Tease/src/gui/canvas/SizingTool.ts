@@ -27,7 +27,7 @@ class SizingTool {
 
     constructor() {
         var dotImg = new Image();
-        dotImg.src = 'res/Dot.png';
+        dotImg.src = 'Tease/src/res/Dot.png';
 
         this.dotSize = dotImg.width;
         //upper-left, upper-right, bottom-left, bottom-right, upper, bottom, left , right dots

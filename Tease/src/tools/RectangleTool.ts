@@ -6,7 +6,7 @@ class RectangleTool implements Tool extends BackgroundableTool {
     constructor(public id: string) {
         super(id, $('<div id="rect-element"></div>'));
         this.displayName = 'Rectangle';
-        this.displayImagePath = 'res/rect-tool.png';
+        this.displayImagePath = 'Tease/src/res/rect-tool.png';
 
         this.properties['width'] = '150';
         this.properties['height'] = '150';

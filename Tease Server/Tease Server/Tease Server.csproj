@@ -306,7 +306,6 @@
     <Content Include="Views\Page\Delete.cshtml" />
     <Content Include="Views\Json\Index.cshtml" />
     <Content Include="Views\Resource\Upload.cshtml" />
-    <Content Include="Views\Tease\Index.cshtml" />
     <Content Include="Views\Main\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

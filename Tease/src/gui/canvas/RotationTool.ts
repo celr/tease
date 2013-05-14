@@ -11,7 +11,7 @@ class RotationTool {
     constructor() {
         this.$canvas = $('#canvas');
         this.image = $('<img></img>');
-        this.image.attr('src', 'res/rotationTool.png');
+        this.image.attr('src', 'Tease/src/res/rotationTool.png');
         this.image.css('position', 'absolute');
         this.image.css('zIndex', '10000000');
         this.toolsize = 30;

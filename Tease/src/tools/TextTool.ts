@@ -10,7 +10,7 @@ class TextTool implements Tool extends BaseTool {
     constructor(public id: string) {
         super(id, $('<div></div>'));
         this.displayName = 'Text';
-        this.displayImagePath = 'res/text-tool.png';
+        this.displayImagePath = 'Tease/src/res/text-tool.png';
 
         this.properties['color'] = '#000000';
         this.properties['text-align'] = 'left';

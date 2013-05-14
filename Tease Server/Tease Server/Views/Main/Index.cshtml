@@ -1,7 +1,6 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,8 +10,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="Tease/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="Tease/style/app.css" rel="stylesheet">
+    <link href="Tease/src/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="Tease/src/style/app.css" rel="stylesheet">
+    <link href="Tease/src/lib/colorpicker/farbtastic.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -49,25 +49,28 @@
       <div class="row-fluid">
         <div class="span2" id="toolbar">
         </div>
-        <div class="span19" style="min-height:650px; padding: 5px" id="canvas">
+		<div class="span18" style="min-height:650px; height:650px; padding: 5px; overflow:scroll;">
+            <div id="canvas" style="overflow:hidden; width:1800px; height:1800px;">
+
+            </div>
         </div>
-        <div class="span3" id="propertyeditor">
+        <div class="span4" id="propertyeditor" style="overflow-y:scroll; padding-right:15px;">
           <p class="noselection">No hay elemento seleccionado</p>
         </div>
       </div>
 
     <div class="nav navbar-fixed-bottom">
         <div id="zoombar" class="row-fluid">
-            <div class="span3 offset21" style="padding-left: 10px"><span class="zoom"><img src="Tease/res/zoom.png" />100%</span></div>
+            <div class="span3 offset21" style="padding-left: 10px"><span class="zoom"><img src="Tease/src/res/zoom.png" />100%</span></div>
         </div>
         <div id="timeline" class="navbar-inner">
             <div class="container-fluid">
                 <div class="row-fluid">
-                    <img src="Tease/res/play-icon.png" id="play-button" /> <img src="Tease/res/stop-icon.png" id="stop-button" />
+                    <img src="Tease/src/res/play-icon.png" id="play-button" /> <img src="Tease/src/res/stop-icon.png" id="stop-button" />
                 </div>
                 <div id ="timeline-workspace" class="row-fluid">                                    
                     <div id="timeline-layers" class="span2">
-                        <div class="timeline-layercontrols"><img id="newlayer-btn" src="Tease/res/new-layer.jpg" /> <img id="trashlayer-btn" src="Tease/res/trash.gif" /></div>
+                        <div class="timeline-layercontrols"><img id="newlayer-btn" src="Tease/src/res/new-layer.jpg" /> <img id="trashlayer-btn" src="Tease/src/res/trash.gif" /></div>
                         <div id="timeline-layerlist"></div>
                     </div>
                     <div id="timeline-framelist" class="span20">
@@ -78,7 +81,7 @@
                     </div>
 
                     <div id="timeline-options" class="span2">
-                        <img id="timelinenav-leftbutton" src="Tease/res/previousframes-icon.png" /> <img id="timelinenav-rightbutton" src="Tease/res/nextframes-icon.png" />
+                        <img id="timelinenav-leftbutton" src="Tease/src/res/previousframes-icon.png" /> <img id="timelinenav-rightbutton" src="Tease/src/res/nextframes-icon.png" />
                     </div>
                 </div>
                 <div class="nav-collapse collapse">
@@ -103,48 +106,60 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="Tease/lib/json2.js"></script>
-    <script src="Tease/lib/ace/ace.js"></script>
-    <script src="Tease/lib/jquery.js"></script>
-    <script src="Tease/lib/jquery.color.js"></script>
-    <script src="Tease/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="Tease/base/Attribute.js"></script>
-    <script src="Tease/base/Environment.js"></script>
-    <script src="Tease/base/AnimationRenderer.js"></script>
-    <script src="Tease/base/Frame.js"></script>
-    <script src="Tease/base/Layer.js"></script>
-    <script src="Tease/base/Eventable.js"></script>
-    <script src="Tease/base/Element.js"></script>
-    <script src="Tease/base/PageSynchronizer.js"></script>
-    <script src="Tease/base/code_generation/CodeGenerator.js"></script>
-    <script src="Tease/base/code_generation/HTMLGenerator.js"></script>
-    <script src="Tease/base/code_generation/JSGenerator.js"></script>
-    <script src="Tease/base/code_generation/CSSGenerator.js"></script>
-    <script src="Tease/base/code_generation/CodeGenerationUtils.js"></script>
-    <script src="Tease/tools/PropertyDisplayGroup.js"></script>
-    <script src="Tease/tools/Tool.js"></script>
-    <script src="Tease/tools/PropertyMapping.js"></script>
-    <script src="Tease/tools/BaseTool.js"></script>
-    <script src="Tease/tools/TextTool.js"></script>
-    <script src="Tease/tools/DimensionableTool.js"></script>
-    <script src="Tease/tools/BackgroundableTool.js"></script>
-    <script src="Tease/tools/RectangleTool.js"></script>
-    <script src="Tease/tools/ImageTool.js"></script>
-    <script src="Tease/tools/AudioTool.js"></script>
-    <script src="Tease/tools/PointerTool.js"></script>
-    <script src="Tease/tools/CanvasTool.js"></script>
-    <script src="Tease/gui/toolbars/Toolbar.js"></script>
-    <script src="Tease/gui/toolbars/property-controls/StringPropertyControl.js"></script>
-    <script src="Tease/gui/toolbars/property-controls/PropertyDisplay.js"></script>
-    <script src="Tease/gui/canvas/SizingTool.js"></script>
-    <script src="Tease/gui/canvas/SelectionTool.js"></script>
-    <script src="Tease/gui/canvas/ElementGroup.js"></script>
-    <script src="Tease/gui/canvas/SelectedElementOptions.js"></script>
-    <script src="Tease/gui/canvas/RotationTool.js"></script>
-    <script src="Tease/gui/canvas/Canvas.js"></script>
-    <script src="Tease/gui/toolbars/PropertyEditor.js"></script>
-    <script src="Tease/gui/toolbars/Timeline.js"></script>
-    <script src="Tease/base/Layer.js"></script>
-    <script src="Tease/Main.js"></script>
+      <script src="Tease/src/lib/json2.js"></script>
+      <script src="Tease/src/lib/ace/ace.js"></script>
+      <script src="Tease/src/lib/jquery.js"></script>
+      <script src="Tease/src/lib/jquery.color.js"></script>
+      <script src="Tease/src/lib/jquery.fontselector.js"></script>
+      <script src="Tease/src/lib/colorpicker/farbtastic.js"></script>
+      <script src="Tease/src/lib/bootstrap/js/bootstrap.js"></script>
+      <script src="Tease/src/lib/colorpicker/farbtastic.js"></script>
+      <script src="Tease/src/base/Attribute.js"></script>
+      <script src="Tease/src/base/Environment.js"></script>
+      <script src="Tease/src/base/AnimationRenderer.js"></script>
+      <script src="Tease/src/base/Frame.js"></script>
+      <script src="Tease/src/base/Layer.js"></script>
+      <script src="Tease/src/base/Eventable.js"></script>
+      <script src="Tease/src/base/Element.js"></script>
+      <script src="Tease/src/base/PageSynchronizer.js"></script>
+      <script src="Tease/src/base/code_generation/CodeGenerator.js"></script>
+      <script src="Tease/src/base/code_generation/HTMLGenerator.js"></script>
+      <script src="Tease/src/base/code_generation/JSGenerator.js"></script>
+      <script src="Tease/src/base/code_generation/CSSGenerator.js"></script>
+      <script src="Tease/src/base/code_generation/CodeGenerationUtils.js"></script>
+      <script src="Tease/src/tools/PropertyDisplayGroup.js"></script>
+      <script src="Tease/src/tools/Tool.js"></script>
+      <script src="Tease/src/tools/PropertyMapping.js"></script>
+      <script src="Tease/src/tools/BaseTool.js"></script>
+      <script src="Tease/src/tools/TextTool.js"></script>
+      <script src="Tease/src/tools/DimensionableTool.js"></script>
+      <script src="Tease/src/tools/BackgroundableTool.js"></script>
+      <script src="Tease/src/tools/RectangleTool.js"></script>
+      <script src="Tease/src/tools/ImageTool.js"></script>
+      <script src="Tease/src/tools/MediaTool.js"></script>
+      <script src="Tease/src/tools/AudioTool.js"></script>
+      <script src="Tease/src/tools/VideoTool.js"></script>
+      <script src="Tease/src/tools/ListTool.js"></script>
+      <script src="Tease/src/tools/PointerTool.js"></script>
+      <script src="Tease/src/tools/CanvasTool.js"></script>
+      <script src="Tease/src/gui/toolbars/Toolbar.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/FontPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/ColorPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/SelectPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/SliderPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/DimensionPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/StringPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/ListPropertyControl.js"></script>
+      <script src="Tease/src/gui/toolbars/property-controls/PropertyDisplay.js"></script>
+      <script src="Tease/src/gui/canvas/SizingTool.js"></script>
+      <script src="Tease/src/gui/canvas/SelectionTool.js"></script>
+      <script src="Tease/src/gui/canvas/ElementGroup.js"></script>
+      <script src="Tease/src/gui/canvas/SelectedElementOptions.js"></script>
+      <script src="Tease/src/gui/canvas/RotationTool.js"></script>
+      <script src="Tease/src/gui/canvas/Canvas.js"></script>
+      <script src="Tease/src/gui/toolbars/PropertyEditor.js"></script>
+      <script src="Tease/src/gui/toolbars/Timeline.js"></script>
+      <script src="Tease/src/base/Layer.js"></script>
+      <script src="Tease/src/Main.js"></script>
   </body>
 </html>

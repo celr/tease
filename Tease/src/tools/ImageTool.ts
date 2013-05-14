@@ -7,11 +7,11 @@ class ImageTool implements Tool extends BackgroundableTool {
     public propertyDisplayGroups: PropertyDisplayGroup[];
 
     constructor(public id: string) {
-        super(id, $('<img id="' + id + '" src = "res/default-image.png"></img>'));
+        super(id, $('<img id="' + id + '" src = "Tease/src/res/default-image.png"></img>'));
         this.displayName = 'Image';
-        this.displayImagePath = 'res/image-tool.png';
+        this.displayImagePath = 'Tease/src/res/image-tool.png';
 
-        this.properties['image-source'] = 'res/default-image.png';
+        this.properties['image-source'] = 'Tease/src/res/default-image.png';
         this.properties['width'] = '150';
         this.properties['height'] = '150';
 

@@ -6,7 +6,7 @@ class VideoTool implements Tool extends MediaTool {
         super(id, $('<video id="' + id + '">Your browser does not support the video element.</video>'));
 
         this.displayName = 'Video';
-        this.displayImagePath = 'res/video-tool.png';
+        this.displayImagePath = 'Tease/src/res/video-tool.png';
 
     }
 }

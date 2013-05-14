@@ -42,8 +42,10 @@ class ColorPropertyControl implements PropertyControl extends Eventable {
     }
 
     private handleChange(color: string) {
-        this.setGUIValue(color, null);
-        this.triggerEvent();
+        if (color != '#NaNNaNNaN') {
+            this.setGUIValue(color, null);
+            this.triggerEvent();
+        }
     }
 
     private triggerEvent() {

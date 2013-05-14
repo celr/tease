@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tease", "Tease\Tease.csproj", "{40F1FB83-6CF7-4BE4-853B-2E5C5C938ED8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tease Server", "Tease Server\Tease Server\Tease Server.csproj", "{5F18D451-F424-48D1-BD45-CCC928ABB87D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{40F1FB83-6CF7-4BE4-853B-2E5C5C938ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40F1FB83-6CF7-4BE4-853B-2E5C5C938ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40F1FB83-6CF7-4BE4-853B-2E5C5C938ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F18D451-F424-48D1-BD45-CCC928ABB87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F18D451-F424-48D1-BD45-CCC928ABB87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F18D451-F424-48D1-BD45-CCC928ABB87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F18D451-F424-48D1-BD45-CCC928ABB87D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

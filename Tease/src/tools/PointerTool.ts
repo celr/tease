@@ -15,7 +15,7 @@ class PointerTool implements Tool{
 
     constructor(public id: string) {
         this.displayName = 'Pointer';
-        this.displayImagePath = 'res/pointerTool.png';
+        this.displayImagePath = 'Tease/src/res/pointerTool.png';
     }
 
     public setAttributesInDOMElement(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {

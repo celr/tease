@@ -8,7 +8,7 @@ class AudioTool implements Tool extends MediaTool {
         this.properties['height'] = '50';
 
         this.displayName = 'Audio';
-        this.displayImagePath = 'res/audioTool.png';
+        this.displayImagePath = 'Tease/src/res/audioTool.png';
 
     }
 }
