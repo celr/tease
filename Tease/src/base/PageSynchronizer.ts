@@ -2,6 +2,8 @@
 ///<reference path="AnimationRenderer.ts" />
 ///<reference path="../lib/jquery.d.ts" />
 ///<reference path="../lib/json2.ts" />
+///<reference path="../tools/BaseTool.ts" />
+///<reference path="../tools/CanvasTool.ts" />
 
 class PageSynchronizer {
     private codeGenerator: CodeGenerator;
@@ -10,18 +12,21 @@ class PageSynchronizer {
     private pageID: string;
     private interval: Object;
     private ms: number;
+    private environment: Environment;
+    private animationSettings: AnimationSettings;
 
-    constructor(private environment: Environment, private animationSettings: AnimationSettings) {
+    constructor() {
+    }
+
+
+    public updatePageFiles(environment: Environment, animationSettings: AnimationSettings) {
+        this.environment = environment;
+        this.animationSettings = animationSettings;
         this.animationRenderer = new AnimationRenderer();
         this.codeGenerator = new CodeGenerator();
         this.pageID = $("#pageID").val();
         this.ms = 300000;
-        this.interval = setInterval(() => { this.updatePageFiles() }, this.ms);
-    }
-
-
-    public updatePageFiles() {
-        var renderedEnv = this.animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
+        var renderedEnv = this.animationRenderer.getRenderedEnvironment(environment, animationSettings);
         var pageCode = <PageCode> this.codeGenerator.generate(renderedEnv);
         this.sendFile("UpdateCSSStyles", pageCode.CSSStylesCode, "css");
         this.sendFile("UpdateCSSAnimations", pageCode.CSSAnimationsCode, "css");
@@ -39,6 +44,12 @@ class PageSynchronizer {
                     return;
                 if (val instanceof HTMLElement)
                     return;
+                if (val instanceof BaseTool) {
+                    return val.id;
+                }
+                if (val instanceof CanvasTool) {
+                    return val.id;
+                }
                 if (seen.indexOf(val) >= 0)
                     return;
                 seen.push(val);

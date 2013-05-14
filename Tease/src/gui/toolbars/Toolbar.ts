@@ -13,29 +13,13 @@
 
 class Toolbar extends Eventable {
     public currentTool: Tool;
-    private tools: Tool[];
-    private toolMap: Object; // id => tool mapping
 
-    constructor(private DOMElement: JQuery) {
+    constructor(private DOMElement: JQuery, private toolMap: Object, private defaultToolId) {
         super();
-        this.tools = new Tool[];
-        this.toolMap = new Object();
-        this.loadTools();
         this.renderTools();
-        this.selectTool(this.tools[0]); // Automatically select the first tool
+        this.selectTool(this.toolMap[this.defaultToolId]); // Automatically select the first tool
     }
-
-    // Loads the available tools into the tools array
-    private loadTools() {
-        this.tools.push(new TextTool('texttool'));
-        this.tools.push(new ImageTool('imagetool'));
-        this.tools.push(new RectangleTool('recttool'));
-        this.tools.push(new AudioTool('audiotool'));
-        this.tools.push(new VideoTool('videotool'));
-        this.tools.push(new ListTool('listtool'));
-        this.tools.push(new PointerTool('pointertool'));
-    }
-
+    
     // Creates and adds the html element for the passed tool
     private renderTool(tool: Tool) {
         tool.toolbarDOMElement = $('<span id="' + tool.id + '" class="tool"><img src="' + tool.displayImagePath + '"></img></span>');
@@ -62,11 +46,13 @@ class Toolbar extends Eventable {
 
     // Helper function to render all the tools in the tool array
     private renderTools() {
-        for (var i = 0; i < this.tools.length; i++) {
-            this.renderTool(this.tools[i]);
-            if ((i + 1) % 2 == 0 && i != 0) {
+        var count = 0;
+        for (var i in this.toolMap) {
+            this.renderTool(this.toolMap[i]);
+            if ((count + 1) % 2 == 0 && count != 0) {
                 $('<br />').appendTo(this.DOMElement); // Add newline every two tools
             }
+            count++;
         }
     }
 }

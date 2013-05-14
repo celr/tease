@@ -18,6 +18,9 @@ class Environment {
             listtool: 0
         };
 
+        this.layers = [];
+        this.canvasAttributes = {};
+        this.canvasPropertyUnits = {};
     }
 
     // Returns list containing the visible elements by layer

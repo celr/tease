@@ -270,6 +270,7 @@
     <Content Include="src\lib\jquery.d.ts" />
     <Content Include="src\lib\jquery.js" />
     <TypeScriptCompile Include="src\Main.ts" />
+    <Content Include="src\lib\json2.ts" />
     <Content Include="src\Main.js">
       <DependentUpon>Main.ts</DependentUpon>
     </Content>

@@ -7,7 +7,7 @@ class Layer {
 
     constructor(public title: string, public visible: bool, public editable: bool, public index: number) {
         // Insert an empty keyframe
-        this.keyframes = [new Keyframe(1)];
+        this.keyframes = [];
     }
 
     // Inserts a frame to the layer, returns its index in the keyframe list

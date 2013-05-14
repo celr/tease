@@ -69,9 +69,6 @@ class Timeline extends Eventable {
         });
 
         this.drawTimeline();
-
-        // Select first frame
-        this.selectFirstFrame();
     }
 
     public selectFirstFrame() {
@@ -219,8 +216,9 @@ class Timeline extends Eventable {
 
     private highlightFrameByPosition(position: number) {
         var frameIndex = position - this.startPosition;
-        var frame = $($(this.frameListGUI.find('#timeline-frames').children()[this.selectedLayerIndex]).find('.timeline-frame')[frameIndex]);
-        this.highlightFrame(frame); // TODO: Break this down
+        var frames = this.frameListGUI.find('#timeline-frames').children();
+        var frame = $(frames[this.selectedLayerIndex]).find('.timeline-frame')[frameIndex];
+        this.highlightFrame($(frame)); // TODO: Break this down
     }
 
     private highlightFrame(frame: JQuery) {
@@ -463,6 +461,7 @@ class Timeline extends Eventable {
 
     private addNewLayer() {
         var layer = new Layer('Layer ' + this.nextLayerNum++, true, true, this.environment.layers.length);
+        layer.keyframes.push(new Keyframe(1));
         this.drawLayer(layer);
         this.environment.layers.push(layer);
         this.fireEvent('layercreate', null);
