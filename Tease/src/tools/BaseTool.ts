@@ -11,7 +11,7 @@ class BaseTool implements Tool {
     public displayName: string;
     public displayImagePath: string;
     public displayGroups: PropertyDisplayGroup[];
-    
+
     // Attributes and properties
     public properties: Object;
     public propertyUnits: Object;
@@ -26,6 +26,7 @@ class BaseTool implements Tool {
 
         // Set default attributes
         this.properties = {
+            elementName: '',
             opacity: '1.0',
             left: '0',
             top: '0',
@@ -42,6 +43,15 @@ class BaseTool implements Tool {
         };
 
         this.propertyMapper = new PropertyMapper();
+
+        this.propertyMapper.callbackMapping.mapProperty('elementName',
+            (property: string, value: string, DOMElement: JQuery) => {
+                if (property === 'elementName') {
+                    DOMElement.attr('element-name', value);
+                }
+            }
+        );
+
         this.propertyMapper.directCSSMapping.mapProperty('opacity');
         this.propertyMapper.directCSSMapping.mapProperty('left');
         this.propertyMapper.directCSSMapping.mapProperty('top');
@@ -57,10 +67,16 @@ class BaseTool implements Tool {
         var rotationUnitLabels = ['grados', 'radianes'];
 
         this.displayGroups = [
+            new PropertyDisplayGroup('Nombrado',
+                ['elementName'],
+                ['Nombre'],
+                [new StringPropertyControl('elementName')]
+            ),
+
             new PropertyDisplayGroup('Posicionamiento',
                 ['top', 'left', 'rotation'],
                 ['Arriba', 'Izquierda', 'Rotación'],
-                [   new DimensionPropertyControl('top', dimensionUnits, dimensionUnitLabels),
+                [new DimensionPropertyControl('top', dimensionUnits, dimensionUnitLabels),
                     new DimensionPropertyControl('left', dimensionUnits, dimensionUnitLabels),
                     new DimensionPropertyControl('rotation', rotationUnits, rotationUnitLabels)]
             ),

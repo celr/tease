@@ -40,22 +40,22 @@ class Canvas extends Eventable {
         this.DOMElement.css('position', 'relative');
         this.elementMap = {};
         this.nextElementId = 0;
-        
-		this.canvasElement = new Tease.Element(new CanvasTool('canvastool'), this.nextElementId++);
+
+        this.canvasElement = new Tease.Element(new CanvasTool('canvastool'), this.nextElementId++);
         this.canvasElement.setDOMElement(this.DOMElement);
         this.canvasElement.setAttribute('height', parseInt(this.DOMElement.css('height')).toString());
         this.canvasElement.setAttribute('width', parseInt(this.DOMElement.css('width')).toString());
 
         environment.canvasAttributes = this.canvasElement.attributes;
         environment.canvasPropertyUnits = this.canvasElement.propertyUnits;
-		
-		this.DOMElement.click((e: Event) => {
+
+        this.DOMElement.click((e: Event) => {
             this.handleCanvasClick(e);
         });
         this.DOMElement.mousedown((e: JQueryEventObject) => {
             this.handleSelectionTool(e);
         });
-        this.DOMElement.on('elementDeleted', (e, element:Tease.Element) => {
+        this.DOMElement.on('elementDeleted', (e, element: Tease.Element) => {
             this.handleElementDeleted(element);
         });
         this.DOMElement.on('elementResized', (e, element: Tease.Element) => {
@@ -150,9 +150,10 @@ class Canvas extends Eventable {
         this.elementMap[element.id.toString()] = element;
         this.DOMElement.append(element.DOMElement);
         this.setZIndexProperty(element);
-        
+
         //set element-name
-        element.DOMElement.attr('element-name', element.parentTool.id + this.environment.getNextToolNumber(element.parentTool.id));
+        element.attributes["elementName"] = element.parentTool.displayName + this.environment.getNextToolNumber(element.parentTool.id);
+        element.DOMElement.attr('element-name', element.attributes["elementName"]);
 
         // Insert element into layer group
         this.layerGroups[layerIndex].insertElement(element.id.toString(), element);
@@ -274,7 +275,7 @@ class Canvas extends Eventable {
                 document.removeEventListener('mouseup', handleUp);
                 that.DOMElement.off('mousemove', handleMove);
                 var finalX = event.clientX + $(document).scrollLeft() - that.DOMElement.offset().left;
-                var finalY = event.clientY + $(document).scrollTop()  - that.DOMElement.offset().top;
+                var finalY = event.clientY + $(document).scrollTop() - that.DOMElement.offset().top;
                 that.selectedGroup = that.selectionTool.getSelectedElements(that.elementMap, finalX, finalY);
                 that.selectionTool.erase();
                 if (that.selectedGroup.hasMultipleElements()) {
