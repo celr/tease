@@ -18,6 +18,8 @@ class RenderedElement {
 class RenderedEnvironment {
     private animationCount: number;
     private playCallback: Function;
+    public canvasAttributes: Object;
+    public canvasPropertyUnits: Object;
 
     constructor(public renderedElements?: RenderedElement[] = []) {
         this.animationCount = 0;
@@ -63,6 +65,10 @@ class AnimationRenderer {
         for (var i = 0; i < environment.layers.length; i++) {
             this.renderLayer(environment.layers[i]);
         }
+
+        // Add canvas properties.
+        this.renderedEnv.canvasAttributes = environment.canvasAttributes;
+        this.renderedEnv.canvasPropertyUnits = environment.canvasPropertyUnits;
 
         return this.renderedEnv;
     }
