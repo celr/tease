@@ -21,7 +21,7 @@ class CanvasTool implements Tool{
         this.properties = {
             height: 500,
             width: 800,
-            'background-color': 'none',
+            'background-color': '#cccccc',
             'background-image': 'none'
         };
         
@@ -36,21 +36,21 @@ class CanvasTool implements Tool{
         this.propertyMapper.directCSSMapping.mapProperty('background-color');
         this.propertyMapper.directCSSMapping.mapProperty('background-image');
 
+        var dimensionUnits = ['px', 'in', 'pt'];
+        var dimensionUnitLabels = ['pixeles', 'pulgadas', 'puntos'];
 
         this.displayGroups = [
-            new PropertyDisplayGroup("Tamaño",
+            new PropertyDisplayGroup('Tamaño',
             ['width', 'height'],
             ['Ancho', 'Alto'],
-            [new StringPropertyControl('width'), new StringPropertyControl('height')] 
-        )];
-
-        this.displayGroups.push(
+            [new DimensionPropertyControl('width', dimensionUnits, dimensionUnitLabels),
+             new DimensionPropertyControl('height', dimensionUnits, dimensionUnitLabels)]
+            ),
             new PropertyDisplayGroup('Fondo',
                 ['background-color', 'background-image'],
                 ['Color de fondo', 'Imagen de fondo'],
-                [new StringPropertyControl('background-color'), new StringPropertyControl('background-image')]
-            )
-        );
+                [new ColorPropertyControl('background-color'), new StringPropertyControl('background-image')]
+            )];
 
         this.defaultDOMElement = $('<div></div>');
     }
