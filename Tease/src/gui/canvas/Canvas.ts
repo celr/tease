@@ -40,9 +40,16 @@ class Canvas extends Eventable {
         this.DOMElement.css('position', 'relative');
         this.elementMap = {};
         this.nextElementId = 0;
-        this.canvasElement = new Tease.Element(new CanvasTool('canvastool'), this.nextElementId++);
+        
+		this.canvasElement = new Tease.Element(new CanvasTool('canvastool'), this.nextElementId++);
         this.canvasElement.setDOMElement(this.DOMElement);
-        this.DOMElement.click((e: Event) => {
+        this.canvasElement.setAttribute('height', parseInt(this.DOMElement.css('height')).toString());
+        this.canvasElement.setAttribute('width', parseInt(this.DOMElement.css('width')).toString());
+
+        environment.canvasAttributes = this.canvasElement.attributes;
+        environment.canvasPropertyUnits = this.canvasElement.propertyUnits;
+		
+		this.DOMElement.click((e: Event) => {
             this.handleCanvasClick(e);
         });
         this.DOMElement.mousedown((e: JQueryEventObject) => {

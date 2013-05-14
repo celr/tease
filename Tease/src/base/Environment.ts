@@ -5,7 +5,9 @@
 class Environment {
     public layers: Layer[];
     public toolCount: Object;
-
+	public canvasAttributes: Object;
+    public canvasPropertyUnits: Object;
+	
     constructor() {
         this.toolCount = {
             audiotool: 0,
