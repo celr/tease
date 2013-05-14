@@ -57,12 +57,10 @@ class BaseTool implements Tool {
         var rotationUnitLabels = ['grados', 'radianes'];
 
         this.displayGroups = [
-            new PropertyDisplayGroup('Posicionamiento y tamaño',
-                ['width', 'height', 'top', 'left', 'rotation'],
-                ['Ancho', 'Alto', 'Arriba', 'Izquierda', 'Rotación'],
-                [new DimensionPropertyControl('width', dimensionUnits, dimensionUnitLabels),
-                    new DimensionPropertyControl('height', dimensionUnits, dimensionUnitLabels),
-                    new DimensionPropertyControl('top', dimensionUnits, dimensionUnitLabels),
+            new PropertyDisplayGroup('Posicionamiento',
+                ['top', 'left', 'rotation'],
+                ['Arriba', 'Izquierda', 'Rotación'],
+                [   new DimensionPropertyControl('top', dimensionUnits, dimensionUnitLabels),
                     new DimensionPropertyControl('left', dimensionUnits, dimensionUnitLabels),
                     new DimensionPropertyControl('rotation', rotationUnits, rotationUnitLabels)]
             ),

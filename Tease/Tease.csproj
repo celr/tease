@@ -94,6 +94,10 @@
       <DependentUpon>CodeEditor.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\ListPropertyControl.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\FontPropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\FontPropertyControl.js">
+      <DependentUpon>FontPropertyControl.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\property-controls\ListPropertyControl.js">
       <DependentUpon>ListPropertyControl.ts</DependentUpon>
     </Content>

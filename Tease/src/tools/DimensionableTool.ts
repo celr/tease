@@ -1,5 +1,6 @@
 ///<reference path="Tool.ts" />
 ///<reference path="BaseTool.ts" />
+///<reference path="../gui/toolbars/property-controls/DimensionPropertyControl.ts" />
 
 class DimensionableTool extends BaseTool implements Tool {
     constructor(id: string, DOMElement: JQuery) {
@@ -14,5 +15,15 @@ class DimensionableTool extends BaseTool implements Tool {
 
         this.propertyMapper.directCSSMapping.mapProperty('width');
         this.propertyMapper.directCSSMapping.mapProperty('height');
+
+        var dimensionUnits = ['px', 'in', 'pt'];
+        var dimensionUnitLabels = ['pixeles', 'pulgadas', 'puntos'];
+
+        this.displayGroups.push(new PropertyDisplayGroup('Tamaño',
+                ['width', 'height'],
+                ['Ancho', 'Alto'],
+                [new DimensionPropertyControl('width', dimensionUnits, dimensionUnitLabels),
+                    new DimensionPropertyControl('height', dimensionUnits, dimensionUnitLabels)]
+        ));
     }
 }
