@@ -255,6 +255,7 @@ class PropertyMapper {
         this.directCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
         this.renameCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
         this.multipleCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
+        this.transformCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
 
         return animationProperties;
     }

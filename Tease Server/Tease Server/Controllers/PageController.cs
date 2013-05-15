@@ -109,7 +109,7 @@ namespace Tease_Server.Controllers
                     return RedirectToAction("Index", new { projectID = page.ProjectID });
                 }
 
-                ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Name", page.ProjectID);
+                ViewBag.ProjectID = 0;
                 return View(page);
             }
             catch (Exception e)
