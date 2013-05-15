@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="/Resource/upload?pageId=@ViewBag.pageID" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileOne" />
+        <input type="submit" value="test"/>
+    </form>
+</body>
+
+</html>

@@ -35,10 +35,12 @@ class MainController {
         this.elementLayerMap = {};
         this.fps = 10;
 
+        var pageId = $('#pageID').val();
+
         // Create tools
         this.tools = {
             texttool: new TextTool('texttool'),
-            imagetool: new ImageTool('imagetool'),
+            imagetool: new ImageTool('imagetool', pageId),
             recttool: new RectangleTool('recttool'),
             audiotool: new AudioTool('audiotool'),
             videotool: new VideoTool('videotool'),
@@ -48,8 +50,6 @@ class MainController {
 
         // Initialize Synchronizer
         this.pageSynchronizer = new PageSynchronizer();
-
-        var pageId = $('#pageID').val();
 
         if (pageId) {
             this.openExistingPage(pageId);

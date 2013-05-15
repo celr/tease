@@ -10,8 +10,15 @@ namespace Tease_Server.Controllers
     public class ResourceController : Controller
     {
         private UsersContext db = new UsersContext();
+
+        public ActionResult UploadView(int pageID)
+        {
+            ViewBag.pageID = pageID;
+            return View();
+        }
+
         //
-        // POST: /Resource/
+        // POST: /Resource?pageID=
         [HttpPost]
         public ActionResult Upload(int pageID)
         {
@@ -43,7 +50,7 @@ namespace Tease_Server.Controllers
             res.PageID = pageID;
             res.Name = fileName;
             res.Type = extension;
-            res.Url = "http://" + Request.Url.Authority + "/" + projectID + "/res/" + fileName + extension;
+            res.Url = "http://" + Request.Url.Authority + "/PagesFiles/" + projectID + "/res/" + fileName + extension;
             db.Resources.Add(res);
             db.SaveChanges();
             return View();

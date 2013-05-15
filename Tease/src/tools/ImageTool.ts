@@ -1,12 +1,13 @@
 ///<reference path="BackgroundableTool.ts" />
 ///<reference path="PropertyDisplayGroup.ts" />
 ///<reference path="Tool.ts" />
+///<reference path="../gui/toolbars/property-controls/ResourcePropertyControl.ts" />
 
 class ImageTool implements Tool extends BackgroundableTool {
     private propertyDisplayMap: Object;
     public propertyDisplayGroups: PropertyDisplayGroup[];
 
-    constructor(public id: string) {
+    constructor(public id: string, public pageId: number) {
         super(id, $('<img id="' + id + '" src = "Tease/src/res/default-image.png"></img>'));
         this.displayName = 'Image';
         this.displayImagePath = 'Tease/src/res/image-tool.png';
@@ -19,7 +20,7 @@ class ImageTool implements Tool extends BackgroundableTool {
             new PropertyDisplayGroup('Imagen',
                 ['image-source'],
                 ['Fuente de imagen'],
-                [new StringPropertyControl('image-source')]
+                [new ResourcePropertyControl('image-source', this.pageId)]
             )
         );
 

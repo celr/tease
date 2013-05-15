@@ -115,6 +115,10 @@
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\StringPropertyControl.ts" />
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\SliderPropertyControl.ts" />
     <TypeScriptCompile Include="src\gui\toolbars\property-controls\SelectPropertyControl.ts" />
+    <TypeScriptCompile Include="src\gui\toolbars\property-controls\ResourcePropertyControl.ts" />
+    <Content Include="src\gui\toolbars\property-controls\ResourcePropertyControl.js">
+      <DependentUpon>ResourcePropertyControl.ts</DependentUpon>
+    </Content>
     <Content Include="src\gui\toolbars\property-controls\SelectPropertyControl.js">
       <DependentUpon>SelectPropertyControl.ts</DependentUpon>
     </Content>
