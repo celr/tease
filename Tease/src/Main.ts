@@ -42,8 +42,8 @@ class MainController {
             texttool: new TextTool('texttool'),
             imagetool: new ImageTool('imagetool', pageId),
             recttool: new RectangleTool('recttool'),
-            audiotool: new AudioTool('audiotool'),
-            videotool: new VideoTool('videotool'),
+            audiotool: new AudioTool('audiotool', pageId),
+            videotool: new VideoTool('videotool', pageId),
             listtool: new ListTool('listtool'),
             ellipsetool: new EllipseTool('ellipsetool'),
             pointertool: new PointerTool('pointertool')

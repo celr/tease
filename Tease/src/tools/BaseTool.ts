@@ -99,7 +99,7 @@ class BaseTool implements Tool {
         this.propertyMapper.applyAttribute(property, value, unit, DOMElement);
     }
 
-    public getAnimationPropertiesFromChangeList(changeList: Object, propertyUnits: Object) {
-        this.propertyMapper.getAnimationProperties(changeList, propertyUnits);
+    public getAnimationPropertiesFromChangeList(changeList: Object, propertyUnits: Object, element: Tease.Element) {
+        this.propertyMapper.getAnimationProperties(changeList, propertyUnits, element);
     }
 }

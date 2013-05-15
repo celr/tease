@@ -11,7 +11,7 @@ interface PropertyMapping {
 
 interface AnimatablePropertyMapping extends PropertyMapping {
     // Generates the animation properties and appends them to the specified properties object.
-    appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object): void;
+    appendAnimationProperties(changeList: Object, propertyUnits: Object, element: Tease.Element, properties: Object): void;
 }
 
 // Represents a direct mapping between abstract and CSS property domains
@@ -33,7 +33,7 @@ class DirectCSSPropertyMapping implements AnimatablePropertyMapping {
         }
     }
 
-    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, element: Tease.Element, properties: Object) {
         for (var i in this.propertyMap) {
             var property = this.propertyMap[i];
             if (changeList[property]) {
@@ -73,10 +73,10 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
         }
     }
 
-    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, element: Tease.Element, properties: Object) {
         for (var i in this.propertyMap) {
             if (changeList[i]) {
-                this.expandProperty(i, changeList[i], propertyUnits[i],
+                this.expandProperty(i, changeList[i], propertyUnits[i], element.DOMElement,
                     (targetProperty: string, targetValue: string, targetUnit: string) => {
                         var unit = targetUnit || '';
                         properties[targetProperty] = targetValue + unit;
@@ -86,13 +86,12 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
         }
     }
 
-    private expandProperty(property: string, value: string, propertyUnit: string, callback: Function) {
+    private expandProperty(property: string, value: string, propertyUnit: string, DOMElement: JQuery, callback: Function) {
         var transformMap = this.propertyMap[property];
 
         if (transformMap) {
             for (var targetProperty in transformMap) {
-                callback(targetProperty, transformMap(value), propertyUnit);
-
+                callback(targetProperty, transformMap[targetProperty](value, DOMElement), propertyUnit);
             }
         }
     }
@@ -101,7 +100,7 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
         var result = false;
 
         if (this.propertyMap[property]) {
-            this.expandProperty(property, value, propertyUnit,
+            this.expandProperty(property, value, propertyUnit, DOMElement,
                 (targetProperty: string, targetValue: string, targetUnit: string) => {
                     var unit = targetUnit || '';
                     DOMElement.css(targetProperty, targetValue + unit);
@@ -140,7 +139,7 @@ class TransformCSSPropertyMapping implements AnimatablePropertyMapping {
         }
     }
 
-    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, element: Tease.Element, properties: Object) {
         for (var i in this.propertyMap) {
             if (changeList[i]) {
                 switch (i) {
@@ -201,7 +200,7 @@ class RenameCSSPropertyMapping implements AnimatablePropertyMapping {
         }
     }
 
-    public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
+    public appendAnimationProperties(changeList: Object, propertyUnits: Object, element: Tease.Element, properties: Object) {
         for (var i in this.propertyMap) {
             if (changeList[i]) {
                 var unit = propertyUnits[i] || '';
@@ -254,13 +253,13 @@ class PropertyMapper {
         this.transformCSSMapping.applyAttribute(property, value, propertyUnit, DOMElement);
     }
 
-    public getAnimationProperties(changeList: Object, propertyUnits: Object) {
+    public getAnimationProperties(changeList: Object, propertyUnits: Object, element: Tease.Element) {
         var animationProperties = {};
 
-        this.directCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
-        this.renameCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
-        this.multipleCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
-        this.transformCSSMapping.appendAnimationProperties(changeList, propertyUnits, animationProperties);
+        this.directCSSMapping.appendAnimationProperties(changeList, propertyUnits, element, animationProperties);
+        this.renameCSSMapping.appendAnimationProperties(changeList, propertyUnits, element, animationProperties);
+        this.multipleCSSMapping.appendAnimationProperties(changeList, propertyUnits, element, animationProperties);
+        this.transformCSSMapping.appendAnimationProperties(changeList, propertyUnits, element, animationProperties);
 
         return animationProperties;
     }

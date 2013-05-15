@@ -3,7 +3,7 @@
 
 class MediaTool extends DimensionableTool implements Tool {
 
-    constructor(id: string, DOMElement: JQuery) {
+    constructor(id: string, DOMElement: JQuery, private pageId: number) {
         super(id, DOMElement);
 
         var MIMETypesByExtension = {
@@ -70,7 +70,7 @@ class MediaTool extends DimensionableTool implements Tool {
             new PropertyDisplayGroup('Media',
                 ['media-src', 'controls', 'autoplay', 'loop'],
                 ['Fuente del medio:', 'Mostrar controles', 'Reproducir automaticamente', 'Repetir'],
-                [new StringPropertyControl('media-src'),
+                [new ResourcePropertyControl('media-src', this.pageId),
                     new SelectPropertyControl('controls', ['true', 'false'], ['Mostrar', 'Ocultar']),
                     new SelectPropertyControl('autoplay', ['true', 'false'], ['Activado', 'Desactivado']),
                     new SelectPropertyControl('loop', ['true', 'false'], ['Activar', 'Desactivar'])]

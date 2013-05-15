@@ -13,28 +13,31 @@ class EllipseTool implements Tool extends BackgroundableTool {
         this.properties['border'] = 'solid black 1px';
         this.properties['background-color'] = '#cccccc';
 
-        this.propertyUnits['width'] = 'px';
-        this.propertyUnits['height'] = 'px';
+        this.propertyUnits['width'] = '';
+        this.propertyUnits['height'] = '';
 
+        this.propertyMapper.multipleCSSMapping.mapProperty('width', {
+            'border-radius': (value: string, DOMElement: JQuery) => {
+                return (parseInt(value) / 2) + 'px' + " / " +
+                          (parseInt(DOMElement[0].style.height) / 2) + 'px';
+            },
 
-        this.propertyMapper.callbackMapping.mapProperty('width',
-            (property: string, value: string, DOMElement: JQuery) => {
-                if (property === 'width') {
-                    DOMElement[0].style.width = value;
-                    DOMElement[0].style.borderRadius = (parseInt(DOMElement[0].style.width) / 2) + this.propertyUnits['width'] + " / " +
-                                                       (parseInt(DOMElement[0].style.height) / 2) + this.propertyUnits['height'];
-                }
+            width: (value: string, DOMElement: JQuery) => {
+                return value;
             }
-        );
-        this.propertyMapper.callbackMapping.mapProperty('height',
-            (property: string, value: string, DOMElement: JQuery) => {
-                if (property === 'height') {
-                    DOMElement[0].style.height = value;
-                    DOMElement[0].style.borderRadius = (parseInt(DOMElement[0].style.width) / 2) + this.propertyUnits['width'] + " / " +
-                                                       (parseInt(DOMElement[0].style.height) / 2) + this.propertyUnits['height'];
-                }
+        });
+
+        this.propertyMapper.multipleCSSMapping.mapProperty('height', {
+            'border-radius': (value: string, DOMElement: JQuery) => {
+                return (parseInt(DOMElement[0].style.width) / 2) + 'px' + " / " +
+                         (parseInt(value) / 2) + 'px';
+            },
+
+            height: (value: string, DOMElement: JQuery) => {
+                return value;
             }
-        );
+        });
+        
         this.propertyMapper.directCSSMapping.mapProperty('background-color');
     }
 }
