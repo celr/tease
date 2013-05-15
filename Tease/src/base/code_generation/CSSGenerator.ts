@@ -15,10 +15,19 @@ class CSSGenerator {
             var element: RenderedElement = enviroment.renderedElements[i];
             var elementName: string = getElementName(element);
 
+            var originalOpacity: string = element.DOMElement.css("opacity");
+            // Elements that appear delayed.
+            // TODO(chadan): Check condition below.
+            if (element.delay > 100) {
+                element.DOMElement.css("opacity", "0");
+            }
+
             out += "." + elementName + " ";
             out += "\{\n";
             out += tabulate(element.DOMElement[0].style.cssText.replace(/; /g, ";\n")) + "\n";
             out += "\}\n\n";
+
+            element.DOMElement.css("opacity", originalOpacity);
         }
 
         return out;
@@ -79,14 +88,8 @@ class CSSGenerator {
         var timeFromBegining: number = 0;
         var keyframes: string = "";
 
-        keyframes += "from ";
-        keyframes += "{\n";
-        keyframes += tabulate("opacity: 1;") + "\n";
-        keyframes += "}\n";
-
-
         // Original state.
-        keyframes += "1% ";
+        keyframes += "from ";
         keyframes += "{\n";
         keyframes += tabulate(element.DOMElement[0].style.cssText.replace(/; /g, ";\n")) + "\n";
         keyframes += "}\n";
@@ -143,6 +146,7 @@ class CSSGenerator {
         out += prefix + "animation-iteration-count: " + "1" + ";\n";
         out += prefix + "animation-direction: " + "normal" + ";\n";
         out += prefix + "animation-play-state: " + "running" + ";\n";
+        out += prefix + "animation-fill-mode: " + "forwards" + ";\n";
         return out;
     }
 }

@@ -15,7 +15,8 @@ class Environment {
             recttool: 0,
             texttool: 0,
             videotool: 0,
-            listtool: 0
+            listtool: 0,
+            ellipsetool: 0
         };
 
         this.layers = [];
