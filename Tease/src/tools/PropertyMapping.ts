@@ -34,9 +34,12 @@ class DirectCSSPropertyMapping implements AnimatablePropertyMapping {
     }
 
     public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
-        for (var i in changeList) {
-            var unit = propertyUnits[i] || '';
-            properties[i] = changeList[i] + unit;
+        for (var i in this.propertyMap) {
+            var property = this.propertyMap[i];
+            if (changeList[property]) {
+                var unit = propertyUnits[i] || '';
+                properties[property] = changeList[property] + unit;
+            }
         }
     }
 
@@ -71,13 +74,15 @@ class MultipleCSSPropertyMapping implements AnimatablePropertyMapping {
     }
 
     public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
-        for (var i in changeList) {
-            this.expandProperty(i, changeList[i], propertyUnits[i],
-                (targetProperty: string, targetValue: string, targetUnit: string) => {
-                    var unit = targetUnit || '';
-                    properties[targetProperty] = targetValue + unit;
-                }
-            );
+        for (var i in this.propertyMap) {
+            if (changeList[i]) {
+                this.expandProperty(i, changeList[i], propertyUnits[i],
+                    (targetProperty: string, targetValue: string, targetUnit: string) => {
+                        var unit = targetUnit || '';
+                        properties[targetProperty] = targetValue + unit;
+                    }
+                );
+            }
         }
     }
 
@@ -136,8 +141,8 @@ class TransformCSSPropertyMapping implements AnimatablePropertyMapping {
     }
 
     public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
-        for (var i in changeList) {
-            if (this.propertyMap[i]) {
+        for (var i in this.propertyMap) {
+            if (changeList[i]) {
                 switch (i) {
                     case 'rotation':
                         properties['transform'] = 'rotate(' + changeList[i] + propertyUnits[i] + ')';
@@ -197,8 +202,8 @@ class RenameCSSPropertyMapping implements AnimatablePropertyMapping {
     }
 
     public appendAnimationProperties(changeList: Object, propertyUnits: Object, properties: Object) {
-        for (var i in changeList) {
-            if (this.propertyMap[i]) {
+        for (var i in this.propertyMap) {
+            if (changeList[i]) {
                 var unit = propertyUnits[i] || '';
                 properties[this.propertyMap[i]] = changeList[i] + unit;
             }
