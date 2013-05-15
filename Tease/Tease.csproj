@@ -142,7 +142,6 @@
     <Content Include="src\gui\toolbars\Toolbar.js">
       <DependentUpon>Toolbar.ts</DependentUpon>
     </Content>
-    <Content Include="src\index.html" />
     <Content Include="src\lib\ace\ace.d.ts" />
     <Content Include="src\lib\ace\ace.js" />
     <Content Include="src\lib\ace\ext-elastic_tabstops_lite.js" />
