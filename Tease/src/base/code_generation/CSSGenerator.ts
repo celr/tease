@@ -43,7 +43,7 @@ class CSSGenerator {
                 out += this.GenerateKeyframes(element, elementAnimationName, animationDurationMs, this.BrowserPrefixes.InternetExplorer);
                 out += this.GenerateKeyframes(element, elementAnimationName, animationDurationMs, this.BrowserPrefixes.Webkit);
 
-                out += this.GenerateAnimationClass(elementAnimationName, animationDurationMs);
+                out += this.GenerateAnimationClass(elementAnimationName, animationDurationMs, element.delay);
             }
         }
 
@@ -79,8 +79,14 @@ class CSSGenerator {
         var timeFromBegining: number = 0;
         var keyframes: string = "";
 
-        // Original state.
         keyframes += "from ";
+        keyframes += "{\n";
+        keyframes += tabulate("opacity: 1;") + "\n";
+        keyframes += "}\n";
+
+
+        // Original state.
+        keyframes += "1% ";
         keyframes += "{\n";
         keyframes += tabulate(element.DOMElement[0].style.cssText.replace(/; /g, ";\n")) + "\n";
         keyframes += "}\n";
@@ -117,23 +123,23 @@ class CSSGenerator {
 
     // Generates the style for the given element animation.
     // TODO(chadan): Support for custom animation settings?.
-    private GenerateAnimationClass(animationName: string, durationMs: number) {
+    private GenerateAnimationClass(animationName: string, durationMs: number, delayMs: number) {
         var out = "\." + animationName + " ";
         out += "\{\n";
-        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.Standar, durationMs)) + "\n";
-        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.Firefox, durationMs)) + "\n";
-        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.InternetExplorer, durationMs)) + "\n";
-        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.Webkit, durationMs));
+        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.Standar, durationMs, delayMs)) + "\n";
+        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.Firefox, durationMs, delayMs)) + "\n";
+        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.InternetExplorer, durationMs, delayMs)) + "\n";
+        out += tabulate(this.GenerateAnimationSettings(animationName, this.BrowserPrefixes.Webkit, durationMs, delayMs));
         out += "\}\n\n";
         return out;
     }
 
     // Generates CSS code fragment for the given element animation with the given prefix.
-    private GenerateAnimationSettings(animationName: string, prefix: string, durationMs: number) {
+    private GenerateAnimationSettings(animationName: string, prefix: string, durationMs: number, delayMs: number) {
         var out = prefix + "animation-name: " + animationName + ";\n";
         out += prefix + "animation-duration: " + durationMs + "ms;\n";
         out += prefix + "animation-timing-function: " + "ease" + ";\n";
-        out += prefix + "animation-delay: " + "0ms" + ";\n";
+        out += prefix + "animation-delay: " + delayMs + "ms" + ";\n";
         out += prefix + "animation-iteration-count: " + "1" + ";\n";
         out += prefix + "animation-direction: " + "normal" + ";\n";
         out += prefix + "animation-play-state: " + "running" + ";\n";

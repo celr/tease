@@ -11,7 +11,7 @@ class RenderedAnimation {
 }
 
 class RenderedElement {
-    constructor(public DOMElement: JQuery, public renderedAnimations?: RenderedAnimation[] = []) {
+    constructor(public DOMElement: JQuery, public renderedAnimations?: RenderedAnimation[] = [], public delay?: number = 0) {
     };
 }
 
@@ -33,6 +33,10 @@ class RenderedEnvironment {
     }
 
     private animate(renderedElement: RenderedElement) {
+        renderedElement.DOMElement.animate({ opacity: "0" }, 0);
+        renderedElement.DOMElement.delay(renderedElement.delay);
+        renderedElement.DOMElement.animate({ opacity: "1" }, 0);
+
         for (var i = 0; i < renderedElement.renderedAnimations.length; i++) {
             var animation = renderedElement.renderedAnimations[i];
             renderedElement.DOMElement.animate(animation.animationProperties, animation.durationMs, "swing", (e: Event) => {
@@ -62,6 +66,7 @@ class AnimationRenderer {
         this.environment = environment;
         this.settings = settings;
 
+
         for (var i = 0; i < environment.layers.length; i++) {
             this.renderLayer(environment.layers[i]);
         }
@@ -89,6 +94,8 @@ class AnimationRenderer {
         if (!element.elementTransition.hasPreviousElement) { // Do not render transitioned elements
             var renderedElement = new RenderedElement($(element.DOMElement).clone(true));
             var currElement = element;
+
+            renderedElement.delay = (currElement.keyframePosition / this.settings.fps) * 1000;
 
             while (currElement.hasTransition()) {
                 renderedElement.renderedAnimations.push(new RenderedAnimation(this.getAnimatedProperties(currElement),

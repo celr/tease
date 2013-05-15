@@ -1,7 +1,7 @@
 ///<reference path="Tool.ts" />
 ///<reference path="DimensionableTool.ts" />
 
-class CanvasTool implements Tool{
+class CanvasTool implements Tool {
     public displayName: string;
     public displayImagePath: string; // Image to be shown on the toolbar
     public properties: Object; // Supported properties
@@ -21,15 +21,15 @@ class CanvasTool implements Tool{
         this.properties = {
             height: 500,
             width: 800,
-            'background-color': '#cccccc',
+            'background-color': '#ffffff',
             'background-image': 'none'
         };
-        
+
         this.propertyUnits = {
             height: 'px',
             width: 'px'
         };
-        
+
         this.propertyMapper = new PropertyMapper();
         this.propertyMapper.directCSSMapping.mapProperty('width');
         this.propertyMapper.directCSSMapping.mapProperty('height');

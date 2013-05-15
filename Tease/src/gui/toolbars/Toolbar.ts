@@ -5,6 +5,7 @@
 ///<reference path="../../tools/RectangleTool.ts" />
 ///<reference path="../../tools/VideoTool.ts" />
 ///<reference path="../../tools/ListTool.ts" />
+///<reference path="../../tools/EllipseTool.ts" />
 ///<reference path="../../base/Eventable.ts" />
 
 // Toolbar

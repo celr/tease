@@ -45,6 +45,7 @@ class MainController {
             audiotool: new AudioTool('audiotool'),
             videotool: new VideoTool('videotool'),
             listtool: new ListTool('listtool'),
+            ellipsetool: new EllipseTool('ellipsetool'),
             pointertool: new PointerTool('pointertool')
         };
 

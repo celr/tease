@@ -286,6 +286,7 @@
     <Content Include="src\res\default-image.png" />
     <Content Include="src\res\defaultImage.png" />
     <Content Include="src\res\Dot.png" />
+    <Content Include="src\res\ellipse-tool.png" />
     <Content Include="src\res\image-tool.png" />
     <Content Include="src\res\imageTool.png" />
     <Content Include="src\res\jair.png" />
@@ -325,6 +326,10 @@
       <DependentUpon>DimensionableTool.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="src\tools\ListTool.ts" />
+    <TypeScriptCompile Include="src\tools\EllipseTool.ts" />
+    <Content Include="src\tools\EllipseTool.js">
+      <DependentUpon>EllipseTool.ts</DependentUpon>
+    </Content>
     <Content Include="src\tools\ListTool.js">
       <DependentUpon>ListTool.ts</DependentUpon>
     </Content>
