@@ -37,7 +37,7 @@ class DirectCSSPropertyMapping implements AnimatablePropertyMapping {
         for (var i in this.propertyMap) {
             var property = this.propertyMap[i];
             if (changeList[property]) {
-                var unit = propertyUnits[i] || '';
+                var unit = propertyUnits[property] || '';
                 properties[property] = changeList[property] + unit;
             }
         }
