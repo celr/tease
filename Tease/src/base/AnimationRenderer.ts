@@ -33,9 +33,11 @@ class RenderedEnvironment {
     }
 
     private animate(renderedElement: RenderedElement) {
+        var originalOpacity: number = renderedElement.DOMElement.css('opacity');
+
         renderedElement.DOMElement.animate({ opacity: "0" }, 0);
         renderedElement.DOMElement.delay(renderedElement.delay);
-        renderedElement.DOMElement.animate({ opacity: "1" }, 0);
+        renderedElement.DOMElement.animate({ opacity: originalOpacity }, 0);
 
         for (var i = 0; i < renderedElement.renderedAnimations.length; i++) {
             var animation = renderedElement.renderedAnimations[i];
