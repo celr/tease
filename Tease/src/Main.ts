@@ -24,6 +24,7 @@ class MainController {
     private currentLayerIndex: number;
     private fps: number;
     private pageSynchronizer: PageSynchronizer;
+    private pageId: number;
 
     // Initializes the app
     constructor() {
@@ -36,6 +37,7 @@ class MainController {
         this.fps = 10;
 
         var pageId = $('#pageID').val();
+        this.pageId = pageId;
 
         // Create tools
         this.tools = {
@@ -62,7 +64,7 @@ class MainController {
     private init() {
         // Initialize GUI components
         this.toolbar = new Toolbar($('#toolbar'), this.tools, 'pointertool');
-        this.canvas = new Canvas($('#canvas'), this.toolbar.currentTool, this.environment);
+        this.canvas = new Canvas($('#canvas'), this.toolbar.currentTool, this.environment, this.pageId);
         this.propertyEditor = new PropertyEditor($('#propertyeditor'));
         this.timeline = new Timeline($('#timeline'), this.environment, this.fps); // TODO: Replace settings with real objects
 
@@ -70,7 +72,7 @@ class MainController {
         this.timeline.addEventListener('frameselect', (e: CustomEvent) => {
             this.handleFrameSelect(e);
         }, true);
-
+        
         this.timeline.addEventListener('layerselect', (e: CustomEvent) => {
             this.handleLayerSelect(e);
         }, true);

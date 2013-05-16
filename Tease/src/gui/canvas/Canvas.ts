@@ -28,7 +28,7 @@ class Canvas extends Eventable {
     private rotationTool: RotationTool;
     public currentLayerIndex: number;
 
-    constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment) {
+    constructor(private DOMElement: JQuery, public currentTool: Tool, private environment: Environment, public pageId: number) {
         super();
         this.currentLayerIndex = 0;
         this.allowInput = true;
@@ -41,7 +41,7 @@ class Canvas extends Eventable {
         this.elementMap = {};
         this.nextElementId = 0;
 
-        this.canvasElement = new Tease.Element(new CanvasTool('canvastool'), this.nextElementId++);
+        this.canvasElement = new Tease.Element(new CanvasTool('canvastool', this.pageId), this.nextElementId++);
         this.canvasElement.setDOMElement(this.DOMElement);
         this.canvasElement.setAttribute('height', parseInt(this.DOMElement.css('height')).toString());
         this.canvasElement.setAttribute('width', parseInt(this.DOMElement.css('width')).toString());
@@ -138,7 +138,6 @@ class Canvas extends Eventable {
 
 
         element.DOMElement.bind('mousedown', (e: MouseEvent) => {
-            console.log(element);
             e.stopPropagation();
             e.preventDefault();
             e.cancelBubble = true;
@@ -223,7 +222,6 @@ class Canvas extends Eventable {
                 this.createGroup(element);
             }
             this.selectedGroup.updateInitialPositions();
-            //console.log(this.selectedGroup);
             function handleMove(eMove: MouseEvent) {
                 that.selectedGroup.move(eMove.clientX - e.clientX, eMove.clientY - e.clientY);
                 that.move = true;
@@ -239,7 +237,6 @@ class Canvas extends Eventable {
                 else {
                     that.selectElement(that.selectedGroup.getElement());
                 }
-                
             }
             this.DOMElement.bind('mousemove', handleMove);
             $(document).bind('mouseup', handleUp);

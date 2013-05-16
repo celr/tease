@@ -1,6 +1,7 @@
 ///<reference path="Tool.ts" />
 ///<reference path="DimensionableTool.ts" />
 ///<reference path="../gui/toolbars/property-controls/ColorPropertyControl.ts" />
+///<reference path="../gui/toolbars/property-controls/ResourcePropertyControl.ts" />
 
 class CanvasTool implements Tool {
     public displayName: string;
@@ -16,7 +17,7 @@ class CanvasTool implements Tool {
 
 
 
-    constructor(public id: string) {
+    constructor(public id: string, public pageId: number) {
         this.displayName = 'Canvas';
         this.description = 'Herramienta para modificar las propiedades del canvas';
         // Set default values
@@ -37,7 +38,11 @@ class CanvasTool implements Tool {
         this.propertyMapper.directCSSMapping.mapProperty('width');
         this.propertyMapper.directCSSMapping.mapProperty('height');
         this.propertyMapper.directCSSMapping.mapProperty('background-color');
-        this.propertyMapper.directCSSMapping.mapProperty('background-image');
+        this.propertyMapper.callbackMapping.mapProperty('background-image', (property: string, value: string, DOMElement: JQuery) => {
+            if (property === 'background-image') {
+                DOMElement.css('background-image', 'url(\'' + value + '\')');
+            }
+        });
 
         var dimensionUnits = ['px', 'in', 'pt'];
         var dimensionUnitLabels = ['pixeles', 'pulgadas', 'puntos'];
@@ -57,7 +62,7 @@ class CanvasTool implements Tool {
             new PropertyDisplayGroup('Fondo',
                 ['background-color', 'background-image'],
                 ['Color de fondo', 'Imagen de fondo'],
-                [new ColorPropertyControl('background-color'), new StringPropertyControl('background-image')]
+                [new ColorPropertyControl('background-color'), new ResourcePropertyControl('background-image', pageId)]
             )
         ];
 
