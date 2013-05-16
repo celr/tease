@@ -468,7 +468,7 @@ class Timeline extends Eventable {
     }
 
     private addNewLayer() {
-        var layer = new Layer('Layer ' + this.nextLayerNum++, true, true, this.environment.layers.length);
+        var layer = new Layer('Capa ' + this.nextLayerNum++, true, true, this.environment.layers.length);
         layer.keyframes.push(new Keyframe(1));
         this.drawLayer(layer);
         this.environment.layers.push(layer);
