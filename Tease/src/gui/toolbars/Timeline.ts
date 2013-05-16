@@ -242,6 +242,8 @@ class Timeline extends Eventable {
         var keyframe = new Keyframe(this.selectedFrameIndex + this.startPosition);
         this.environment.layers[this.selectedLayerIndex].insertKeyframe(keyframe);
         this.selectFrame(this.selectedFrameGUI); // Reselect frame to update dependencies (ie. Canvas)
+        this.selectedFrameGUI.find('.delete-frame').show();
+        this.selectedFrameGUI.find('.insert-keyframe').hide();
     }
 
     private handleTimelineFrameClick(e: Event) {
@@ -305,12 +307,17 @@ class Timeline extends Eventable {
             var frames = $(layerFrames[this.selectedLayerIndex]).children();
             this.selectFrame($(frames[previousKeyframe.position - 1]));
         }
+
+        this.selectedFrameGUI.find('.delete-frame').hide();
+        this.selectedFrameGUI.find('.insert-keyframe').show();
     }
 
     private removeAnimation(e: Event) {
         var previousKeyframe = this.selectedFrame;
         this.removeKeyframe();
         this.removeTransitionStyle(this.selectedFrame.position, previousKeyframe.position);
+        this.selectedFrameGUI.find('.animar-frame').show();
+        this.selectedFrameGUI.find('.remove-animation').hide();
     }
 
     private redrawLayerFrames(layer: Layer, layerIndex: number) {
@@ -371,12 +378,10 @@ class Timeline extends Eventable {
 
         for (var i = this.startPosition - 1; i < this.numFrames + this.startPosition; i++){ 
             var timelineFrame = $('<div class="timeline-frames-container dropup timeline-frame"><a class="timeline-frame-link" data-toggle="dropdown" href="#"></a><ul class="dropdown-menu frame-options" role="menu">\
+                                <li><a tabindex="-1" href="#" class ="delete-frame">Eliminar keyframe</a></li>\
                                 <li><a tabindex="-1" href="#" class ="insert-keyframe">Insertar keyframe</a></li>\
-                                <li><a tabindex="-1" href="#" class ="empty-frame">Vaciar frame</a></li>\
                                 <li><a tabindex="-1" href="#" class ="animar-frame">Animar</a></li>\
                                 <li><a tabindex="-1" href="#" class ="remove-animation">Eliminar animación</a></li>\
-                                <li class ="divider"></li>\
-                                <li><a tabindex="-1" href="#" class ="delete-frame">Eliminar frame</a></li>\
                         </ul>\
                         </div>').appendTo(layerFramesDiv);
 
@@ -407,6 +412,7 @@ class Timeline extends Eventable {
             }
 
             timelineFrame.find('.remove-animation').hide();
+            timelineFrame.find('.delete-frame').hide();
 
             timelineFrame.find('.insert-keyframe').click((e: Event) => {
                 this.insertKeyframe();
@@ -417,7 +423,7 @@ class Timeline extends Eventable {
             });
 
             timelineFrame.find('.delete-frame').click((e: Event) => {
-                //this.deleteFrame();
+                this.removeKeyframe();
             });
 
             timelineFrame.find('.animar-frame').click((e: Event) => {
@@ -425,7 +431,9 @@ class Timeline extends Eventable {
             });
 
             timelineFrame.find('.remove-animation').click((e: Event) => {
+                timelineFrame.find('.remove-animation').hide();
                 this.removeAnimation(e);
+                timelineFrame.find('.animar-frame').show();
             });
 
             // Click event for individual frame on the Timeline
