@@ -146,13 +146,13 @@ class Canvas extends Eventable {
             }
         });
         //set id and zIndex properties, insert element into canvas and currentElements
-        element.DOMElement.attr('id', element.id);
+        element.DOMElement.attr('id', element.parentTool.displayName + this.environment.getNextToolNumber(element.parentTool.id));
         this.elementMap[element.id.toString()] = element;
         this.DOMElement.append(element.DOMElement);
         this.setZIndexProperty(element);
 
         //set element-name
-        element.attributes["elementName"] = element.parentTool.displayName + this.environment.getNextToolNumber(element.parentTool.id);
+        element.attributes["elementName"] = element.DOMElement.attr('id');
         element.DOMElement.attr('element-name', element.attributes["elementName"]);
 
         // Insert element into layer group
