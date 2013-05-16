@@ -11,10 +11,13 @@
         @Styles.Render("~/lib/bootstrap/css/bootstrap.css")
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top top-nav">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <div class="offset7 span3" style="margin-top: 5px">
+            
+        @*<div class="navbar navbar-inverse navbar-fixed-top top-nav">*@
+        @*<div class="container-fluid">*@
+        <div class="container-fluid">
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <div class="span2" style="margin-top: 5px">
                         @if (Request.IsAuthenticated)
                         {
                             <a href="/Project">Tease</a>
@@ -22,28 +25,52 @@
                         else
                         {
                             <a href="/" class="brand">Tease</a>
-                        }
-                        
+                        }            
                     </div>
-                    <div class="span10" style="margin-top: 10px">
+                    <div class="span7">
                         <section id="login">
                             @Html.Partial("_LoginPartial")
                         </section>
                     </div>
                 </div>
             </div>
+            <div class="row-fluid">
+            <div class="offset8 span8" style="text-align:center">
+                    @RenderBody()
+                </div>
+            </div>
         </div>
+            @*</div>*@
+@*                <div class="row-fluid">
+                    <div class="offset7 span7">*@
+                        
+                    @*</div>
+                    <div class="span7">
+                    </div>
+                </div>*@
+            @*</div>
+        </div>*@
 
-        <div class="container-fluid" style="margin-top: 10px">
+
+        @*<div class="container-fluid" style="margin-top: 10px">
             <div class="row-fluid">
                 <div class="offset7 span10">
-    &nbsp;
+                    
                 </div>
             </div>
             <hr>
-        </div>
+        </div>*@
 
-        @RenderBody()
+        @*<div class="container-fluid" style="margin-top: 10px">
+            <div class="row-fluid">
+                <div class="offset 7 span10">
+                    @RenderBody()
+                </div>
+                <div class="span7">
+
+                </div>
+            </div>
+        </div>*@
 
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
