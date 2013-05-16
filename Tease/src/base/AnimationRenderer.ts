@@ -108,7 +108,7 @@ class AnimationRenderer {
     }
 
     private getAnimatedProperties(element: Tease.Element) {
-        return element.parentTool.propertyMapper.getAnimationProperties(element.elementTransition.nextElement.attributes, element.elementTransition.nextElement.propertyUnits);
+        return element.parentTool.propertyMapper.getAnimationProperties(element.elementTransition.nextElement.attributes, element.elementTransition.nextElement.propertyUnits, element.elementTransition.nextElement);
     }
 
     private getAnimationDuration(element: Tease.Element) {
