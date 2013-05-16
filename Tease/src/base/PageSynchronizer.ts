@@ -18,7 +18,6 @@ class PageSynchronizer {
     constructor() {
     }
 
-
     public updatePageFiles(environment: Environment, animationSettings: AnimationSettings) {
         this.environment = environment;
         this.animationSettings = animationSettings;
@@ -33,7 +32,6 @@ class PageSynchronizer {
         this.sendFile("UpdateHTML", pageCode.HTMLCode, "html");
         this.sendFile("UpdateJavaScript", pageCode.JSCode, "javascript");
         this.updateEnvironment();
-        //console.log('sync');
     }
 
     private updateEnvironment() {

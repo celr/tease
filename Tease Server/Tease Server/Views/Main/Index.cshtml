@@ -45,12 +45,28 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span2" id="toolbar">
+        <div class="span2">
+            <div class="row-fluid">
+                <div id="toolbar">
+                </div>
+            </div>
+            <div class="row-fluid">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active">
+                        <a href="#" id="showCanvas">Canvas</a>
+                    </li>
+                    <li><a href="#" id="showHTML">HTML</a></li>
+                    <li><a href="#" id="showJS">Javascript</a></li>
+                    <li><a href="#" id="showCSSAnimations">CSS Animaciones</a></li>
+                    <li><a href="#" id="showCSSStyles">CSS Estilos</a></li>
+                </ul>
+            </div>
         </div>
 		<div class="span18" style="min-height:650px; height:650px; padding: 5px; overflow:scroll;">
             <div id="canvas" style="overflow:hidden; width:1800px; height:1800px;">
 
             </div>
+            <div id="codeeditor" class="codeeditor"></div>
         </div>
         <div class="span4" id="propertyeditor" style="overflow-y:scroll; padding-right:15px;">
           <p class="noselection">No hay elemento seleccionado</p>
@@ -61,6 +77,7 @@
         @*<div id="zoombar" class="row-fluid">
             <div class="span3 offset21" style="padding-left: 10px"><span class="zoom"><img src="Tease/src/res/zoom.png" />100%</span></div>
         </div>*@
+
         <div id="timeline" class="navbar-inner">
             <div class="container-fluid">
                 <div class="row-fluid">
@@ -159,6 +176,7 @@
       <script src="Tease/src/gui/canvas/Canvas.js"></script>
       <script src="Tease/src/gui/toolbars/PropertyEditor.js"></script>
       <script src="Tease/src/gui/toolbars/Timeline.js"></script>
+      <script src="Tease/src/gui/CodeEditor.js"></script>
       <script src="Tease/src/base/Layer.js"></script>
       <script src="Tease/src/Main.js"></script>
   </body>

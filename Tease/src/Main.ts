@@ -8,6 +8,7 @@
 ///<reference path="base/code_generation/CodeGenerator.ts" />
 ///<reference path="base/PageSynchronizer.ts" />
 ///<reference path="lib/json2.ts" />
+///<reference path="gui/CodeEditor.ts" />
 
 // Manages system wide events and global environment
 class MainController {
@@ -25,6 +26,7 @@ class MainController {
     private fps: number;
     private pageSynchronizer: PageSynchronizer;
     private pageId: number;
+    private editor: CodeEditor;
 
     // Initializes the app
     constructor() {
@@ -105,11 +107,34 @@ class MainController {
             this.handleSavePage();
         });
 
+        $('#showHTML').on('click', () => {
+            this.handleShowHTMLCode();
+        });
+
+        $('#showJS').on('click', () => {
+            this.handleShowJSCode();
+        });
+
+        $('#showCSSAnimations').on('click', () => {
+            this.handleShowCSSAnimationsCode();
+        });
+
+        $('#showCSSStyles').on('click', () => {
+            this.handleShowCSSStyleCode();
+        });
+
+        $('#showCanvas').on('click', () => {
+            this.handleShowCanvas();
+        });
+
         // Initialize animation settings
         this.animationSettings = new AnimationSettings(1, this.fps); // TODO: Set fps from GUI
 
         // Select first frame
         this.timeline.selectFirstFrame();
+
+        //Initialize codeEditor
+        this.editor = new CodeEditor("codeeditor", CodeEditorModes.HTML);
     }
 
     private openExistingPage(pageId: number) {
@@ -263,6 +288,83 @@ class MainController {
     private handleSavePage() {
         $('#lastSaved').text('Última hora en que se guardó el documento: ' + new Date().toLocaleTimeString());
         this.pageSynchronizer.updatePageFiles(this.environment, this.animationSettings);
+    }
+
+    private getGeneratedCode() {
+        var codeGenerationr = new CodeGenerator();
+        var animationRenderer = new AnimationRenderer();
+        var renderedEnv = animationRenderer.getRenderedEnvironment(this.environment, this.animationSettings);
+        var pageCode = codeGenerationr.generate(renderedEnv);
+        return pageCode;
+    }
+
+    private handleShowHTMLCode() {
+        var pageCode: PageCode = this.getGeneratedCode();
+        this.setNavActive('showHTML');
+        this.codeeditorToHTML(pageCode.HTMLCode);
+    }
+
+    private handleShowJSCode() {
+        var pageCode: PageCode = this.getGeneratedCode();
+        this.setNavActive('showJS');
+        this.codeeditorToJS(pageCode.JSCode);
+    }
+
+    private handleShowCSSStyleCode() {
+        var pageCode: PageCode = this.getGeneratedCode();
+        this.setNavActive('showCSSStyles');
+        this.codeeditorToCSS(pageCode.CSSStylesCode);
+    }
+
+    private handleShowCSSAnimationsCode() {
+        var pageCode: PageCode = this.getGeneratedCode();
+        this.setNavActive('showCSSAnimations');
+        this.codeeditorToCSS(pageCode.CSSAnimationsCode);
+    }
+
+    private handleShowCanvas() {
+        this.setNavActive('showCanvas');
+    }
+
+    private setNavActive(navId: string) {
+        $('#showCanvas').parent().attr('class', '');
+        $('#showJS').parent().attr('class', '');
+        $('#showHTML').parent().attr('class', '');
+        $('#showCSSAnimations').parent().attr('class', '');
+        $('#showCSSStyles').parent().attr('class', '');
+
+        $('div#codeeditor').css('display', 'none');
+        $('div#canvas').css('display', 'none');
+
+        $('#' + navId).parent().attr('class', 'active');
+        if (navId == 'showCanvas') {
+            $('div#canvas').css('display', 'block');
+            $('div#propertyeditor').css('visibility', 'visible');
+        }
+        else {
+            $('div#codeeditor').css('display', 'block');
+            $('div#propertyeditor').css('visibility', 'hidden');
+        }
+    }
+
+    private codeeditorToHTML(textHTML:string) {
+        this.editor.setMode(CodeEditorModes.HTML);
+        this.editor.setText(textHTML);
+    }
+
+    private codeeditorToJS(textJS:string) {
+        this.editor.setMode(CodeEditorModes.JS);
+        this.editor.setText(textJS);
+    }
+
+    private codeeditorToCSS(textCSS:string) {
+        this.editor.setMode(CodeEditorModes.CSS);
+        this.editor.setText(textCSS);
+    }
+
+    private codeeditorToCSSAnimations(textCSSAnimations:string) {
+        this.editor.setMode(CodeEditorModes.CSS);
+        this.editor.setText(textCSSAnimations);
     }
 }
 
