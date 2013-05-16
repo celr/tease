@@ -5,12 +5,13 @@
 class RectangleTool implements Tool extends BackgroundableTool {
     constructor(public id: string) {
         super(id, $('<div id="rect-element"></div>'));
-        this.displayName = 'Rectangle';
+        this.displayName = 'Rectangulo';
         this.displayImagePath = 'Tease/src/res/rect-tool.png';
 
         this.properties['width'] = '150';
         this.properties['height'] = '150';
         this.properties['border'] = 'solid black 1px';
         this.properties['background-color'] = '#cccccc';
+        this.description = 'Herramienta para insertar rectángulos';
     }
 }

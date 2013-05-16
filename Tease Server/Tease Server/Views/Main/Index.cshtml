@@ -31,15 +31,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Tease</a>
+          <a class="brand" href="/Project/">Tease</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="#">Nuevo</a></li>
-              <li><a href="#about">Abrir</a></li>
-              <li><a href="#contact" id="btnSave">Guardar</a></li>
-              <li><a href="#contact">Copiar</a></li>
-              <li><a href="#contact">Pegar</a></li>
-              <li><a href="#contact">Opciones</a></li>
+              <li><a href="/Page/Create?projectID=@ViewBag.projectID">Nuevo</a></li>
+              <li><a href="/Page?projectID=@ViewBag.pageID">Abrir</a></li>
+              <li><a href="#" id="btnSave">Guardar</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -90,7 +87,7 @@
             </div>
         </div>
         <div id="statusbar" class="navbar navbar-fixed-bottom">
-            <strong>index.html</strong> Last saved: 6 minutes ago
+            <span><strong>@ViewBag.pageName</strong></span> <span id="lastSaved"></span>
         </div>
     </div>
       <hr>

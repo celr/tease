@@ -9,8 +9,9 @@
 class TextTool implements Tool extends BaseTool {
     constructor(public id: string) {
         super(id, $('<div></div>'));
-        this.displayName = 'Text';
+        this.displayName = 'Texto';
         this.displayImagePath = 'Tease/src/res/text-tool.png';
+        this.description = 'Herramienta para insertar texto';
 
         this.properties['color'] = '#000000';
         this.properties['text-align'] = 'left';
@@ -20,7 +21,7 @@ class TextTool implements Tool extends BaseTool {
         this.properties['text-decoration'] = 'none';
         this.properties['line-height'] = 'normal';
         this.properties['word-spacing'] = 'normal';
-        this.properties['text'] = 'Text';
+        this.properties['text'] = 'Texto';
 
         this.propertyUnits['font-size'] = 'px';
 

@@ -5,8 +5,9 @@
 class ListTool implements Tool extends BaseTool {
     constructor(public id: string) {
         super(id, $('<ul></ul>'));
-        this.displayName = 'List';
+        this.displayName = 'Lista';
         this.displayImagePath = 'Tease/src/res/list-tool.png';
+        this.description = 'Herramienta para insertar listas';
 
         this.properties['ordered'] = 'false';
         this.properties['values'] = 'Lista';
