@@ -61,4 +61,20 @@ class Environment {
     public generateNextToolNumber(id: string) {
         this.toolCount[id] = this.toolCount[id] + 1;
     }
+
+    public deleteElement(element: Tease.Element) {
+        // TODO: Make efficient
+        for (var i = 0; i < this.layers.length; i++) {
+            var frame = this.layers[i].findKeyframeForPosition(element.keyframePosition);
+
+            if (frame) {
+                for (var k = 0; k < frame.elements.length; k++) {
+                    if (frame.elements[i].id === element.id) {
+                        frame.elements.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -34,7 +34,7 @@ class Canvas extends Eventable {
         this.allowInput = true;
         this.selectedGroup = new ElementGroup(null, this.DOMElement);
         this.layerGroups = [];
-        this.SEOptions = new SelectedElementOptions(this.DOMElement);
+        this.SEOptions = new SelectedElementOptions(this.DOMElement, environment);
         this.sizingTool = new SizingTool();
         this.rotationTool = new RotationTool();
         this.DOMElement.css('position', 'relative');
