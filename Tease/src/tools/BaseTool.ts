@@ -32,7 +32,9 @@ class BaseTool implements Tool {
             left: '0',
             top: '0',
             visibility: 'visible',
-            border: 'none',
+            'border-color': '#000000',
+            'border-width': '1',
+            'border-style': 'solid',
             position: 'absolute',
             rotation: '0'
         };
@@ -40,7 +42,8 @@ class BaseTool implements Tool {
         this.propertyUnits = {
             left: 'px',
             top: 'px',
-            rotation: 'deg'
+            rotation: 'deg',
+            'border-width': 'px'
         };
 
         this.propertyMapper = new PropertyMapper();
@@ -57,7 +60,10 @@ class BaseTool implements Tool {
         this.propertyMapper.directCSSMapping.mapProperty('left');
         this.propertyMapper.directCSSMapping.mapProperty('top');
         this.propertyMapper.directCSSMapping.mapProperty('visibility');
-        this.propertyMapper.directCSSMapping.mapProperty('border');
+        this.propertyMapper.directCSSMapping.mapProperty('border-color');
+        this.propertyMapper.directCSSMapping.mapProperty('border-width');
+        this.propertyMapper.directCSSMapping.mapProperty('border-style');
+
         this.propertyMapper.directCSSMapping.mapProperty('position');
         this.propertyMapper.transformCSSMapping.mapProperty('rotation', 'rotate');
 
@@ -82,12 +88,21 @@ class BaseTool implements Tool {
                     new DimensionPropertyControl('rotation', rotationUnits, rotationUnitLabels)]
             ),
 
+            new PropertyDisplayGroup('Borde',
+                ['border-style', 'border-width', 'border-color'],
+                ['Estilo de borde', 'Tamaño de borde', 'Color de borde'],
+                [new SelectPropertyControl('border-style', ['solid', 'dashed', 'dotted', 'double', 'groove'], ['Sólido', 'Lineado', 'Puntos', 'Doble', '3D']),
+                 new DimensionPropertyControl('border-width', dimensionUnits, dimensionUnitLabels),
+                 new ColorPropertyControl('border-color')
+                ]
+            ),
+
             new PropertyDisplayGroup('Visibilidad',
-                ['visibility', 'opacity', 'border'],
-                ['Ocultar', 'Opacidad', 'Bordes'],
+                ['visibility', 'opacity'],
+                ['Ocultar', 'Opacidad'],
                 [new SelectPropertyControl('visibility', ['visible', 'hidden'], ['Mostrar', 'Ocultar']),
                  new SliderPropertyControl('opacity', 0, 1, 0.1, 1),
-                 new StringPropertyControl('border')]
+                ]
             )
         ];
     }
