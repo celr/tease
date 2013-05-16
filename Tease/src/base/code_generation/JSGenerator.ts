@@ -11,10 +11,10 @@ class JSGenerator {
         out += "{\n";
         for (var i: number = 0; i < enviroment.renderedElements.length; i++) {
             var element: RenderedElement = enviroment.renderedElements[i];
-            var elementName: string = getElementName(element);
+            var elementId: string = element.DOMElement.attr("id");
             var elementAnimationName: string = getElementAnimationName(element);
 
-            out += tabulate("\$\(\"\." + elementName + "\"\)\.toggleClass\(\"" + elementAnimationName + "\"\);\n");
+            out += tabulate("document\.getElementById\(\"" + elementId + "\"\)\.className \+\= \" " + elementAnimationName + "\";\n");
         }
         out += "}\n";
 
