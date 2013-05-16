@@ -34,7 +34,7 @@ class BaseTool implements Tool {
             visibility: 'visible',
             'border-color': '#000000',
             'border-width': '1',
-            'border-style': 'solid',
+            'border-style': 'none',
             position: 'absolute',
             rotation: '0'
         };
@@ -91,7 +91,7 @@ class BaseTool implements Tool {
             new PropertyDisplayGroup('Borde',
                 ['border-style', 'border-width', 'border-color'],
                 ['Estilo de borde', 'Tamaño de borde', 'Color de borde'],
-                [new SelectPropertyControl('border-style', ['solid', 'dashed', 'dotted', 'double', 'groove'], ['Sólido', 'Lineado', 'Puntos', 'Doble', '3D']),
+                [new SelectPropertyControl('border-style', ['none', 'solid', 'dashed', 'dotted', 'double', 'groove'], ['Ninguno', 'Sólido', 'Lineado', 'Puntos', 'Doble', '3D']),
                  new DimensionPropertyControl('border-width', dimensionUnits, dimensionUnitLabels),
                  new ColorPropertyControl('border-color')
                 ]

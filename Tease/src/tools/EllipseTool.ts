@@ -24,7 +24,7 @@ class EllipseTool implements Tool extends BackgroundableTool {
             },
 
             width: (value: string, DOMElement: JQuery) => {
-                return value;
+                return value + 'px';
             }
         });
 
@@ -35,9 +35,11 @@ class EllipseTool implements Tool extends BackgroundableTool {
             },
 
             height: (value: string, DOMElement: JQuery) => {
-                return value;
+                return value + 'px';
             }
         });
+
+
         
         this.propertyMapper.directCSSMapping.mapProperty('background-color');
     }
