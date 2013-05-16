@@ -164,8 +164,6 @@ class MainController {
             }
         }
 
-        console.log(data);
-
         return environment;
     }
     
@@ -261,7 +259,7 @@ class MainController {
     }
 
     private handleSavePage() {
-
+        $('#lastSaved').text('Última hora en que se guardó el documento: ' + new Date().toLocaleTimeString());
         this.pageSynchronizer.updatePageFiles(this.environment, this.animationSettings);
     }
 }

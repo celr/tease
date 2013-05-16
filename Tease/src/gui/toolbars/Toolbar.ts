@@ -23,7 +23,7 @@ class Toolbar extends Eventable {
     
     // Creates and adds the html element for the passed tool
     private renderTool(tool: Tool) {
-        tool.toolbarDOMElement = $('<span id="' + tool.id + '" class="tool"><img src="' + tool.displayImagePath + '"></img></span>');
+        tool.toolbarDOMElement = $('<span id="' + tool.id + '" class="tool" title="' + tool.displayName + ' - ' + tool.description + '"><img src="' + tool.displayImagePath + '"></img></span>');
         this.DOMElement.append(tool.toolbarDOMElement);
 
         tool.toolbarDOMElement.click((event: MouseEvent) => {

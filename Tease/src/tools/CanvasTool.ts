@@ -1,5 +1,6 @@
 ///<reference path="Tool.ts" />
 ///<reference path="DimensionableTool.ts" />
+///<reference path="../gui/toolbars/property-controls/ColorPropertyControl.ts" />
 
 class CanvasTool implements Tool {
     public displayName: string;
@@ -11,18 +12,20 @@ class CanvasTool implements Tool {
     public displayGroups: PropertyDisplayGroup[];
     private propertyMapper: PropertyMapper;
     private propertyUnits: Object;
+    private description: string;
 
 
 
     constructor(public id: string) {
         this.displayName = 'Canvas';
-        
+        this.description = 'Herramienta para modificar las propiedades del canvas';
         // Set default values
         this.properties = {
             height: 500,
             width: 800,
             'background-color': '#ffffff',
-            'background-image': 'none'
+            'background-image': 'none',
+            elementName :  ''
         };
 
         this.propertyUnits = {
@@ -40,6 +43,11 @@ class CanvasTool implements Tool {
         var dimensionUnitLabels = ['pixeles', 'pulgadas', 'puntos'];
 
         this.displayGroups = [
+            new PropertyDisplayGroup('Canvas',
+                [],
+                [],
+                []
+            ),
             new PropertyDisplayGroup('Tamaño',
             ['width', 'height'],
             ['Ancho', 'Alto'],
@@ -50,7 +58,8 @@ class CanvasTool implements Tool {
                 ['background-color', 'background-image'],
                 ['Color de fondo', 'Imagen de fondo'],
                 [new ColorPropertyControl('background-color'), new StringPropertyControl('background-image')]
-            )];
+            )
+        ];
 
         this.defaultDOMElement = $('<div></div>');
     }

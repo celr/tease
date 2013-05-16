@@ -11,11 +11,12 @@ class PointerTool implements Tool{
     public displayGroups: PropertyDisplayGroup[];
     private propertyMapper: PropertyMapper;
     private propertyUnits: Object;
-    
+    public description: string;
 
     constructor(public id: string) {
         this.displayName = 'Pointer';
         this.displayImagePath = 'Tease/src/res/pointerTool.png';
+        this.description = "Herramienta para manipular elementos en el canvas";
     }
 
     public setAttributesInDOMElement(attributes: Object, propertyUnits: Object, DOMElement: JQuery) {

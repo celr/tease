@@ -9,6 +9,6 @@ class AudioTool implements Tool extends MediaTool {
 
         this.displayName = 'Audio';
         this.displayImagePath = 'Tease/src/res/audioTool.png';
-
+        this.description = ' Herramienta para reproducir audio';
     }
 }

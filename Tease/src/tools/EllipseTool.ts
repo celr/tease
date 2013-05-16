@@ -5,8 +5,9 @@
 class EllipseTool implements Tool extends BackgroundableTool {
     constructor(public id: string) {
         super(id, $('<div id="' + id + '"></div>'));
-        this.displayName = 'Ellipse';
+        this.displayName = 'Elipse';
         this.displayImagePath = 'Tease/src/res/ellipse-tool.png';
+        this.description = "Herramienta para insertar elipses";
 
         this.properties['width'] = '100';
         this.properties['height'] = '100';

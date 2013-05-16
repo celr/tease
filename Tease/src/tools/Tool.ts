@@ -14,6 +14,7 @@ interface Tool {
     displayGroups: PropertyDisplayGroup[]; // Tells us how to display the tool's properties 
     propertyMapper: PropertyMapper;
     propertyUnits: Object;
+    description: string;
 
     setAttributeInDOMElement(property: string, value: string, propertyUnit: string, DOMElement: JQuery): void;
     setAttributesInDOMElement(attributes: Object, propertyUnits: Object, DOMElement: JQuery): void;

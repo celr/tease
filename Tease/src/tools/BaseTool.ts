@@ -10,6 +10,7 @@ class BaseTool implements Tool {
     // Menu display properties
     public displayName: string;
     public displayImagePath: string;
+    public description: string;
     public displayGroups: PropertyDisplayGroup[];
 
     // Attributes and properties

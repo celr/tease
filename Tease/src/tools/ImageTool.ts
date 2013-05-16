@@ -9,8 +9,9 @@ class ImageTool implements Tool extends BackgroundableTool {
 
     constructor(public id: string, public pageId: number) {
         super(id, $('<img id="' + id + '" src = "Tease/src/res/default-image.png"></img>'));
-        this.displayName = 'Image';
+        this.displayName = 'Imagen';
         this.displayImagePath = 'Tease/src/res/image-tool.png';
+        this.description = "Herramienta para insertar imágenes";
 
         this.properties['image-source'] = 'Tease/src/res/default-image.png';
         this.properties['width'] = '150';
