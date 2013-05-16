@@ -95,7 +95,7 @@ class CSSGenerator {
         keyframes += "}\n";
 
         for (var i: number = 0; i < element.renderedAnimations.length - 1; ++i) {
-            var animation = element.renderedAnimations[0];
+            var animation = element.renderedAnimations[i];
 
             timeFromBegining += animation.durationMs;
 
