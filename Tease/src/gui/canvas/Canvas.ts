@@ -138,6 +138,7 @@ class Canvas extends Eventable {
 
 
         element.DOMElement.bind('mousedown', (e: MouseEvent) => {
+            console.log(element);
             e.stopPropagation();
             e.preventDefault();
             e.cancelBubble = true;
@@ -222,6 +223,7 @@ class Canvas extends Eventable {
                 this.createGroup(element);
             }
             this.selectedGroup.updateInitialPositions();
+            //console.log(this.selectedGroup);
             function handleMove(eMove: MouseEvent) {
                 that.selectedGroup.move(eMove.clientX - e.clientX, eMove.clientY - e.clientY);
                 that.move = true;
@@ -237,6 +239,7 @@ class Canvas extends Eventable {
                 else {
                     that.selectElement(that.selectedGroup.getElement());
                 }
+                
             }
             this.DOMElement.bind('mousemove', handleMove);
             $(document).bind('mouseup', handleUp);

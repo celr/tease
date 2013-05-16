@@ -29,7 +29,7 @@ class MainController {
     constructor() {
         // Initialize layers
         this.environment = new Environment;
-        this.environment.layers = [new Layer("Layer 1", true, true, 0)];
+        this.environment.layers = [new Layer("Capa 1", true, true, 0)];
         this.environment.layers[0].keyframes.push(new Keyframe(1));
         this.currentLayerIndex = 0;
         this.elementLayerMap = {};
