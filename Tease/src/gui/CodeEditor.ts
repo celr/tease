@@ -9,6 +9,7 @@ class CodeEditor {
         this.editor.setTheme("ace/theme/textmate");
         this.editor.getSession().setMode("ace/mode/" + mode);
         this.editor.setReadOnly(true);
+        this.editor.session.setUseWorker(false)
     }
 
     public setMode(mode: string) {
@@ -17,7 +18,6 @@ class CodeEditor {
 
     public setText(text: string) {
         this.editor.setValue(text);
-        this.editor.selection.setRange(new AceAjax.Range(0, 0, 0, 0), false);
     }
 }
 
