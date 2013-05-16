@@ -105,7 +105,13 @@ class CSSGenerator {
             keyframes += percentage + "% ";
             keyframes += "{\n";
             for (var property in animation.animationProperties) {
-                keyframes += tabulate(property + ": " + animation.animationProperties[property] + ";\n");
+                // TODO(chadan): Do a better approach.
+                if (property === "transform") {
+                    keyframes += tabulate(prefix + property + ": " + animation.animationProperties[property] + ";\n");
+                }
+                else {
+                    keyframes += tabulate(property + ": " + animation.animationProperties[property] + ";\n");
+                }
             }
             keyframes += "}\n";
         }
@@ -115,7 +121,13 @@ class CSSGenerator {
         keyframes += "to ";
         keyframes += "{\n";
         for (var property in animation.animationProperties) {
-            keyframes += tabulate(property + ": " + animation.animationProperties[property] + ";\n");
+            // TODO(chadan): Do a better approach.
+            if (property === "transform") {
+                keyframes += tabulate(prefix + property + ": " + animation.animationProperties[property] + ";\n");
+            }
+            else {
+                keyframes += tabulate(property + ": " + animation.animationProperties[property] + ";\n");
+            }
         }
         keyframes += "}\n";
 

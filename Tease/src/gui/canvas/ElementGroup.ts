@@ -14,7 +14,7 @@ class ElementGroup {
         this.initialY = {};
         this.dots = [];
         var img = <HTMLImageElement> document.createElement('img');
-        img.src = 'res/Dot.png';
+        img.src = 'Tease/src/res/Dot.png';
         this.dotSize = img.width;
         this.visible = false;
     }
@@ -41,7 +41,7 @@ class ElementGroup {
 
     private createDot(top, left) {
         var $img = $('<img></img>');
-        $img.attr({'src': 'res/Dot.png', 'canvasTool' : 'selectedGroupTool'});
+        $img.attr({ 'src': 'Tease/src/res/Dot.png', 'canvasTool' : 'selectedGroupTool'});
         $img.css({
             'top': top + 'px',
             'left': left + 'px',

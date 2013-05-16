@@ -44,11 +44,10 @@ class SelectionTool {
             var height = temp == null ? 0 : parseInt(temp);
 
             var found = true;
-            if (width) {
-                if (eleLeft + width < this.initialX || eleLeft > finalX ||
-                    eleTop > finalY || eleTop + height < this.initialY) {
-                    found = false;
-                }
+            
+            if (eleLeft + width < this.initialX || eleLeft > finalX ||
+                eleTop > finalY || eleTop + height < this.initialY) {
+                found = false;
             }
             if (found) {
                 selectedGroup.insertElement(element.DOMElement.attr('id'), element);

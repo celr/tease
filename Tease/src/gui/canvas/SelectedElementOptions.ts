@@ -1,5 +1,6 @@
 ///<reference path="../../lib/jquery.d.ts" />
 ///<reference path="../../lib/bootstrap/js/bootstrap.ts" />
+///<reference path="../../base/Environment.ts" />
 
 class SelectedElementOptions {
     private $dropDownList: JQuery;
@@ -8,7 +9,7 @@ class SelectedElementOptions {
     private visible: bool;
     private element: Tease.Element;
 
-    constructor(private $canvas: JQuery) {
+    constructor(private $canvas: JQuery, private environment: Environment) {
         this.toolSize = 20;
         this.visible = false;
     }
@@ -127,6 +128,8 @@ class SelectedElementOptions {
             return 0;
         });
 
+        //delete from environment
+        this.environment.deleteElement(this.element);
         //fire deletion event in canvas
         this.$canvas.trigger('elementDeleted', this.element);
     }
